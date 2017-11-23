@@ -5,18 +5,13 @@
 			<img src="../../assets/img/defaultImg.svg" v-show="!fileUrl">
 			<div class="controller">
 				<div class="controllerBtn">
-					<div class="perviewBtn" @click.stop="isShowImgModal = true"></div>
+					<div class="perviewBtn" @click.stop="showImgModal"></div>
 				</div>
 			</div>
-			<CustomModal title="查看图片" :width="500" :height="400" v-if="isShowImgModal" @closeModal="closeImgModal">
-				<img :src="fileUrl" v-show="fileUrl">
-				<img src="../../assets/img/defaultImg.svg" v-show="!fileUrl">
-			</CustomModal>
 		</div>
 	</div>
 </template>
 <script>
-	import CustomModal from './CustomModal'
 	export default {
 		props: {
 			width: {
@@ -31,18 +26,14 @@
 				type: String
 			}
 		},
-		data() {
-			return {
-				isShowImgModal: false
-			}
-		},
 		methods: {
-			closeImgModal() {
-				this.isShowImgModal = false;
+			showImgModal() {
+				this.modal({
+					title: '图片详情',
+					content: `<img :src="${fileUrl}" v-show="${fileUrl}">
+							<img src="../../assets/img/defaultImg.svg" v-show="${!fileUrl}">`
+				})
 			}
-		},
-		components: {
-			CustomModal
 		}
 	}
 </script>

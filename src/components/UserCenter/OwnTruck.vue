@@ -4,9 +4,14 @@
 			<SearchFilter></SearchFilter>
 		</div></div>
 		<div class="con">
-			<TruckList v-for="truck in truckList" :key="truck.memID" :data="truck"></TruckList>
-			<div class="listFooter text-center">
-				<Paging></Paging>
+			<div v-if="truckList.length > 0">
+				<TruckList v-for="truck in truckList" :key="truck.memID" :dataDetail="truck"></TruckList>
+				<div class="listFooter text-center">
+					<Paging></Paging>
+				</div>
+			</div>
+			<div v-if="truckList.length == 0">
+				<Empty type="noData"></Empty>
 			</div>
 		</div>
 	</div>
@@ -15,6 +20,7 @@
 	import TruckList from '../FindTruck/TruckList'
 	import SearchFilter from './SearchFilter'
 	import Paging from '../commonComponents/Paging'
+	import Empty from '../commonComponents/Empty'
 	export default {
 		data() {
 			return {
@@ -55,7 +61,8 @@
 		components: {
 			TruckList,
 			Paging,
-			SearchFilter
+			SearchFilter,
+			Empty
 		}
 	}
 </script>

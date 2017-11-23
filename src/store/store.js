@@ -6,8 +6,6 @@ const vuexStore = new Vuex.Store({
 	state: {
 		memberInfo: null,
 		selected: 0,
-		MsgContent: '',
-		isMsgShow: false,
 		cargoTypeList: []
 	},
 	mutations: {
@@ -21,10 +19,6 @@ const vuexStore = new Vuex.Store({
 		},
 		selectChange: (state,data) => {
 			state.selected = data.selected;
-		},
-		msgContentShow: (state,data) => {
-			state.isMsgShow = data.isMsgShow;
-			state.MsgContent = data.MsgContent;
 		},
 		getCargoTypeList: (state,data) => {
 			state.cargoTypeList = data.cargoTypeList;

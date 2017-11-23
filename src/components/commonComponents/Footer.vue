@@ -2,8 +2,8 @@
 	<div class="footer">
         <div class="copyright">
             <div class="page-w text-center">
-                <p>Copyright &copy; 2008-2018 www.vfu56.con All Rights Reserved 版权所有·货多多 粤ICP备14012994号-1 本站法律顾问：陈明律师</p>
-                <p>经营许可证 （粤）字第06990号</p>
+                <p>Copyright &copy; 2008-2018 All Rights Reserved 版权所有·云南微服物流 滇ICP备17003923号</p>
+                <p>云南微服物流大数据运营有限公司</p>
             </div>
         </div>
     </div>

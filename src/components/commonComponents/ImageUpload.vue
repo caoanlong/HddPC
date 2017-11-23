@@ -8,9 +8,6 @@
 					<div class="delBtn" @click.stop="delImg(i)"></div>
 				</div>
 			</div>
-			<CustomModal title="查看图片" :width="500" :height="400" v-if="isShowImgModal" @closeModal="closeImgModal">
-				<img :src="file">
-			</CustomModal>
 		</div>
 		<div class="addBtn" :style="{'width':width+'px','height':height+'px'}" v-show="isLimit">
 			<div class="addIcon">
@@ -22,7 +19,6 @@
 	</div>
 </template>
 <script>
-	import CustomModal from './CustomModal'
 	import common from '../../common/common.js'
 	export default {
 		props: {
@@ -42,7 +38,6 @@
 		data() {
 			return {
 				fileUrl: [],
-				isShowImgModal: false
 			}
 		},
 		computed: {
@@ -78,13 +73,13 @@
 				this.fileUrl.splice(i,1);
 				this.$emit('imgUrlBack',this.fileUrl);
 			},
-			closeImgModal() {
-				this.isShowImgModal = false;
+			showImgModal() {
+				this.modal({
+					title: '图片详情',
+					content: `<img :src="${file}">`
+				})
 			}
 		},
-		components: {
-			CustomModal
-		}
 	}
 </script>
 <style lang="stylus" scoped>

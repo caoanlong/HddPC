@@ -15,17 +15,26 @@
 					<router-link :to="{name: 'PublishInfo',query:{active: 21}}" class="publishBtn fr">发布货源</router-link>
 				</div>
 				<div class="tabCon" v-show="tabs==1">
-					<GoodsList v-for="Goods in GoodsList" :key="Goods.cargoSourceID" :data="Goods"></GoodsList>
-					<div class="listFooter text-center">
-						<Paging :pagecount="pagecount" :pageindex="pageindex" @getpaging="getGoodsList"></Paging>
+					<div v-if="GoodsList.length > 0">
+						<GoodsList v-for="Goods in GoodsList" :key="Goods.cargoSourceID" :data="Goods"></GoodsList>
+						<div class="listFooter text-center">
+							<Paging :pagecount="pagecount" :pageindex="pageindex" @getpaging="getGoodsList"></Paging>
+						</div>
+					</div>
+					<div v-if="GoodsList.length == 0">
+						<Empty type="noGoods"></Empty>
 					</div>
 				</div>
 				<div class="tabCon" v-show="tabs==2">
-					<!-- <GoodsList v-for="Goods in myGoodsList" :key="Goods.cargoSourceID" :data="Goods"></GoodsList>
-					<div class="listFooter text-center">
-						<Paging :pagecount="pagecount" :pageindex="pageindex" @getpaging="getMyGoodsList"></Paging>
-					</div> -->
-					<Empty></Empty>
+					<div v-if="myGoodsList.length > 0">
+						<GoodsList v-for="Goods in myGoodsList" :key="Goods.cargoSourceID" :data="Goods"></GoodsList>
+						<div class="listFooter text-center">
+							<Paging :pagecount="pagecount" :pageindex="pageindex" @getpaging="getMyGoodsList"></Paging>
+						</div>
+					</div>
+					<div v-if="myGoodsList.length == 0">
+						<Empty type="noPublishGoods"></Empty>
+					</div>
 				</div>
 			</div>
 		</div>

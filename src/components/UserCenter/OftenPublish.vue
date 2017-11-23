@@ -2,28 +2,34 @@
 	<div>			
 		<div class="tit">常发货源</div>
 		<div class="con">
-			<div class="listItem clearfix" v-for="item in oftenPublishList">
-				<div class="lineInfo fl">
-					<p class="start" :title="item.areaFromBaseArea.fullName|clearComma">{{item.areaFromBaseArea.fullName|clearComma}}</p>
-					<p class="end" :title="item.areaToBaseArea.fullName|clearComma">{{item.areaToBaseArea.fullName|clearComma}}</p>
+			<div v-if="oftenPublishList.length > 0">
+				<div class="listItem clearfix" v-for="item in oftenPublishList">
+					<div class="lineInfo fl">
+						<p class="start" :title="item.areaFromBaseArea.fullName|clearComma">{{item.areaFromBaseArea.fullName|clearComma}}</p>
+						<p class="end" :title="item.areaToBaseArea.fullName|clearComma">{{item.areaToBaseArea.fullName|clearComma}}</p>
+					</div>
+					<div class="userInfo fl">
+						<p class="goods" v-text="item.cargoDesc" :title="item.cargoDesc"></p>
+						<p class="vehicleInfo" v-text="item.truckDesc" :title="item.truckDesc"></p>
+					</div>
+					<div class="handle fr">
+						<router-link tag="span" :to="{name: 'PublishInfo',query:{id:item.frequentConcernID}}" class="editBtn">修改</router-link>
+						<span class="delBtn">删除</span>
+					</div>
 				</div>
-				<div class="userInfo fl">
-					<p class="goods" v-text="item.cargoDesc" :title="item.cargoDesc"></p>
-					<p class="vehicleInfo" v-text="item.truckDesc" :title="item.truckDesc"></p>
-				</div>
-				<div class="handle fr">
-					<router-link tag="span" :to="{name: 'PublishInfo',query:{id:item.frequentConcernID}}" class="editBtn">修改</router-link>
-					<span class="delBtn">删除</span>
+				<div class="listFooter text-center">
+					<Paging></Paging>
 				</div>
 			</div>
-			<div class="listFooter text-center">
-				<Paging></Paging>
+			<div v-if="oftenPublishList.length == 0">
+				<Empty type="noData"></Empty>
 			</div>
 		</div>
 	</div>
 </template>
 <script>
 	import Paging from '../commonComponents/Paging'
+	import Empty from '../commonComponents/Empty'
 	export default {
 		data() {
 			return {
@@ -58,7 +64,8 @@
 			}
 		},
 		components: {
-			Paging
+			Paging,
+			Empty
 		}
 	}
 </script>

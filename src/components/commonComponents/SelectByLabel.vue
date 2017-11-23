@@ -2,17 +2,11 @@
 	<div class="pannel" v-if="option.isShow" :style="styleOption" @click.stop="stop()">
 		<span :class="{'selected': selectedLabels.indexOf(label)>-1}" v-for="label in obj" @click.stop="pushLabel(label)">{{label.name}}</span>
 		<p class="text-right">
-			<span class="addBtn" @click.stop="isShowAddModal = true">+ 添加常用标签</span>
+			<span class="addBtn" @click.stop="showLabelModal">+ 添加常用标签</span>
 		</p>
-		<CustomModal title="添加标签" button1="确定" v-if="isShowAddModal" @closeModal="closeAddModal" @doSomething="getLabel">
-			<div class="form-item error">
-	            <input type="text" class="text-input" placeholder="请输入..."/>
-	        </div>
-		</CustomModal>
 	</div>
 </template>
 <script>
-	import CustomModal from './CustomModal'
 	import common from '../../common/common'
 	export default {
 		props: {
@@ -24,11 +18,6 @@
 			},
 			selectedLabels: {
 				type: Array
-			}
-		},
-		data() {
-			return {
-				isShowAddModal: false,
 			}
 		},
 		computed: {
@@ -58,13 +47,14 @@
 				}
 				this.$emit('pushLabel',this.selectedLabels);
 			},
-			closeAddModal() {
-				this.isShowAddModal = false;
-			},
+			showLabelModal() {
+				this.modal({
+					width: '400px',
+					title: '添加标签',
+					content: `<input type="text" class="text-input" placeholder="请输入..."/>`
+				})
+			}
 		},
-		components: {
-			CustomModal
-		}
 	}
 </script>
 <style lang="stylus" scoped>

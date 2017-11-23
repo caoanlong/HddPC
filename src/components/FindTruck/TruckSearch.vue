@@ -14,15 +14,25 @@
 					</ul>
 				</div>
 				<div class="tabCon" v-if="tabs==1">
-					<TruckList v-for="TruckFieldSource in TruckFieldSourceList" :key="TruckFieldSource.truckSourceID" :dataDetail="TruckFieldSource"></TruckList>
-					<div class="listFooter text-center">
-						<Paging :pagecount="pagecount" :pageindex="pageIndex" @getpaging="getTruckList"></Paging>
+					<div v-if="TruckFieldSourceList.length > 0">
+						<TruckList v-for="TruckFieldSource in TruckFieldSourceList" :key="TruckFieldSource.truckSourceID" :dataDetail="TruckFieldSource"></TruckList>
+						<div class="listFooter text-center">
+							<Paging :pagecount="pagecount" :pageindex="pageIndex" @getpaging="getTruckList"></Paging>
+						</div>
+					</div>
+					<div v-if="TruckFieldSourceList.length == 0">
+						<Empty type="noTruck"></Empty>
 					</div>
 				</div>
 				<div class="tabCon" v-if="tabs==2">
-					<TruckList v-for="TruckFleetSource in TruckFleetSourceList" :key="TruckFleetSource.truckSourceID" :dataDetail="TruckFleetSource"></TruckList>
-					<div class="listFooter text-center">
-						<Paging :pagecount="pagecount" :pageindex="pageIndex" @getpaging="getTruckList"></Paging>
+					<div v-if="TruckFleetSourceList.length > 0">
+						<TruckList v-for="TruckFleetSource in TruckFleetSourceList" :key="TruckFleetSource.truckSourceID" :dataDetail="TruckFleetSource"></TruckList>
+						<div class="listFooter text-center">
+							<Paging :pagecount="pagecount" :pageindex="pageIndex" @getpaging="getTruckList"></Paging>
+						</div>
+					</div>
+					<div v-if="TruckFleetSourceList.length == 0">
+						<Empty type="noTruck"></Empty>
 					</div>
 				</div>
 			</div>
@@ -34,6 +44,7 @@
 	import FilterTruck from '../commonComponents/FilterTruck'
 	import TruckList from './TruckList'
 	import Paging from '../commonComponents/Paging'
+	import Empty from '../commonComponents/Empty'
 	export default {
 		data() {
 			return {
@@ -139,7 +150,8 @@
 		components: {
 			FilterTruck,
 			TruckList,
-			Paging
+			Paging,
+			Empty
 		}
 	}
 </script>

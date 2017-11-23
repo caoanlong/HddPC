@@ -4,11 +4,15 @@ export default function install(Vue, options) {
 	/*开发图片服务器*/
 	// Vue.prototype.__imgserver__ = 'http://192.168.1.59:8888/';
 	/*开发服务器*/
-	Vue.prototype.__webserver__ = 'http://test.hdd.we-service.cn:8888/';
+	// Vue.prototype.__webserver__ = 'http://test.hdd.we-service.cn:8888/';
 	/*开发图片服务器*/
 	Vue.prototype.__imgserver__ = 'http://test.hdd.we-service.cn:8888/';
+	/*测试服务器*/
+	// Vue.prototype.__webserver__ = 'http://develop.we-service.cn/test-hdd/v2/';
+	/*测试图片服务器*/
+	// Vue.prototype.__imgserver__ = 'http://develop.we-service.cn/test-hdd/v2/';
 	/*邹文臣电脑*/
-	// Vue.prototype.__webserver__ = 'http://192.168.1.60:4441/';
+	Vue.prototype.__webserver__ = 'http://192.168.1.60:4441/';
 	/*邹文臣手机号码*/
 	//15084798888 
 
