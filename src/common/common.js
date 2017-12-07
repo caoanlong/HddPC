@@ -8,7 +8,7 @@ function getElementsClass(classnames){
 	//定义数组的下标
 	var classint=0; 
 	//获取HTML的所有标签
-	var tags=document.getElementsByTagName("*");
+	var tags = document.getElementsByTagName("*");
 	//对标签进行遍历 
 	for (var i in tags) { 
 		//判断节点类型
