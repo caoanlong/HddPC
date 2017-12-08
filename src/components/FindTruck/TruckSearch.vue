@@ -98,7 +98,7 @@
 						if (res.body.code == 200) {
 							this.total = res.body.data.total;
 							this.TruckFieldSourceList = res.body.data.list;
-							// console.log(JSON.stringify(res.body.data.list));
+							console.log(JSON.stringify(res.body.data.list));
 						}
 					},
 					(res) => {

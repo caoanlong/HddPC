@@ -15,7 +15,7 @@
 				<p class="otherInfo">车龄：5年 驾龄：10年</p>
 			</div>
 			<span class="attention">未关注</span>
-			<router-link :to="{name:'TruckDetail',query:{truckSourceID:dataDetail.truckSourceID}}" title="查看详情" ref="TruckFleet" class="view-btn">查看详情</router-link>
+			<router-link :to="{name:'TruckDetail',query:{memID:dataDetail.memIDStr}}" title="查看详情" ref="TruckFleet" class="view-btn">查看详情</router-link>
 		</div>
 	</div>
 </template>
