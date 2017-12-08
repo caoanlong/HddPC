@@ -75,15 +75,15 @@
 				this.getFleetTruckList();
 			},
 			getTruckList(param) {
-				let URL = this.__webserver__ + 'truck/fleet/findTrucksourcePage';
+				let URL = this.__webserver__ + '/adv/truck/list';
 				if (param) {
 					var params = {
-						"areaFrom": param.areaFrom,
-						"areaTo": param.areaTo,
+						// "areaFrom": param.areaFrom,
+						// "areaTo": param.areaTo,
 						"length": param.length,
 						"type": param.type,
-						"transStatus": param.transStatus,
-						"isReturn": param.isReturn,
+						// "transStatus": param.transStatus,
+						// "isReturn": param.isReturn,
 						"pageSize": this.PAGESIZE,
 					};
 				}else {
@@ -92,13 +92,13 @@
 					};
 				};
 				console.log(JSON.stringify(params));
-				this.$http.post(URL,params).then(
+				this.$http.get(URL,{params: params}).then(
 					(res) => {
 						console.log(JSON.stringify(res.body.message));
 						if (res.body.code == 200) {
 							this.total = res.body.data.total;
 							this.TruckFieldSourceList = res.body.data.list;
-							// console.log(JSON.stringify(res.body.data));
+							// console.log(JSON.stringify(res.body.data.list));
 						}
 					},
 					(res) => {
@@ -110,12 +110,12 @@
 				let URL = this.__webserver__ + 'truck/fleet/findPage';
 				if (param) {
 					var params = {
-						"areaFrom": param.areaFrom,
-						"areaTo": param.areaTo,
+						// "areaFrom": param.areaFrom,
+						// "areaTo": param.areaTo,
 						"length": param.length,
 						"type": param.type,
-						"transStatus": param.transStatus,
-						"isReturn": param.isReturn,
+						// "transStatus": param.transStatus,
+						// "isReturn": param.isReturn,
 						// focusType: 'Selft'
 						// "pageSize": this.PAGESIZE,
 					};

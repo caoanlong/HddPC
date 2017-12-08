@@ -6,16 +6,18 @@ export default function install(Vue, options) {
 	/*开发服务器*/
 	// Vue.prototype.__webserver__ = 'http://test.hdd.we-service.cn:8888/';
 	/*开发图片服务器*/
-	Vue.prototype.__imgserver__ = 'http://test.hdd.we-service.cn:8888/';
+	// Vue.prototype.__imgserver__ = 'http://test.hdd.we-service.cn:8888/';
+	Vue.prototype.__imgserver__ = 'http://develop.we-service.cn/hdd/image/';
 	/*测试服务器*/
 	// Vue.prototype.__webserver__ = 'http://develop.we-service.cn/test-hdd/v2/';
 	/*测试图片服务器*/
 	// Vue.prototype.__imgserver__ = 'http://develop.we-service.cn/test-hdd/v2/';
 	/*邹文臣电脑*/
-	Vue.prototype.__webserver__ = 'http://192.168.1.60:4441/';
+	// Vue.prototype.__webserver__ = 'http://192.168.1.60:4441/';
 	/*邹文臣手机号码*/
 	//15084798888 
-
+	/*农新考电脑*/
+	Vue.prototype.__webserver__ = 'http://192.168.1.49:4441/';
 	/*每页条数*/
 	Vue.prototype.PAGESIZE = 10;
     /*获取localStorage中的会员信息*/
@@ -44,19 +46,19 @@ export default function install(Vue, options) {
 		}else {
 			typeN = 'const';
 		};
-		let URL = this.__webserver__ + 'mem/constCust/findALLList';
+		let URL = this.__webserver__ + '/adv/baseConstant/findByType';
 		var params = {
 			type: type||''
 		};
-		this.$http.post(URL,params).then(
+		this.$http.get(URL,{params:params}).then(
 			(res) => {
 				if (res.body.code == 200) {
 					var list = [];
 					if (type) {
-						for (let i in res.body.data[type]) {
+						for (let i in res.body.data) {
 							list.push({
-								"code": res.body.data[type][i].constStdID,
-								"name": res.body.data[type][i].name
+								"code": res.body.data[i].constStdID,
+								"name": res.body.data[i].name
 							});
 						}
 					}else {

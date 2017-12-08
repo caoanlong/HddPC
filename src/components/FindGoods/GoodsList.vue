@@ -18,8 +18,8 @@
 				<span class="user_sort user_sort4" v-else-if="data.memberType=='NoTruck'">无车承运人</span>
 			</div>
 			<div class="lineInfo fl">
-				<p class="start">{{data.fromAreaName|clearComma}}</p>
-				<p class="end">{{data.toAreaName|clearComma}}</p>
+				<p class="start">{{data.areaFromName|clearComma}}</p>
+				<p class="end">{{data.areaToName|clearComma}}</p>
 				<p class="pos">广西桂林 1分钟前</p>
 			</div>
 			<div class="userInfo fl">
