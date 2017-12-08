@@ -78,12 +78,8 @@
 				let URL = this.__webserver__ + '/adv/truck/list';
 				if (param) {
 					var params = {
-						// "areaFrom": param.areaFrom,
-						// "areaTo": param.areaTo,
 						"length": param.length,
 						"type": param.type,
-						// "transStatus": param.transStatus,
-						// "isReturn": param.isReturn,
 						"pageSize": this.PAGESIZE,
 					};
 				}else {
@@ -91,18 +87,18 @@
 						"pageSize": this.PAGESIZE,
 					};
 				};
-				console.log(JSON.stringify(params));
+				// console.log(JSON.stringify(params));
 				this.$http.get(URL,{params: params}).then(
 					(res) => {
-						console.log(JSON.stringify(res.body.message));
+						// console.log(JSON.stringify(res.body.message));
 						if (res.body.code == 200) {
 							this.total = res.body.data.total;
 							this.TruckFieldSourceList = res.body.data.list;
-							console.log(JSON.stringify(res.body.data.list));
+							// console.log(JSON.stringify(res.body.data.list));
 						}
 					},
 					(res) => {
-						console.log(JSON.stringify(res));
+						// console.log(JSON.stringify(res));
 					}
 				)
 			},

@@ -184,7 +184,7 @@
 			},
 			selectTruckLength(obj) {
 				this.selectTruckLengthList = this.arrToStr(obj,'code');
-				console.log(JSON.stringify(this.selectTruckLengthList));
+				// console.log(JSON.stringify(this.selectTruckLengthList));
 			},
 			selectTruckClass(obj) {
 				this.selectTruckClassLi = obj.code;
