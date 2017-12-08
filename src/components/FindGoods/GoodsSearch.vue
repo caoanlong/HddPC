@@ -76,7 +76,7 @@
 				this.getMyGoodsList();
 			},
 			getGoodsList(param) {
-				let URL = this.__webserver__ + 'cargoSource/findByCondition';
+				let URL = this.__webserver__ + '/adv/cargoSource/list';
 				if (param) {
 					var params = {
 						"areaFrom": param.areaFrom,
@@ -98,7 +98,7 @@
 						if (res.body.code == 200) {
 							this.total = res.body.data.total;
 							this.GoodsList = res.body.data.list;
-							// console.log(JSON.stringify(res.body.data.list));
+							console.log(JSON.stringify(res.body.data.list));
 						}
 					},
 					(res) => {

@@ -25,8 +25,8 @@
 				<div class="goodsInfo">
 					<p class="title">货源信息</p>
 					<div class="lineInfo fl">
-						<p class="start">{{goodsDetail.fromAreaName|clearComma}}</p>
-						<p class="end">{{goodsDetail.toAreaName|clearComma}}</p>
+						<p class="start">{{goodsDetail.areaFromName|clearComma}}</p>
+						<p class="end">{{goodsDetail.areaToName|clearComma}}</p>
 					</div>
 					<ul class="detail fr">
 						<li><label>名称：</label>{{goodsDetail.cargoName}}</li>
@@ -335,7 +335,7 @@
         },
 		methods: {
 			getGoodsDetail() {
-				let URL = this.__webserver__ + 'cargoSource/detail';
+				let URL = this.__webserver__ + '/adv/cargoSource/detail/';
 				var params = {
 					"id": this.cargoSourceID
 				};

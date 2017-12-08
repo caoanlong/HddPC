@@ -7,30 +7,30 @@
 					<img v-if="headPicture" :src="headPicture" class="driverPic"/>
 					<img v-else src='../../assets/img/defaultImg.svg' class="driverPic"/>
 					<p>
-						<label>姓名：</label>{{truckSourceDetail.memMember.realName}}
-						<RateDisplay :score="truckSourceDetail.memMember.score"></RateDisplay>
+						<label>姓名：{{truckSourceDetail.realName}}</label>
+						<RateDisplay :score="truckSourceDetail.score"></RateDisplay>
 					</p>
 					<p><label>年龄：</label>27岁</p>
 					<p><label>驾龄：</label>5年</p>
 					<span class="attention attentioned" v-if="truckSourceDetail.isFocus=='Y'">已关注</span>
 					<span class="attention" v-else-if="truckSourceDetail.isFocus=='N'">未关注</span>
 				</div>
-				<div class="lineInfo">
+				<!-- <div class="lineInfo">
 					<p class="title">期待路线</p>
 					<p class="start">{{truckSourceDetail.trucksource.areaFromBaseArea.fullName|clearComma}}</p>
 					<p class="end">
 						<span v-for="(item,i) in truckSourceDetail.trucksource.areaToBaseAreaList">{{item.fullName|clearComma}}<b v-show="i!=truckSourceDetail.trucksource.areaToBaseAreaList.length-1">，</b></span>
 					</p>
-				</div>
+				</div> -->
 				<div class="truckInfo clearfix">
 					<p class="title">车辆信息</p>
 					<ul>
-						<li><label>车牌：</label>{{truckSourceDetail.memTruck.plateNo}}</li>
-						<li><label>车龄：</label>{{truckSourceDetail.memTruck.mileage}}年</li>
-						<li><label>车型：</label>{{truckSourceDetail.memTruck.typeName.name}}</li>
-						<li><label>电话：</label>{{truckSourceDetail.memMember.mobile}}</li>
-						<li><label>车长：</label>{{truckSourceDetail.memTruck.lengthName.name}}</li>
-						<li>
+						<li><label>车牌：</label>{{truckSourceDetail.plateNo}}</li>
+						<li><label>车龄：</label>{{truckSourceDetail.coty}}年</li>
+						<li><label>车型：</label>{{truckSourceDetail.truckTypeName}}</li>
+						<li><label>电话：</label>{{truckSourceDetail.mobile}}</li>
+						<li><label>车长：</label>{{truckSourceDetail.truckLengthName}}</li>
+						<!-- <li>
 							<label>可装货时间：</label>
 							<span class="c1">{{truckSourceDetail.trucksource.loadingDate}}
 								<span v-if="truckSourceDetail.trucksource.loadingTimeSlot=='NoLimit'">全天</span>
@@ -39,11 +39,11 @@
 								<span v-else-if="truckSourceDetail.trucksource.loadingTimeSlot=='Night'">晚上</span>
 								<span v-else-if="truckSourceDetail.trucksource.loadingTimeSlot=='Limit'"></span>
 							</span>
-						</li>
-						<li><label>载重：</label>{{truckSourceDetail.memTruck.loads}}吨</li>
-						<li><label>发布时间：</label>{{truckSourceDetail.trucksource.createTime}}</li>
+						</li> -->
+						<!-- <li><label>载重：</label>{{truckSourceDetail.memTruck.loads}}吨</li> -->
+						<!-- <li><label>发布时间：</label>{{truckSourceDetail.trucksource.createTime}}</li> -->
 					</ul>
-					<router-link :to="{name: 'SendGoods',query: {truckSourceID: truckSourceID}}" class="pushBtn">推送货源</router-link>
+					<!-- <router-link :to="{name: 'SendGoods',query: {truckSourceID: truckSourceID}}" class="pushBtn">推送货源</router-link> -->
 				</div>
 			</div>
 		</div>
@@ -62,7 +62,7 @@
 						<bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-navigation>
 						<bm-marker :position="{lng: lng, lat: lat}"></bm-marker>
 						<bm-info-window :position="{lng: lng, lat: lat}" title="详细地址：" :show="true">
-					      	<strong v-text="truckSourceDetail.trucksource.posAddress"></strong>
+					      	<strong v-text="truckSourceDetail.posAreaName"></strong>
 					    </bm-info-window>
 					</baidu-map>
 				</div>
@@ -81,7 +81,7 @@
 						</li>
 						<li>
 							<label>真实姓名</label>
-							<p v-text="truckSourceDetail.memMember.realName"></p>
+							<p v-text="truckSourceDetail.realName"></p>
 						</li>
 						<li>
 							<label>身份证号码</label>
@@ -111,7 +111,7 @@
 						</li>
 						<li>
 							<label>详细地址</label>
-							<p v-text="truckSourceDetail.trucksource.posAddress"></p>
+							<p v-text="truckSourceDetail.posAreaName"></p>
 						</li>
 						<li>
 							<label>门头照</label>
@@ -137,7 +137,7 @@
 		</div>
 		<!-- 车源详情 End -->
 		<!-- 类似车源 Start-->
-		<div class="similar mt clearfix">
+		<!-- <div class="similar mt clearfix">
 			<div class="title">类似车源</div>
 			<div class="con">
 				<div class="item">
@@ -237,7 +237,7 @@
 					<div class="mt text-center"><router-link :to="{name: 'SendGoods',query: {truckSourceID: truckSourceID}}" class="pushBtn">推送货源</router-link></div>
 				</div>
 			</div>
-		</div>
+		</div> -->
 		<!-- 类似车源 End -->
 	</div>
 </template>
@@ -275,33 +275,27 @@
                 lat: 0,
             }
         },
-        computed: {
-        	truckSourceID() {
-        		return this.$route.query.truckSourceID
-        	}
-        },
         created() {
         	this.getTruckDetail();
         },
         methods: {
         	getTruckDetail() {
-				let URL = this.__webserver__ + 'truck/fleet/findTruckSourceInfo';
+				let URL = this.__webserver__ + '/adv/truck/detail';
 				var params = {
-					"truckSourceID": this.truckSourceID
+					"memID": this.$route.query.memID
 				};
-				this.$http.post(URL,params).then(
+				this.$http.get(URL,{params:params}).then(
 					(res) => {
-						console.log(JSON.stringify(res.body.msg));
 						if (res.body.code == 200) {
 							this.truckSourceDetail = res.body.data;
 							this.$nextTick(() => {
-								this.lng = this.truckSourceDetail.trucksource.lng;
-								this.lat = this.truckSourceDetail.trucksource.lat;
-								if (this.truckSourceDetail.memMember.headPicture) {
-									this.headPicture = this.__imgserver__ + this.truckSourceDetail.memMember.headPicture;
+								this.lng = this.truckSourceDetail.lng;
+								this.lat = this.truckSourceDetail.lat;
+								if (this.truckSourceDetail.headPicture) {
+									this.headPicture = this.__imgserver__ + this.truckSourceDetail.headPicture;
 								};
 							})
-							console.log(JSON.stringify(res.body.data));
+							console.log(res.body.data);
 						}
 					},
 					(res) => {
@@ -332,9 +326,9 @@
 					font-weight bold
 					color #878787
 				.driverInfo
-					padding 0 100px
+					padding 0 100px 15px
 					position relative
-					height 90px
+					height 105px
 					.driverPic
 						width 90px
 						height 90px
@@ -365,7 +359,6 @@
 							border-color #ffc426
 				.lineInfo
 					border-top 1px dashed #ebebeb
-					border-bottom 1px dashed #ebebeb
 					padding 10px 0
 					margin 10px 0
 					line-height 30px
@@ -376,9 +369,10 @@
 						background url('../../../static/img/end_icon.png') no-repeat left center
 						padding-left 30px
 				.truckInfo
-					padding-right 140px
+					padding 10px 140px 10px 0
 					position relative
 					line-height 24px
+					border-top 1px dashed #ebebeb
 					li
 						float left
 						width 180px

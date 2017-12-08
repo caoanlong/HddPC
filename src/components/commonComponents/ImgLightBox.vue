@@ -2,7 +2,9 @@
 	<div class="preview fl" @mouseover="showBtn(true)" @mouseout="showBtn(false)">
 		<div class="spec-img posr">
 			<div class="truckPic">
-				<img :src="data.imgList.url[index]" v-if="data.imgList"/>
+				<img :src="__imgserver__ + data.FrontPic" v-if="data.imgList"/>
+				<img :src="__imgserver__ + data.sidePic" v-if="data.imgList"/>
+				<img :src="__imgserver__ + data.backPic" v-if="data.imgList"/>
 			</div>
 			<div class="Status">
 				<img src="../../../static/img/attentioned.png" v-show="data.certifyStatus=='Success'"/>
@@ -35,13 +37,7 @@
 			return {
 				index: 0,
 				isShowBtn: true,
-				imgList: [{
-					url: ''
-				},{
-					url: ''
-				},{
-					url: ''
-				}]
+				imgList: []
 			}
 		},
 		methods: {

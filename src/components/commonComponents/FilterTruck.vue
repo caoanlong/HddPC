@@ -1,9 +1,33 @@
 <template>
-	<div class="filter">
-		<div class="tit" v-if="findType=='truck'">找车条件</div>
-		<div class="tit" v-else-if="findType=='goods'">找货条件</div>
+	<div class="filter" v-if="findType=='truck'">
+		<div class="tit" >找车条件</div>
 		<div class="con clearfix">
-			<div class="filter-tit filter-tit-icon1">位置信息</div>
+			<div class="form-item">
+				<span class="labels">车长：</span>
+				<div class="optionBox clearfix">
+				<div class="option clearfix" :class="{'height-auto':moreTruckLength}">
+					<MultipleSelector :optionList="truckLengthList" :defaultOption="selectTruckLengthIndex" @multipleSelect="selectTruckLength"></MultipleSelector>
+					<span class="more fr" :class="{'fold': moreTruckLength}" v-text="moreText1" @click.stop="more('moreTruckLength')"></span>
+				</div>
+				</div>
+			</div>
+			<div class="form-item">
+				<span class="labels">车型：</span>
+				<div class="optionBox clearfix">
+					<div class="option clearfix" :class="{'height-auto':moreTruckClass}">
+						<SimpleSelector :styleClass="1" :optionList="truckTypeList" :defaultOption="selectedTruckClass" @simpleSelect="selectTruckClass"></SimpleSelector>
+						<span class="more fr" :class="{'fold': moreTruckClass}" v-text="moreText2" @click.stop="more('moreTruckClass')"></span>
+					</div>
+				</div>
+			</div>
+		</div>
+		<div class="text-right mt clearfix">
+			<button class="filter-btn fr" @click.stop="find()">立即找车</button>
+		</div>
+	</div>
+	<div class="filter" v-else-if="findType=='goods'">
+		<div class="tit">找货条件</div>
+		<div class="con clearfix">
 			<div class="form-item Start">
 				<span class="labels">始发地：</span>
 				<div class="text-input AreaSelect" @click.stop="selectStartArea($event)">
@@ -28,35 +52,8 @@
 		        <AreaSelectorMultiple :option="selectEndAreaOption" @selectArea="getEndArea"></AreaSelectorMultiple>
 			</div>
 		</div>
-		<div class="con clearfix">
-		<div class="filter-tit filter-tit-icon2">车辆信息</div>
-		<div class="form-item">
-			<span class="labels">车长：</span>
-			<div class="optionBox clearfix">
-			<div class="option clearfix" :class="{'height-auto':moreTruckLength}">
-				<MultipleSelector :optionList="truckLengthList" :defaultOption="selectTruckLengthIndex" @multipleSelect="selectTruckLength"></MultipleSelector>
-				<span class="more fr" :class="{'fold': moreTruckLength}" v-text="moreText1" @click.stop="more('moreTruckLength')"></span>
-			</div>
-			</div>
-		</div>
-		<div class="form-item">
-			<span class="labels">车型：</span>
-			<div class="optionBox clearfix">
-			<div class="option clearfix" :class="{'height-auto':moreTruckClass}">
-				<SimpleSelector :styleClass="1" :optionList="truckTypeList" :defaultOption="selectedTruckClass" @simpleSelect="selectTruckClass"></SimpleSelector>
-				<span class="more fr" :class="{'fold': moreTruckClass}" v-text="moreText2" @click.stop="more('moreTruckClass')"></span>
-			</div>
-			</div>
-		</div>
-		<div class="form-item">
-			<span class="labels">状态：</span>
-			<SimpleSelector :styleClass="1" :optionList="truckStatusList" :defaultOption="selectedTruckStatus" @simpleSelect="selectTruckStatus"></SimpleSelector>
-			<CheckBox content="回程车" style="margin-top:8px" @isChecked="isReturn"></CheckBox>
-			</div>
-		</div>
 		<div class="text-right mt clearfix">
-			<button class="filter-btn fr" @click.stop="find()" v-if="findType=='truck'">立即找车</button>
-			<button class="filter-btn fr" @click.stop="find()" v-else-if="findType=='goods'">立即找货</button>
+			<button class="filter-btn fr" @click.stop="find()">立即找货</button>
 		</div>
 	</div>
 </template>
@@ -80,20 +77,6 @@
 				moreTruckClass: false,
 				truckLengthList: [],
 				truckTypeList: [],
-				truckStatusList: [
-					{
-						code: '',
-						name: '不限'
-					},
-					{
-						code: 'Empty',
-						name: '空车'
-					},
-					{
-						code: 'OnWay',
-						name: '运输中'
-					},
-				],
 				startArea: {
 					"province": {
 						"key": '',
@@ -126,10 +109,7 @@
 				selectTruckLengthIndex: [0],
 				selectTruckClassLi: '',
 				selectedTruckClass: 0,
-				selectTruckStatusLi: '',
-				selectedTruckStatus: 0,
-
-				isComeBack: ''
+				selectTruckStatusLi: ''
 			}
 		},
 		computed: {
@@ -204,24 +184,18 @@
 			},
 			selectTruckLength(obj) {
 				this.selectTruckLengthList = this.arrToStr(obj,'code');
-				console.log(JSON.stringify(this.selectTruckLengthList));
+				// console.log(JSON.stringify(this.selectTruckLengthList));
 			},
 			selectTruckClass(obj) {
 				this.selectTruckClassLi = obj.code;
 				// console.log(JSON.stringify(this.selectTruckClassLi));
-			},
-			selectTruckStatus(obj) {
-				this.selectTruckStatusLi = obj.code;
-				// console.log(JSON.stringify(this.selectTruckStatusLi));
 			},
 			find() {
 				var params = {
 					"areaFrom": this.selectedStartArea,
 					"areaTo": this.selectedEndArea,
 					"length": this.selectTruckLengthList,
-					"type": this.selectTruckClassLi,
-					"transStatus": this.selectTruckStatusLi,
-					"isReturn": this.isComeBack,
+					"type": this.selectTruckClassLi
 				};
 				this.$emit('search',params);
 			}
@@ -251,6 +225,7 @@
 			background url('../../../static/img/filter_tit_icon.png') no-repeat left center
 		.con
 			border-bottom 1px dashed #f0f0f0
+			padding-top 10px
 			.filter-tit
 				height 34px
 				line-height 34px
