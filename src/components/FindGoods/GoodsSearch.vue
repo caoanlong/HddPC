@@ -10,15 +10,15 @@
 				<div class="hd">
 					<ul>
 					<li class="hall" :class="{'on':tabs==1}" @click="room(1)">配货大厅</li>
-					<li class="mine" :class="{'on':tabs==2}" @click="mine(2)">我的货源</li>
+					<li class="mine" :class="{'on':tabs==2}" @click="mine(2)" v-if="isLogin">我的货源</li>
 					</ul>
-					<router-link :to="{name: 'PublishInfo',query:{active: 21}}" class="publishBtn fr">发布货源</router-link>
+					<router-link :to="{name: 'PublishInfo',query:{active: 21}}" class="publishBtn fr" v-if="isLogin">发布货源</router-link>
 				</div>
 				<div class="tabCon" v-show="tabs==1">
 					<div v-if="GoodsList.length > 0">
 						<GoodsList v-for="Goods in GoodsList" :key="Goods.cargoSourceID" :data="Goods"></GoodsList>
 						<div class="listFooter text-center">
-							<Paging :pagecount="pagecount" :pageindex="pageindex" @getpaging="getGoodsList"></Paging>
+							<Paging :pagecount="pagecount" :pageindex="pageNum" @getpaging="getGoodsList"></Paging>
 						</div>
 					</div>
 					<div v-if="GoodsList.length == 0">
@@ -29,7 +29,7 @@
 					<div v-if="myGoodsList.length > 0">
 						<GoodsList v-for="Goods in myGoodsList" :key="Goods.cargoSourceID" :data="Goods"></GoodsList>
 						<div class="listFooter text-center">
-							<Paging :pagecount="pagecount" :pageindex="pageindex" @getpaging="getMyGoodsList"></Paging>
+							<Paging :pagecount="pagecount" :pageindex="pageNum" @getpaging="getMyGoodsList"></Paging>
 						</div>
 					</div>
 					<div v-if="myGoodsList.length == 0">
@@ -50,19 +50,24 @@
 		data() {
 			return {
 				tabs: 1,
-				total: 1,
-				pageindex: 1,
+				pageNum: 1,
+				pagecount: 1,
 				GoodsList: [],
 				myGoodsList: [],
 			}
 		},
 		computed: {
-			pagecount() {
-				return Math.ceil(this.total/this.PAGESIZE);
+			isLogin () {
+				return localStorage.getItem('memberInfo') && localStorage.getItem('authorization')
 			}
 		},
 		created() {
 			this.getGoodsList();
+		},
+		http: {
+		    headers: {
+		      'Authorization': localStorage.getItem('authorization')||''
+		    }
 		},
 		methods: {
 			room(i) {
@@ -75,65 +80,60 @@
 				this.tabs = i;
 				this.getMyGoodsList();
 			},
-			getGoodsList(param) {
-				let URL = this.__webserver__ + '/adv/cargoSource/list';
-				if (param) {
-					var params = {
-						"areaFrom": param.areaFrom,
-						"areaTo": param.areaTo,
-						"length": param.length,
-						"type": param.type,
-						"transStatus": param.transStatus,
-						"isReturn": param.isReturn,
-						"pageSize": this.PAGESIZE,
-					};
-				}else {
-					var params = {
-						"pageSize": this.PAGESIZE,
-					};
-				};
+			getGoodsList(pageNum, bool) {
+				if (bool) return
+				let URL = ''
+				if(this.isLogin){
+					URL = this.__webserver__ + 'cargoSource/findByCondition'
+				}else{
+					URL = this.__webserver__ + 'adv/cargoSource/list'
+				}
+				let params = {
+					"areaFrom": this.areaFrom,
+					"areaTo": this.areaTo,
+					"length": this.length,
+					"type": this.type,
+					"pageSize": this.PAGESIZE,
+					"pageNum": pageNum
+				}
 				this.$http.get(URL,{params:params}).then(
 					(res) => {
-						console.log(JSON.stringify(res.body.message));
+						console.log(JSON.stringify(res.body.message))
 						if (res.body.code == 200) {
-							this.total = res.body.data.total;
-							this.GoodsList = res.body.data.list;
-							console.log(JSON.stringify(res.body.data.list));
+							this.pagecount = res.body.data.pages
+							this.pageNum = res.body.data.pageNum
+							this.GoodsList = res.body.data.list
+							console.log(JSON.stringify(res.body.data.list))
 						}
 					},
 					(res) => {
-						console.log(JSON.stringify(res));
+						console.log(JSON.stringify(res.body.message));
 					}
 				)
 			},
-			getMyGoodsList(param) {
-				let URL = this.__webserver__ + 'cargoSource/myList';
-				if (param) {
-					var params = {
-						"areaFrom": param.areaFrom,
-						"areaTo": param.areaTo,
-						"length": param.length,
-						"type": param.type,
-						"transStatus": param.transStatus,
-						"isReturn": param.isReturn,
-						"pageSize": this.PAGESIZE,
-					};
-				}else {
-					var params = {
-						"pageSize": this.PAGESIZE,
-					};
-				};
+			getMyGoodsList(pageNum, bool) {
+				if (bool) return
+				let URL = this.__webserver__ + 'cargoSource/myList'
+				let params = {
+					"areaFrom": this.areaFrom,
+					"areaTo": this.areaTo,
+					"length": this.length,
+					"type": this.type,
+					"pageSize": this.PAGESIZE,
+					"pageNum": pageNum
+				}
 				this.$http.get(URL,{params:params}).then(
 					(res) => {
-						console.log(JSON.stringify(res.body.message));
+						console.log(JSON.stringify(res.body.message))
 						if (res.body.code == 200) {
-							this.total = res.body.data.total;
-							this.myGoodsList = res.body.data.list;
-							// console.log(JSON.stringify(res.body.data.list));
+							this.pagecount = res.body.data.pages
+							this.pageNum = res.body.data.pageNum
+							this.myGoodsList = res.body.data.list
+							console.log(JSON.stringify(res.body.data.list))
 						}
 					},
 					(res) => {
-						console.log(JSON.stringify(res));
+						console.log(JSON.stringify(res.body.message));
 					}
 				)
 			},

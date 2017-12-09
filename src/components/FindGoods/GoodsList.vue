@@ -10,8 +10,7 @@
 				<span class="businessModels businessModels3" v-else-if="data.cargoFreightType=='Agent'"></span>
 			</div>
 			<div class="pic fl">
-				<img v-if="data.headPicture" :src="__imgserver__+data.headPicture"/>
-				<img v-else src='../../assets/img/defaultImg.svg'/>
+				<img :src="__imgserver__+data.headPicture" @error="errorImg"/>
 				<span class="user_sort user_sort1" v-if="data.memberType=='3PL'">物流公司</span>
 				<span class="user_sort user_sort2" v-else-if="data.memberType=='InfoDept'">物流信息部</span>
 				<span class="user_sort user_sort3" v-else-if="data.memberType=='IndShipper'">个人</span>
@@ -39,11 +38,12 @@
 					<span v-else-if="data.loadingTimeSlot=='Limit'"></span>
 				</p>
 			</div>
-			<router-link :to="{name:'GoodsDetail',query:{cargoSourceID:data.cargoSourceID}}" title="查看详情" class="view-btn">查看详情</router-link>
+			<router-link :to="{name:'GoodsDetail',query:{cargoSourceID:data.cargoSourceIDStr}}" title="查看详情" class="view-btn">查看详情</router-link>
 		</div>
 	</div>
 </template>
 <script>
+	import {defaultImg} from '../../assets/icons'
 	export default {
 		props: {
 			data: {
@@ -53,6 +53,12 @@
 		data() {
 			return {
 			}
+		},
+		methods: {
+			errorImg (e) {
+                e.target.src = defaultImg
+                e.target.onerror = null
+            },
 		},
 		components: {
 		}

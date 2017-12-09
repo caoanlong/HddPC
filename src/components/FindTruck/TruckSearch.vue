@@ -10,14 +10,14 @@
 				<div class="hd">
 					<ul>
 						<li class="hall" :class="{'on':tabs==1}" @click="inField(1)">车场</li>
-						<li class="mine" :class="{'on':tabs==2}" @click="inFleet(2)">车队</li>
+						<li class="mine" :class="{'on':tabs==2}" @click="inFleet(2)" v-if="isLogin">车队</li>
 					</ul>
 				</div>
 				<div class="tabCon" v-if="tabs==1">
 					<div v-if="TruckFieldSourceList.length > 0">
 						<TruckList v-for="TruckFieldSource in TruckFieldSourceList" :key="TruckFieldSource.truckSourceID" :dataDetail="TruckFieldSource"></TruckList>
 						<div class="listFooter text-center">
-							<Paging :pagecount="pagecount" :pageindex="pageIndex" @getpaging="getTruckList"></Paging>
+							<Paging :pagecount="pagecount" :pageindex="pageNum" @getpaging="getTruckList"></Paging>
 						</div>
 					</div>
 					<div v-if="TruckFieldSourceList.length == 0">
@@ -28,7 +28,7 @@
 					<div v-if="TruckFleetSourceList.length > 0">
 						<TruckList v-for="TruckFleetSource in TruckFleetSourceList" :key="TruckFleetSource.truckSourceID" :dataDetail="TruckFleetSource"></TruckList>
 						<div class="listFooter text-center">
-							<Paging :pagecount="pagecount" :pageindex="pageIndex" @getpaging="getTruckList"></Paging>
+							<Paging :pagecount="pagecount" :pageindex="pageNum" @getpaging="getFleetTruckList"></Paging>
 						</div>
 					</div>
 					<div v-if="TruckFleetSourceList.length == 0">
@@ -49,97 +49,98 @@
 		data() {
 			return {
 				tabs:1,
-				total: 1,
-				pageIndex: 1,
+				length: '',
+				type: '',
+				pageNum: 1,
+				pagecount: 1,
 				TruckFieldSourceList: [],
 				TruckFleetSourceList: [],
 			}
 		},
 		computed: {
-			pagecount() {
-				return Math.ceil(this.total/this.PAGESIZE);
+			isLogin () {
+				return localStorage.getItem('memberInfo') && localStorage.getItem('authorization')
 			}
 		},
 		created() {
-			this.getTruckList();
+			this.getTruckList()
+		},
+		http: {
+		    headers: {
+		      'Authorization': localStorage.getItem('authorization')||''
+		    }
 		},
 		methods: {
 			inField(i) {
-				if (this.tabs == i) {return};
-				this.tabs = i;
-				this.getTruckList();
+				if (this.tabs == i) return
+				this.tabs = i
+				this.getTruckList()
 			},
 			inFleet(i) {
-				if (this.tabs == i) {return};
-				this.tabs = i;
-				this.getFleetTruckList();
+				if (this.tabs == i) return
+				this.tabs = i
+				this.getFleetTruckList()
 			},
-			getTruckList(param) {
-				let URL = this.__webserver__ + '/adv/truck/list';
-				if (param) {
-					var params = {
-						"length": param.length,
-						"type": param.type,
-						"pageSize": this.PAGESIZE,
-					};
-				}else {
-					var params = {
-						"pageSize": this.PAGESIZE,
-					};
-				};
-				// console.log(JSON.stringify(params));
+			getTruckList(pageNum, bool) {
+				if (bool) return
+				let URL = ''
+				if(this.isLogin){
+					URL = this.__webserver__ + 'truck/fleet/findTruckPage'
+				}else{
+					URL = this.__webserver__ + 'adv/truck/list'
+				}
+				let params = {
+					"length": this.length,
+					"type": this.type,
+					"pageSize": this.PAGESIZE,
+					"pageNum": pageNum
+				}
 				this.$http.get(URL,{params: params}).then(
 					(res) => {
-						// console.log(JSON.stringify(res.body.message));
 						if (res.body.code == 200) {
-							this.total = res.body.data.total;
-							this.TruckFieldSourceList = res.body.data.list;
-							// console.log(JSON.stringify(res.body.data.list));
+							this.pagecount = res.body.data.pages
+							this.pageNum = res.body.data.pageNum
+							this.TruckFieldSourceList = res.body.data.list
+							console.log(JSON.stringify(res.body.data))
 						}
 					},
 					(res) => {
-						// console.log(JSON.stringify(res));
+						// console.log(JSON.stringify(res))
 					}
 				)
 			},
-			getFleetTruckList(param) {
-				let URL = this.__webserver__ + 'truck/fleet/findPage';
-				if (param) {
-					var params = {
-						// "areaFrom": param.areaFrom,
-						// "areaTo": param.areaTo,
-						"length": param.length,
-						"type": param.type,
-						// "transStatus": param.transStatus,
-						// "isReturn": param.isReturn,
-						// focusType: 'Selft'
-						// "pageSize": this.PAGESIZE,
-					};
-				}else {
-					var params = {
-						// focusType: 'Selft'
-						// "pageSize": this.PAGESIZE,
-					};
-				};
-				this.$http.post(URL,params).then(
+			getFleetTruckList(pageNum, bool) {
+				if (bool) return
+				let URL = this.__webserver__ + 'truck/fleet/findTeamPage'
+				let params = {
+					"length": this.length,
+					"type": this.type,
+					"pageSize": this.PAGESIZE,
+					"pageNum": pageNum
+				}
+				// console.log(JSON.stringify(params))
+				this.$http.get(URL,{params: params}).then(
 					(res) => {
-						console.log(JSON.stringify(res.body.message));
 						if (res.body.code == 200) {
-							this.total = res.body.data.total;
-							this.TruckFleetSourceList = res.body.data.list;
-							console.log(JSON.stringify(res.body.data));
+							this.pagecount = res.body.data.pages
+							this.pageNum = res.body.data.pageNum
+							this.TruckFleetSourceList = res.body.data.list
+							// console.log(JSON.stringify(res.body.data))
 						}
 					},
 					(res) => {
-						console.log(JSON.stringify(res));
+						// console.log(JSON.stringify(res))
 					}
 				)
 			},
+
 			findTruck(param) {
+				this.length = param.length
+				this.type = param.type
 				if (this.tabs == 1) {
-					this.getTruckList(param);
+					this.getTruckList()
 				}else {
-					this.getFleetTruckList(param);
+					this.getFleetTruckList()
 				}			
 			}
 		},
@@ -203,13 +204,13 @@
 							color #6cc
 							height 32px
 							border-radius 4px 4px 0 0
-							border-bottom-color #fff;
+							border-bottom-color #fff
 			.tabCon
 				background #fff
 				border 1px solid #f0f0f0
 				border-radius 0 4px 4px 4px
 			.listFooter
-				background #fff;
+				background #fff
 				padding 20px 0
 				border-radius 0 0 4px 4px
 </style>

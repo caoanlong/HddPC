@@ -11,7 +11,7 @@
 				</div>
 				</div>
 			</div>
-			<div class="form-item">
+			<div class="form-item last">
 				<span class="labels">车型：</span>
 				<div class="optionBox clearfix">
 					<div class="option clearfix" :class="{'height-auto':moreTruckClass}">
@@ -39,7 +39,7 @@
 		        </div>
 				<AreaSelector :option="selectStartAreaOption" @selectArea="getStartArea"></AreaSelector>
 			</div>
-			<div class="form-item End">
+			<div class="form-item End last">
 				<span class="labels">目的地：</span>
 				<div class="text-input AreaSelect" @click.stop="selectEndArea($event)">
 			        <span class="selectTips" v-for="endArea in endAreaList" v-if="endArea.province.key">
@@ -224,7 +224,6 @@
 			padding-left 30px
 			background url('../../../static/img/filter_tit_icon.png') no-repeat left center
 		.con
-			border-bottom 1px dashed #f0f0f0
 			padding-top 10px
 			.filter-tit
 				height 34px
@@ -263,6 +262,8 @@
 					cursor pointer
 					&.fold
 						background-image url('../../../static/img/arrow_up.png')
+			&.last,&:last-child
+				margin-bottom 0
 			.labels
 				width 75px
 				height 40px

@@ -2,8 +2,7 @@
 	<div class="content">
 		<div class="listItem">
 			<div class="pic fl">
-				<img v-if="dataDetail.headPicture" :src="__imgserver__+dataDetail.headPicture"/>
-				<img v-else src='../../assets/img/defaultImg.svg'/>
+				<img :src="__imgserver__+dataDetail.headPicture" @error="errorImg"/>
 				<span class="pos">{{dataDetail.posAreaName}}</span>
 			</div>
 			<div class="userInfo fl">
@@ -14,12 +13,14 @@
 				<p class="vehicleInfo" v-html="dataDetail.plateNo+'&nbsp;'+dataDetail.truckLengthName+'&nbsp;'+dataDetail.loads+'吨'+'&nbsp;'+dataDetail.truckTypeName"></p>
 				<p class="otherInfo">车龄：5年 驾龄：10年</p>
 			</div>
-			<span class="attention">未关注</span>
+			<span class="attention attentioned" v-if="dataDetail.focusType == 'Familiar' || dataDetail.focusType == 'Selft' || dataDetail.focusType == 'Attach'">已关注</span>
+			<span class="attention" v-else>未关注</span>
 			<router-link :to="{name:'TruckDetail',query:{memID:dataDetail.memIDStr}}" title="查看详情" ref="TruckFleet" class="view-btn">查看详情</router-link>
 		</div>
 	</div>
 </template>
 <script>
+	import {defaultImg} from '../../assets/icons'
 	import RateDisplay from '../commonComponents/RateDisplay'
 	import common from '../../common/common.js'
 	export default {
@@ -39,6 +40,12 @@
 		},
 		components: {
 			RateDisplay
+		},
+		methods: {
+			errorImg (e) {
+                e.target.src = defaultImg
+                e.target.onerror = null
+            },
 		}
 	}
 </script>

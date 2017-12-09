@@ -4,8 +4,7 @@
 			<ImgLightBox :data="goodsDetail"></ImgLightBox>
 			<div class="itemInfo-wrap fr">
 				<div class="ownerInfo">
-					<img v-if="headPicture" :src="headPicture" class="ownerPic"/>
-					<img v-else src='../../assets/img/defaultImg.svg' class="ownerPic"/>
+					<img :src="goodsDetail.headPicture" class="ownerPic" @error="errorImg"/>
 					<p><label>姓名：</label>{{goodsDetail.realName}}
 					<span class="user_sort user_sort1" v-if="goodsDetail.memberType=='3PL'">物流公司</span>
 					<span class="user_sort user_sort2" v-else-if="goodsDetail.memberType=='InfoDept'">物流信息部</span>
@@ -239,7 +238,8 @@
 					<p class="end">云南 西双版纳、云南 昆明、黑龙江 齐齐哈尔</p>
 				 </router-link>
 				 <router-link :to="{name:'GoodsDetail'}" title="查看详情" class="item">
-					<div class="goodsImg posr"><img src="../../../static/img/truck_img.jpg" class="goodsPic"/>
+					<div class="goodsImg posr">
+						<img src="../../../static/img/truck_img.jpg" class="goodsPic"/>
 						<div class="sort_bg">
 							<span class="businessModels businessModels1" v-if="businessModels==1">定价</span>
 							<span class="businessModels businessModels2" v-else-if="businessModels==2">议价</span>
@@ -296,6 +296,7 @@
 	</div>
 </template>
 <script>
+	import {defaultImg} from '../../assets/icons'
 	import ImgLightBox from '../commonComponents/ImgLightBox'
 	import ImagePerview from '../commonComponents/ImagePerview'
 	import SimpleSelector from '../commonComponents/SimpleSelector'
@@ -315,7 +316,6 @@
 				tab: 1,
 				todayOrMore: [{name:'今天'},{name:'更早'}],
 				selectedRange: 0,
-				headPicture: '',
 				goodsDetail: {
 					"cargoPackageConstant":{
 						"name": ''
@@ -326,28 +326,37 @@
 			}
 		},
 		computed: {
-        	cargoSourceID() {
-        		return this.$route.query.cargoSourceID
-        	}
+        	isLogin () {
+				return localStorage.getItem('memberInfo') && localStorage.getItem('authorization')
+			}
         },
         created() {
         	this.getGoodsDetail();
         },
+        http: {
+		    headers: {
+		      'Authorization': localStorage.getItem('authorization')||''
+		    }
+		},
 		methods: {
+			errorImg (e) {
+                e.target.src = defaultImg
+                e.target.onerror = null
+            },
 			getGoodsDetail() {
-				let URL = this.__webserver__ + '/adv/cargoSource/detail/';
-				var params = {
-					"id": this.cargoSourceID
+				let URL = ''
+				if(this.isLogin){
+					URL = this.__webserver__ + 'cargoSource/detail'
+				}else{
+					URL = this.__webserver__ + 'adv/cargoSource/detail';
+				}
+				let params = {
+					"id": this.$route.query.cargoSourceID
 				};
 				this.$http.get(URL,{params:params}).then(
 					(res) => {
 						if (res.body.code == 200) {
 							this.goodsDetail = res.body.data;
-							this.$nextTick(() => {
-								if (this.goodsDetail.headPicture) {
-									this.headPicture = this.__imgserver__ + this.goodsDetail.headPicture;
-								};
-							})
 							console.log(JSON.stringify(res.body.data));
 						}
 					},

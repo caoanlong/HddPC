@@ -4,8 +4,7 @@
 			<ImgLightBox :data="truckSourceDetail"></ImgLightBox>
 			<div class="itemInfo-wrap fr">
 				<div class="driverInfo">
-					<img v-if="headPicture" :src="headPicture" class="driverPic"/>
-					<img v-else src='../../assets/img/defaultImg.svg' class="driverPic"/>
+					<img :src="headPicture" class="driverPic"  @error="errorImg"/>
 					<p>
 						<label>姓名：{{truckSourceDetail.realName}}</label>
 						<RateDisplay :score="truckSourceDetail.score"></RateDisplay>
@@ -242,6 +241,7 @@
 	</div>
 </template>
 <script>
+	import {defaultImg} from '../../assets/icons'
 	import ImgLightBox from '../commonComponents/ImgLightBox'
 	import ImagePerview from '../commonComponents/ImagePerview'
 	import RateDisplay from '../commonComponents/RateDisplay'
@@ -275,15 +275,34 @@
                 lat: 0,
             }
         },
+        computed: {
+			isLogin () {
+				return localStorage.getItem('memberInfo') && localStorage.getItem('authorization')
+			}
+		},
         created() {
         	this.getTruckDetail();
         },
+        http: {
+		    headers: {
+		      'Authorization': localStorage.getItem('authorization')||''
+		    }
+		},
         methods: {
+        	errorImg (e) {
+                e.target.src = defaultImg
+                e.target.onerror = null
+            },
         	getTruckDetail() {
-				let URL = this.__webserver__ + '/adv/truck/detail';
-				var params = {
+        		let URL = ''
+				if(this.isLogin){
+					URL = this.__webserver__ + 'truck/fleet/findByMemID'
+				}else{
+					URL = this.__webserver__ + 'adv/truck/detail'
+				}
+				let params = {
 					"memID": this.$route.query.memID
-				};
+				}
 				this.$http.get(URL,{params:params}).then(
 					(res) => {
 						if (res.body.code == 200) {

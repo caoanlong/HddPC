@@ -14,6 +14,7 @@ const vuexStore = new Vuex.Store({
 			state.memberInfo = JSON.parse(data);
 		},
 		loginout: (state) => {
+			localStorage.removeItem('authorization');
 			localStorage.removeItem('memberInfo');
 			state.memberInfo = null;
 		},
