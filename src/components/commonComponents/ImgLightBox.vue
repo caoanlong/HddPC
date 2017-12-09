@@ -2,9 +2,9 @@
 	<div class="preview fl" @mouseover="showBtn(true)" @mouseout="showBtn(false)">
 		<div class="spec-img posr">
 			<div class="truckPic">
-				<img :src="__imgserver__ + data.FrontPic" v-if="data.imgList"/>
-				<img :src="__imgserver__ + data.sidePic" v-if="data.imgList"/>
-				<img :src="__imgserver__ + data.backPic" v-if="data.imgList"/>
+				<img :src="__imgserver__ + data.frontPic" @error="errorImg" v-show="index == 0"/>
+				<img :src="__imgserver__ + data.sidePic" @error="errorImg" v-show="index == 1"/>
+				<img :src="__imgserver__ + data.backPic" @error="errorImg" v-show="index == 2"/>
 			</div>
 			<div class="Status">
 				<img src="../../../static/img/attentioned.png" v-show="data.certifyStatus=='Success'"/>
@@ -19,14 +19,18 @@
 		</div>
 		<div class="spec-list">
 			<ul>
-				<li v-for="(imgLi,i) in imgList" :class="{'active':index == i}">
+				<!-- <li v-for="(imgLi,i) in imgList" :class="{'active':index == i}">
 					<img :src="imgLi.url" v-if="imgLi.url"/>
-				</li>
+				</li> -->
+				<li :class="{'active':index == 0}" @click="selectedImg(0)"><img :src="__imgserver__ + data.frontPic" @error="errorImg"/></li>
+				<li :class="{'active':index == 1}" @click="selectedImg(1)"><img :src="__imgserver__ + data.sidePic" @error="errorImg"/></li>
+				<li :class="{'active':index == 2}" @click="selectedImg(2)"><img :src="__imgserver__ + data.backPic" @error="errorImg"/></li>
 			</ul>
 		</div>
 	</div>
 </template>
 <script>
+	import {defaultImg} from '../../assets/icons'
 	export default {
 		props: {
 			data: {
@@ -43,19 +47,26 @@
 		methods: {
 			next() {
 				this.index++;
-				if (this.index == this.imgList.length) {
+				if (this.index == 3) {
 					this.index = 0;
 				}
 			},
 			prev() {
 				this.index--;
 				if (this.index == -1) {
-					this.index = this.imgList.length-1;
+					this.index = 2;
 				}
 			},
 			showBtn(bool) {
 				this.isShowBtn = bool;
-			}
+			},
+			errorImg (e) {
+                e.target.src = defaultImg
+                e.target.onerror = null
+            },
+            selectedImg(i) {
+            	this.index = i
+            }
 		},
 		components: {
 		}
