@@ -4,7 +4,7 @@
 			<ImgLightBox :data="goodsDetail"></ImgLightBox>
 			<div class="itemInfo-wrap fr">
 				<div class="ownerInfo">
-					<img :src="goodsDetail.headPicture" class="ownerPic" @error="errorImg"/>
+					<img :src="__imgserver__ + goodsDetail.headPicture" class="ownerPic" @error="errorImg"/>
 					<p><label>姓名：</label>{{goodsDetail.realName}}
 					<span class="user_sort user_sort1" v-if="goodsDetail.memberType=='3PL'">物流公司</span>
 					<span class="user_sort user_sort2" v-else-if="goodsDetail.memberType=='InfoDept'">物流信息部</span>
@@ -67,11 +67,11 @@
 				</div>
 			</div>
 		</div>
-		<!-- 车源详情 Start-->
+		<!-- 货源详情 Start-->
 		<div class="detail mt clearfix">
 			<ul class="hd">
 				<li :class="{'on':tab==1}" @click="tab = 1">已发货源</li>
-				<li :class="{'on':tab==2}" @click="tab = 2">认证信息</li>
+				<li :class="{'on':tab==2}" @click="getAuthenticationInfo">认证信息</li>
 			</ul>
 			<div class="bd">
 				<div class="tabCon" v-show="tab==1">
@@ -147,12 +147,12 @@
 						<li>
 							<label>本人正面照片</label>
 							<p>
-								<ImagePerview :width="40" :height="40" class="fr" fileUrl=""></ImagePerview>
+								<ImagePerview :width="40" :height="40" class="fr" :fileUrl="authenticationInfo.person?authenticationInfo.person.memCertifyPersonPicture.pictureFront:''"></ImagePerview>
 							</p>
 						</li>
 						<li>
 							<label>真实姓名</label>
-							<p>朱静静</p>
+							<p>{{authenticationInfo.person?authenticationInfo.person.realName:''}}</p>
 						</li>
 						<li>
 							<label>身份证号码</label>
@@ -170,19 +170,19 @@
 					<ul class="attentionInfo text-righ fr">
 						<li>
 							<label>公司名称</label>
-							<p>云南微服物流有限公司</p>
+							<p>{{authenticationInfo.enterprice?authenticationInfo.enterprice.companyName:''}}</p>
 						</li>
 						<li>
 							<label>所在区域</label>
-							<p>云南昆明官渡区</p>
+							<p>{{authenticationInfo.enterprice?authenticationInfo.enterprice.baseArea.fullOriginalName:''}}</p>
 						</li>
 						<li>
 							<label>地址定位</label>
-							<p>浩宏物流驾驶员广场</p>
+							<p>{{authenticationInfo.enterprice?authenticationInfo.enterprice.gpsAddress:''}}</p>
 						</li>
 						<li>
 							<label>详细地址</label>
-							<p>信息中心</p>
+							<p>{{authenticationInfo.enterprice?authenticationInfo.enterprice.detailAddress:''}}</p>
 						</li>
 						<li>
 							<label>门头照</label>
@@ -316,13 +316,8 @@
 				tab: 1,
 				todayOrMore: [{name:'今天'},{name:'更早'}],
 				selectedRange: 0,
-				goodsDetail: {
-					"cargoPackageConstant":{
-						"name": ''
-					},
-					"cargoTypeConstant":{},
-					"truckTypeConstant":{},
-				}
+				goodsDetail: {},
+				authenticationInfo: {}
 			}
 		},
 		computed: {
@@ -343,12 +338,28 @@
                 e.target.src = defaultImg
                 e.target.onerror = null
             },
+            getAuthenticationInfo() {
+            	this.tab = 2
+            	// if (this.AuthenticationInfo != {}) return
+            	let URL = this.__webserver__ + 'certify/enterprice/detail'
+            	let params = {
+					"memID": this.goodsDetail.memIDStr
+				};
+				this.$http.get(URL,{params:params}).then(
+					(res) => {
+						if (res.body.code == 200) {
+							this.authenticationInfo = res.body.data
+							console.log(JSON.stringify(res.body.data))
+						}
+					}
+				)
+            },
 			getGoodsDetail() {
 				let URL = ''
 				if(this.isLogin){
 					URL = this.__webserver__ + 'cargoSource/detail'
 				}else{
-					URL = this.__webserver__ + 'adv/cargoSource/detail';
+					URL = this.__webserver__ + 'adv/cargoSource/detail'
 				}
 				let params = {
 					"id": this.$route.query.cargoSourceID
@@ -356,12 +367,9 @@
 				this.$http.get(URL,{params:params}).then(
 					(res) => {
 						if (res.body.code == 200) {
-							this.goodsDetail = res.body.data;
-							console.log(JSON.stringify(res.body.data));
+							this.goodsDetail = res.body.data
+							// console.log(JSON.stringify(res.body.data))
 						}
-					},
-					(res) => {
-						console.log(JSON.stringify(res.body));
 					}
 				)
 			}

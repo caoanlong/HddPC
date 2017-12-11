@@ -1,8 +1,7 @@
 <template>
 	<div class="imgPerview clearfix">
 		<div class="imgLi" :style="{'width':width+'px','height':height+'px'}">
-			<img :src="fileUrl" v-show="fileUrl">
-			<img src="../../assets/img/defaultImg.svg" v-show="!fileUrl">
+			<img :src="__imgserver__ + fileUrl" @error="errorImg">
 			<div class="controller">
 				<div class="controllerBtn">
 					<div class="perviewBtn" @click.stop="showImgModal"></div>
@@ -12,6 +11,7 @@
 	</div>
 </template>
 <script>
+	import {defaultImg} from '../../assets/icons'
 	export default {
 		props: {
 			width: {
@@ -27,11 +27,15 @@
 			}
 		},
 		methods: {
+			errorImg (e) {
+                e.target.src = defaultImg
+                e.target.onerror = null
+            },
 			showImgModal() {
 				this.modal({
 					title: '图片详情',
-					content: `<img :src="${fileUrl}" v-show="${fileUrl}">
-							<img src="../../assets/img/defaultImg.svg" v-show="${!fileUrl}">`
+					content: `<img :src="${__imgserver__ +fileUrl}"  @error="${errorImg}">`
+							
 				})
 			}
 		}

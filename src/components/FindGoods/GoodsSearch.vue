@@ -103,7 +103,7 @@
 							this.pagecount = res.body.data.pages
 							this.pageNum = res.body.data.pageNum
 							this.GoodsList = res.body.data.list
-							console.log(JSON.stringify(res.body.data.list))
+							console.log(JSON.stringify(res.body.data))
 						}
 					},
 					(res) => {

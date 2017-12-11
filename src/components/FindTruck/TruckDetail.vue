@@ -4,13 +4,13 @@
 			<ImgLightBox :data="truckSourceDetail"></ImgLightBox>
 			<div class="itemInfo-wrap fr">
 				<div class="driverInfo">
-					<img :src="headPicture" class="driverPic"  @error="errorImg"/>
+					<img :src="__imgserver__ + truckSourceDetail.headPicture" class="driverPic"  @error="errorImg"/>
 					<p>
 						<label>姓名：{{truckSourceDetail.realName}}</label>
 						<RateDisplay :score="truckSourceDetail.score"></RateDisplay>
 					</p>
 					<p><label>年龄：</label>27岁</p>
-					<p><label>驾龄：</label>5年</p>
+					<p><label>驾龄：</label>{{truckSourceDetail.drivingExperience}}年</p>
 					<span class="attention attentioned" v-if="truckSourceDetail.isFocus=='Y'">已关注</span>
 					<span class="attention" v-else-if="truckSourceDetail.isFocus=='N'">未关注</span>
 				</div>
@@ -267,10 +267,6 @@
                 		"areaToBaseAreaList": [],
                 	}
                 },
-                headPicture: '',
-                doorImg: '',
-                licenseImg: '',
-                roadTransPermitImg: '',
                 lng: 0,
                 lat: 0,
             }
