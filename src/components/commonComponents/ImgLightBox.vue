@@ -2,9 +2,9 @@
 	<div class="preview fl" @mouseover="showBtn(true)" @mouseout="showBtn(false)">
 		<div class="spec-img posr">
 			<div class="truckPic">
-				<img :src="__imgserver__ + data.frontPic" @error="errorImg" v-show="index == 0"/>
-				<img :src="__imgserver__ + data.sidePic" @error="errorImg" v-show="index == 1"/>
-				<img :src="__imgserver__ + data.backPic" @error="errorImg" v-show="index == 2"/>
+				<img :src="__imgserver__ + data.pic1" @error="errorImg" v-show="index == 0"/>
+				<img :src="__imgserver__ + data.pic2" @error="errorImg" v-show="index == 1"/>
+				<img :src="__imgserver__ + data.pic3" @error="errorImg" v-show="index == 2"/>
 			</div>
 			<div class="Status">
 				<img src="../../../static/img/attentioned.png" v-show="data.certifyStatus=='Success'"/>
@@ -22,9 +22,9 @@
 				<!-- <li v-for="(imgLi,i) in imgList" :class="{'active':index == i}">
 					<img :src="imgLi.url" v-if="imgLi.url"/>
 				</li> -->
-				<li :class="{'active':index == 0}" @click="selectedImg(0)"><img :src="__imgserver__ + data.frontPic" @error="errorImg"/></li>
-				<li :class="{'active':index == 1}" @click="selectedImg(1)"><img :src="__imgserver__ + data.sidePic" @error="errorImg"/></li>
-				<li :class="{'active':index == 2}" @click="selectedImg(2)"><img :src="__imgserver__ + data.backPic" @error="errorImg"/></li>
+				<li :class="{'active':index == 0}" @click="selectedImg(0)"><img :src="__imgserver__ + data.pic1" @error="errorImg"/></li>
+				<li :class="{'active':index == 1}" @click="selectedImg(1)"><img :src="__imgserver__ + data.pic2" @error="errorImg"/></li>
+				<li :class="{'active':index == 2}" @click="selectedImg(2)"><img :src="__imgserver__ + data.pic3" @error="errorImg"/></li>
 			</ul>
 		</div>
 	</div>

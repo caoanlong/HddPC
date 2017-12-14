@@ -5,7 +5,7 @@
 		<!-- 筛选 -->
 		<!-- 列表 -->
 		<div class="list">
-			<div class="tit"><span>车源列表</span></div>
+			<div class="tit"><span>车辆列表</span></div>
 			<div class="tab">
 				<div class="hd">
 					<ul>
@@ -102,10 +102,11 @@
 							this.pageNum = res.body.data.pageNum
 							this.TruckFieldSourceList = res.body.data.list
 							console.log(JSON.stringify(res.body.data))
+						}else if (res.body.code ==10006){
+							localStorage.removeItem('memberInfo')
+							localStorage.removeItem('authorization')
+							this.$router.push({name:'Login'})
 						}
-					},
-					(res) => {
-						// console.log(JSON.stringify(res))
 					}
 				)
 			},
@@ -126,10 +127,11 @@
 							this.pageNum = res.body.data.pageNum
 							this.TruckFleetSourceList = res.body.data.list
 							// console.log(JSON.stringify(res.body.data))
+						}else if (res.body.code ==10006){
+							localStorage.removeItem('memberInfo')
+							localStorage.removeItem('authorization')
+							this.$router.push({name:'Login'})
 						}
-					},
-					(res) => {
-						// console.log(JSON.stringify(res))
 					}
 				)
 			},

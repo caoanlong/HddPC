@@ -34,7 +34,7 @@
 			showImgModal() {
 				this.modal({
 					title: '图片详情',
-					content: `<img :src="${__imgserver__ +fileUrl}"  @error="${errorImg}">`
+					content: `<img src="${this.__imgserver__ +this.fileUrl}"  @error="${this.errorImg}">`
 							
 				})
 			}

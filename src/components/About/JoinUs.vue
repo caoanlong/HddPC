@@ -28,9 +28,9 @@
 			<div class="hr fr">
 				<div class="title f14 fb">申请职位</div>
 				<p class="c1 fb f14">投递简历</p>
-				<p>zhujj@vfu56.com</p>
+				<p>zjj@vfu56.com</p>
 				<p class="c1 fb f14">咨询电话</p>
-				<p>400-XXX-XXXX</p>
+				<p>0755-26607376</p>
 			</div>
 		</div>
 	</div>

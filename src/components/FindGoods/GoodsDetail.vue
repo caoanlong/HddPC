@@ -1,69 +1,41 @@
 <template>
 	<div class="lside fl">
 		<div class="preview-wrap clearfix">
-			<ImgLightBox :data="goodsDetail"></ImgLightBox>
-			<div class="itemInfo-wrap fr">
+			<div class="itemInfo-wrap">
 				<div class="ownerInfo">
 					<img :src="__imgserver__ + goodsDetail.headPicture" class="ownerPic" @error="errorImg"/>
-					<p><label>姓名：</label>{{goodsDetail.realName}}
+					<p><label>货主姓名：</label>{{goodsDetail.realName}}
 					<span class="user_sort user_sort1" v-if="goodsDetail.memberType=='3PL'">物流公司</span>
 					<span class="user_sort user_sort2" v-else-if="goodsDetail.memberType=='InfoDept'">物流信息部</span>
 					<span class="user_sort user_sort3" v-else-if="goodsDetail.memberType=='IndShipper'">个人</span>
 					<span class="user_sort user_sort4" v-else-if="goodsDetail.memberType=='NoTruck'">无车承运人</span>
-
 					<span class="businessModels businessModels1" v-if="goodsDetail.cargoFreightType=='Fix'">定价</span>
 					<span class="businessModels businessModels2" v-else-if="goodsDetail.cargoFreightType=='Talk'">议价</span>
 					<span class="businessModels businessModels3" v-else="goodsDetail.cargoFreightType=='Agent'">中介</span>
 					</p>
-					<p><label>电话：</label>{{goodsDetail.mobile}}</p>
-					<p><label>公司：</label>云南微服物流有限公司</p>
-					<p><label>地址：</label>云南昆明官渡区浩宏物流驾驶员广场信息中心</p>
+					<p><label>联系电话：</label>{{goodsDetail.mobile}}</p>
+					<p><label>所在区域：</label>云南昆明</p>
+					<p><span><label>发布货源：</label>{{goodsDetail.cargoSourceNum || 0}}次</span><span><label>平台成交：</label>{{goodsDetail.dealNum || 0}}笔</span><span><label>好评率：</label>{{goodsDetail.feedbackRate}}%</span></p>
 					<!-- <span class="attention attentioned">已关注</span> -->
 					<span class="attention">未关注</span>
 				</div>
-				<div class="goodsInfo">
+				<div class="goodsInfo clearfix">
 					<p class="title">货源信息</p>
-					<div class="lineInfo fl">
-						<p class="start">{{goodsDetail.areaFromName|clearComma}}</p>
-						<p class="end">{{goodsDetail.areaToName|clearComma}}</p>
+					<div class="lineInfo">
+						<p><span class="start">{{goodsDetail.areaFromName|clearComma}}</span><span class="arrow"></span><span class="end">{{goodsDetail.areaToName|clearComma}}</span></p>
 					</div>
-					<ul class="detail fr">
-						<li><label>名称：</label>{{goodsDetail.cargoName}}</li>
-						<li><label>货物包装：</label>{{goodsDetail.cargoPackageConstant?goodsDetail.cargoPackageConstant.name:''}}</li>
-						<li><label>类型：</label>{{goodsDetail.cargoTypeConstant?goodsDetail.cargoTypeConstant.name:''}}</li>
-						<li><label>路线距离：</label>{{goodsDetail.estimateMileage}}公里</li>
-						<li><label>数量：</label>{{goodsDetail.cargoWeight}}</li>
-						<li><label>预计成本：</label>1000.00元</li>
-					</ul>
-					<ul class="otherInfo clearfix">
-						<li><label>货物运费：</label></li>
-						<li><label>备注留言：</label></li>
-						<li>{{goodsDetail.cargoFreightTotalPrice}}元</li>
-						<li>
-							<span v-for="(remark,i) in goodsDetail.remarkList">{{remark.name+((i==goodsDetail.remarkList.length-1)?'':'、')}}</span>
-						</li>
-					</ul>
-				</div>
-				<div class="demand clearfix">
-					<p class="title">用车需求</p>
-					<ul>
-						<li><label>车型：</label>{{goodsDetail.truckTypeConstant?goodsDetail.truckTypeConstant.name:''}}</li>
-						<li><label>用车数量：</label>{{goodsDetail.truckNum}}</li>
-						<li>
-							<label>车长：</label>
+					<div class="goodsDetail ">
+						<p><label>货物信息：</label><span>{{goodsDetail.cargoName}}</span><span>{{goodsDetail.cargoWeight}}吨</span><span>{{goodsDetail.cargoVolume}}</span><span>{{goodsDetail.cargoNum}}</span></p>
+						<p><label>需求车型：</label>
 							<span v-for="(truckLength,i) in goodsDetail.truckLengthList">{{truckLength.name+((i==goodsDetail.remarkList.length-1)?'':'/')}}</span>
-						</li>
-						<li>
-							<label>装车时间：</label>
-							<span class="c1">{{goodsDetail.loadingDate}}
-								<span v-if="goodsDetail.loadingTimeSlot=='NoLimit'">全天</span>
-								<span v-else-if="goodsDetail.loadingTimeSlot=='AM'">上午</span>
-								<span v-else-if="goodsDetail.loadingTimeSlot=='PM'">下午</span>
-								<span v-else-if="goodsDetail.loadingTimeSlot=='Night'">晚上</span>
-								<span v-else-if="goodsDetail.loadingTimeSlot=='Limit'"></span>
-							</span>
-						</li>
-					</ul>
+							<span>{{goodsDetail.truckTypeConstant?goodsDetail.truckTypeConstant.name:''}}</span>
+							<span>{{goodsDetail.truckNum}}</span>
+						</p>
+						<p><label>装车时间：</label>
+							<span class="c1">{{goodsDetail.loadingDate}}</span>
+						</p>
+						<p><label>货主留言：</label>{{goodsDetail.remark || '无'}}</p>
+					</div>
 				</div>
 			</div>
 		</div>
@@ -78,49 +50,7 @@
 					<div class="filterTab clearfix">
 						<SimpleSelector :optionList="todayOrMore" :defaultOption="selectedRange" :styleClass="3"></SimpleSelector>
 					</div>
-					<div class="listItem">
-						<span class="businessModels businessModels1" v-if="businessModels==1">定价</span>
-						<span class="businessModels businessModels2" v-else-if="businessModels==2">议价</span>
-						<span class="businessModels businessModels3" v-else="businessModels==3">中介</span>
-						<div class="lineInfo fl">
-							<p class="start">广东 深圳</p>
-							<p class="end">黑龙江 齐齐哈尔</p>
-						</div>
-						<div class="goodsInfo fl">
-							<p class="goods">食品 30吨 45方 裸装</p>
-							<p class="vehicleInfo">6.8米/7.2米 集装箱车 3车</p>
-						</div>
-						<div class="loadingTime fl">
-							<p class="title">装货时间：</p>
-							<p class="time">2017-08-14 全天</p>
-						</div>
-						<div class="other fr">
-							<p><span class="c1">刚刚</span> 发布</p>
-							<p><router-link :to="{name:'GoodsDetail'}" title="查看详情" class="view-btn">查看详情</router-link></p>
-						</div>
-					</div>
-					<div class="listItem">
-						<span class="businessModels businessModels1" v-if="businessModels==1">定价</span>
-						<span class="businessModels businessModels2" v-else-if="businessModels==2">议价</span>
-						<span class="businessModels businessModels3" v-else="businessModels==3">中介</span>
-						<div class="lineInfo fl">
-							<p class="start">广东 深圳</p>
-							<p class="end">黑龙江 齐齐哈尔</p>
-						</div>
-						<div class="goodsInfo fl">
-							<p class="goods">食品 30吨 45方 裸装</p>
-							<p class="vehicleInfo">6.8米/7.2米 集装箱车 3车</p>
-						</div>
-						<div class="loadingTime fl">
-							<p class="title">装货时间：</p>
-							<p class="time">2017-08-14 全天</p>
-						</div>
-						<div class="other fr">
-							<p><span class="c1">刚刚</span> 发布</p>
-							<p><router-link :to="{name:'GoodsDetail'}" title="查看详情" class="view-btn">查看详情</router-link></p>
-						</div>
-					</div>
-					<div class="listItem">
+					<div class="listItem" v-for="item in 5" key="item">
 						<span class="businessModels businessModels1" v-if="businessModels==1">定价</span>
 						<span class="businessModels businessModels2" v-else-if="businessModels==2">议价</span>
 						<span class="businessModels businessModels3" v-else="businessModels==3">中介</span>
@@ -144,12 +74,6 @@
 				</div>
 				<div class="tabCon clearfix" v-show="tab==2">
 					<ul class="attentionInfo text-righ fl">
-						<li>
-							<label>本人正面照片</label>
-							<p>
-								<ImagePerview :width="40" :height="40" class="fr" :fileUrl="authenticationInfo.person?authenticationInfo.person.memCertifyPersonPicture.pictureFront:''"></ImagePerview>
-							</p>
-						</li>
 						<li>
 							<label>真实姓名</label>
 							<p>{{authenticationInfo.person?authenticationInfo.person.realName:''}}</p>
@@ -207,97 +131,10 @@
 			</div>
 		</div>
 		<!-- 车源详情 End -->
-		<!-- 类似车源 Start-->
-		<div class="similar mt clearfix">
-			<div class="title">类似货源</div>
-			<div class="con">
-				 <router-link :to="{name:'GoodsDetail'}" title="查看详情" class="item">
-					<div class="goodsImg posr"><img src="../../../static/img/truck_img.jpg" class="goodsPic"/>
-						<div class="sort_bg">
-							<span class="businessModels businessModels1" v-if="businessModels==1">定价</span>
-							<span class="businessModels businessModels2" v-else-if="businessModels==2">议价</span>
-							<span class="businessModels businessModels3" v-else="businessModels==3">中介</span>
-						</div>
-					</div>
-					<p>云A·12345</p>
-					<p>集装箱车/6.8米/35吨</p>
-					<p class="start">广东 深圳</p>
-					<p class="end">云南 西双版纳、云南 昆明、黑龙江 齐齐哈尔</p>
-				 </router-link>
-				 <router-link :to="{name:'GoodsDetail'}" title="查看详情" class="item">
-					<div class="goodsImg posr"><img src="../../../static/img/truck_img.jpg" class="goodsPic"/>
-						<div class="sort_bg">
-							<span class="businessModels businessModels1" v-if="businessModels==1">定价</span>
-							<span class="businessModels businessModels2" v-else-if="businessModels==2">议价</span>
-							<span class="businessModels businessModels3" v-else="businessModels==3">中介</span>
-						</div>
-					</div>
-					<p>云A·12345</p>
-					<p>集装箱车/6.8米/35吨</p>
-					<p class="start">广东 深圳</p>
-					<p class="end">云南 西双版纳、云南 昆明、黑龙江 齐齐哈尔</p>
-				 </router-link>
-				 <router-link :to="{name:'GoodsDetail'}" title="查看详情" class="item">
-					<div class="goodsImg posr">
-						<img src="../../../static/img/truck_img.jpg" class="goodsPic"/>
-						<div class="sort_bg">
-							<span class="businessModels businessModels1" v-if="businessModels==1">定价</span>
-							<span class="businessModels businessModels2" v-else-if="businessModels==2">议价</span>
-							<span class="businessModels businessModels3" v-else="businessModels==3">中介</span>
-						</div>
-					</div>
-					<p>云A·12345</p>
-					<p>集装箱车/6.8米/35吨</p>
-					<p class="start">广东 深圳</p>
-					<p class="end">云南 西双版纳、云南 昆明、黑龙江 齐齐哈尔</p>
-				 </router-link>
-				 <router-link :to="{name:'GoodsDetail'}" title="查看详情" class="item">
-					<div class="goodsImg posr"><img src="../../../static/img/truck_img.jpg" class="goodsPic"/>
-						<div class="sort_bg">
-							<span class="businessModels businessModels1" v-if="businessModels==1">定价</span>
-							<span class="businessModels businessModels2" v-else-if="businessModels==2">议价</span>
-							<span class="businessModels businessModels3" v-else="businessModels==3">中介</span>
-						</div>
-					</div>
-					<p>云A·12345</p>
-					<p>集装箱车/6.8米/35吨</p>
-					<p class="start">广东 深圳</p>
-					<p class="end">云南 西双版纳、云南 昆明、黑龙江 齐齐哈尔</p>
-				 </router-link>
-				 <router-link :to="{name:'GoodsDetail'}" title="查看详情" class="item">
-					<div class="goodsImg posr"><img src="../../../static/img/truck_img.jpg" class="goodsPic"/>
-						<div class="sort_bg">
-							<span class="businessModels businessModels1" v-if="businessModels==1">定价</span>
-							<span class="businessModels businessModels2" v-else-if="businessModels==2">议价</span>
-							<span class="businessModels businessModels3" v-else="businessModels==3">中介</span>
-						</div>
-					</div>
-					<p>云A·12345</p>
-					<p>集装箱车/6.8米/35吨</p>
-					<p class="start">广东 深圳</p>
-					<p class="end">云南 西双版纳、云南 昆明、黑龙江 齐齐哈尔</p>
-				 </router-link>
-				 <router-link :to="{name:'GoodsDetail'}" title="查看详情" class="item">
-					<div class="goodsImg posr"><img src="../../../static/img/truck_img.jpg" class="goodsPic"/>
-						<div class="sort_bg">
-							<span class="businessModels businessModels1" v-if="businessModels==1">定价</span>
-							<span class="businessModels businessModels2" v-else-if="businessModels==2">议价</span>
-							<span class="businessModels businessModels3" v-else="businessModels==3">中介</span>
-						</div>
-					</div>
-					<p>云A·12345</p>
-					<p>集装箱车/6.8米/35吨</p>
-					<p class="start">广东 深圳</p>
-					<p class="end">云南 西双版纳、云南 昆明、黑龙江 齐齐哈尔</p>
-				 </router-link>
-			</div>
-		</div>
-		<!-- 类似车源 End -->
 	</div>
 </template>
 <script>
 	import {defaultImg} from '../../assets/icons'
-	import ImgLightBox from '../commonComponents/ImgLightBox'
 	import ImagePerview from '../commonComponents/ImagePerview'
 	import SimpleSelector from '../commonComponents/SimpleSelector'
 	export default {
@@ -317,7 +154,8 @@
 				todayOrMore: [{name:'今天'},{name:'更早'}],
 				selectedRange: 0,
 				goodsDetail: {},
-				authenticationInfo: {}
+				authenticationInfo: {},
+				isAuth: false
 			}
 		},
 		computed: {
@@ -328,11 +166,6 @@
         created() {
         	this.getGoodsDetail();
         },
-        http: {
-		    headers: {
-		      'Authorization': localStorage.getItem('authorization')||''
-		    }
-		},
 		methods: {
 			errorImg (e) {
                 e.target.src = defaultImg
@@ -340,8 +173,17 @@
             },
             getAuthenticationInfo() {
             	this.tab = 2
-            	// if (this.AuthenticationInfo != {}) return
-            	let URL = this.__webserver__ + 'certify/enterprice/detail'
+            	if (this.isAuth) {
+            		return
+            	}
+            	this.isAuth =true
+            	let URL = ''
+            	if(this.isLogin){
+					URL = this.__webserver__ + 'certify/enterprice/detail'
+				}
+				else{
+					URL = this.__webserver__ + 'adv/certify/enterprice/detail'
+				}
             	let params = {
 					"memID": this.goodsDetail.memIDStr
 				};
@@ -368,14 +210,17 @@
 					(res) => {
 						if (res.body.code == 200) {
 							this.goodsDetail = res.body.data
-							// console.log(JSON.stringify(res.body.data))
+							console.log(JSON.stringify(res.body.data))
+						}else if (res.body.code ==10006){
+							localStorage.removeItem('memberInfo')
+							localStorage.removeItem('authorization')
+							this.$router.push({name:'Login'})
 						}
 					}
 				)
 			}
 		},
 		components: {
-			ImgLightBox,
 			ImagePerview,
 			SimpleSelector
 		}
@@ -394,7 +239,6 @@
 	background #fff
 	border-radius 4px
 	.itemInfo-wrap
-		width 568px
 		color #585757
 		.title
 			font-weight bold
@@ -402,20 +246,21 @@
 		label
 			color #afafaf
 		.ownerInfo
-			padding 0 100px
+			padding 0 100px 0 160px
 			position relative
-			height 90px
+			height 140px
 			overflow hidden
-			
 			.ownerPic
-				width 90px
-				height 90px
+				width 140px
+				height 140px
 				border-radius 4px
 				position absolute
 				left 0
 				top 0
 			p
-				line-height 23px
+				line-height 30px
+				span
+					margin-right 40px
 			.attention
 				background url('../../../static/img/attention_icon.png') no-repeat 8px center
 				padding 5px 10px 5px 30px
@@ -432,57 +277,37 @@
 					border-color #ffc426
 		.goodsInfo
 			border-top 1px dashed #ebebeb
-			border-bottom 1px dashed #ebebeb
 			padding 10px 0
 			margin 10px 0
 			line-height 30px
 			.lineInfo
-				width 180px
-				height 60px
+				height 30px
 				p
-					width 150px
 					height 30px
 					line-height 30px
 					text-overflow ellipsis
 					white-space nowrap
 					overflow hidden
-					&.start
-						background url('../../../static/img/start_icon.png') no-repeat left center
-						padding-left 30px
-					&.end
-						background url('../../../static/img/end_icon.png') no-repeat left center
-						padding-left 30px
-			.otherInfo
-				li
-					float left
-					width 180px
-					line-height 24px
-					&:nth-child(2n)
-						width 368px
-						padding-left 30px
-					&:nth-child(3)
-						color #fe603b
-						font-size 20px
-			.detail
+					span
+						display inline-block
+						vertical-align middle
+						height 30px
+						&.start
+							background url('../../../static/img/start_icon.png') no-repeat left center
+							padding-left 30px
+						&.end
+							background url('../../../static/img/end_icon.png') no-repeat left center
+							padding-left 30px
+						&.arrow
+							width 30px
+							margin-right 10px
+							background url('../../../static/img/lin_arrow.png') center no-repeat
+			.goodsDetail
 				width 368px
 				padding-left 10px
-				height 60px
-				line-height 20px
-				li
-					width 50%
-					float left
-		.demand
-			position relative
-			line-height 24px
-			li
-				float left
-				width 180px
-				label
-					color #afafaf
-					text-align right
-				&:nth-child(2n)
-					width 368px
-					padding-left 30px
+				line-height 30px
+				span
+					margin-right 20px
 			.pushBtn
 				position absolute
 				right 10px
@@ -670,63 +495,6 @@
 					font-size 12px
 					background url('../../assets/img/attentioned_icon1.png') no-repeat left center
 					padding-left 16px
-.similar
-	background #fff
-	border 1px solid #f0f0f0
-	padding 10px 9px
-	border-radius 4px
-	.title
-		font-size 12px
-		font-weight bold
-		color #878787
-		height 30px
-		line-height 30px
-	.item
-		width 145px
-		float left
-		margin-right 12px
-		color #585757
-		&:last-child
-			margin-right:0
-		.goodsPic
-			width 145px
-			height 108px
-		.sort_bg
-			background rgba(255,255,255,.5)
-			position absolute
-			bottom 0
-			padding 2px 5px
-			left 0
-			right 0 
-			text-align right
-		p
-			line-height 24px
-			height 24px
-			width 145px
-			text-overflow ellipsis
-			white-space nowrap
-			overflow hidden
-			&.start
-				&:before
-					content '始'
-					color #6cc
-					margin-right 10px
-			&.end
-				&:before
-					content '终'
-					color #ec4c4f
-					margin-right 10px
-		.pushBtn
-			color #6cc
-			border-radius 4px
-			border 1px solid #6cc
-			height 28px
-			line-height 28px
-			width 90px
-			text-align center
-			margin 10px auto 0
-			display block
-			
 .rside
 	width 320px
 	.recommend
