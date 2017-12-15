@@ -23,7 +23,7 @@ Vue.use(VueResource);
 Vue.use(base);
 Vue.use(msg);
 Vue.use(modal);
-// Vue.http.options.credentials = true;
+Vue.http.options.credentials = true;
 Vue.http.options.emulateJSON = true;
 // Vue.http.options.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
 Vue.http.interceptors.push((request, next) => {
