@@ -23,7 +23,6 @@
 			</div>
 			<div class="userInfo fl">
 				<p class="user">{{data.realName}}<span class="score"></span> <span class="attention">未关注</span></p>
-				<p class="company_name" v-text="data.companyName"></p>
 				<p class="goods" v-text="data.cargoDesc" :title="data.cargoDesc"></p>
 				<p class="vehicleInfo" v-text="data.truckDesc" :title="data.truckDesc"></p>
 			</div>

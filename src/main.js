@@ -23,17 +23,17 @@ Vue.use(VueResource);
 Vue.use(base);
 Vue.use(msg);
 Vue.use(modal);
-// Vue.http.options.credentials = true;
+Vue.http.options.credentials = true;
 Vue.http.options.emulateJSON = true;
 // Vue.http.options.headers = {'Content-Type': 'application/x-www-form-urlencoded'};
-// Vue.http.interceptors.push((request, next) => {
-//     //请求发送前的处理逻辑
-//     const authorization = localStorage.getItem('authorization');
-//     if (authorization) {
-//       	request.headers.set('Authorization', authorization);
-//     }
-//   	next();
-// });
+Vue.http.interceptors.push((request, next) => {
+    //请求发送前的处理逻辑
+    const authorization = localStorage.getItem('authorization') || ''
+    if (authorization) {
+      	request.headers.set('Authorization', authorization);
+    }
+  	next();
+});
 
 
 Vue.use(BaiduMap, {

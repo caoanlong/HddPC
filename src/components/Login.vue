@@ -205,7 +205,9 @@
 							//存入缓存
 							// 18627208285
 							console.log(res.headers)
+							// console.log(res.body.data)
 							localStorage.setItem('authorization',res.headers.get('authorization'))
+							// localStorage.setItem('memInfo',JSON.stringify(res.body.data))
 							this.$store.commit('login',JSON.stringify(res.body.data));
 							//判断是否认证
 							if (res.body.data.certifyStatus == 'Y') {

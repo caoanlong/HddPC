@@ -3,15 +3,12 @@
 		<div class="listItem">
 			<div class="pic fl">
 				<img :src="__imgserver__+dataDetail.headPicture" @error="errorImg"/>
-				<span class="pos">{{dataDetail.posAreaName}}</span>
+				
 			</div>
 			<div class="userInfo fl">
-				<p class="user">{{dataDetail.realName}}
-					<RateDisplay :score="dataDetail.score"></RateDisplay>
-					
-				</p>
-				<p class="vehicleInfo" v-html="dataDetail.plateNo+'&nbsp;'+dataDetail.truckLengthName+'&nbsp;'+dataDetail.loads+'吨'+'&nbsp;'+dataDetail.truckTypeName"></p>
-				<p class="otherInfo">车龄：5年 驾龄：10年</p>
+				<p class="user"><span>{{dataDetail.realName}}</span><span>{{dataDetail.plateNo}}</span></p>
+				<p class="vehicleInfo" v-html="dataDetail.truckLengthName+'&nbsp;'+dataDetail.loads+'吨'+'&nbsp;'+dataDetail.truckTypeName"></p>
+				<p class="pos">{{dataDetail.posAreaName}}</p>
 			</div>
 			<span class="attention attentioned" v-if="dataDetail.focusType == 'Familiar' || dataDetail.focusType == 'Selft' || dataDetail.focusType == 'Attach'">已关注</span>
 			<span class="attention" v-else>未关注</span>
@@ -59,20 +56,11 @@
 			position relative
 			border-bottom 1px solid #f0f0f0
 			.pic
-				width 70px
+				width 90px
 				img
-					width 70px
-					height 70px
+					width 90px
+					height 90px
 					border-radius 8px
-				.pos
-						background url('../../../static/img/pos_icon.png') -4px center no-repeat
-						color #afafaf
-						font-size 12px
-						width 70px
-						height 20px
-						line-height 20px
-						display block
-						padding-left 16px
 			p
 				line-height 30px
 				height 30px
@@ -87,10 +75,12 @@
 				p
 					&.user
 						background-image url('../../../static/img/user_icon.png')
+						span
+							margin-right 20px
 					&.vehicleInfo
 						background-image url('../../../static/img/vehicle_icon.png')
-					&.otherInfo
-						background-image url('../../../static/img/otherInfo_icon.png')
+					&.pos
+						background url('../../../static/img/pos_icon.png') -4px center no-repeat
 			.view-btn
 				position absolute
 				height 28px
