@@ -167,7 +167,13 @@
 											<p>为了方便您的后续操作</p>
 											<p>请完善资料</p>`,
 									icon: '2',
-									btn: ['完善资料','继续逛逛'],
+									btn: [{
+										text:'完善资料',
+										class: 'primary'
+									},{
+										text:'继续逛逛',
+										class: 'default'
+									}],
 									sure: function() {
 										that.$router.push({name:'CompleteInfo',query:{active:32}});
 									},

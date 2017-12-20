@@ -30,7 +30,7 @@
 					clearTimeout(this.timeout);
 					this.timeout = setTimeout(() => {
 						this.isShow = false;
-						document.body.removeChild(this.$refs.msg)
+						// document.body.removeChild(this.$refs.msg)
 					},this.time)
 				}
 			}

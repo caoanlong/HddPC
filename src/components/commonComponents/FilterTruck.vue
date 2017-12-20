@@ -6,7 +6,7 @@
 				<span class="labels">车长：</span>
 				<div class="optionBox clearfix">
 				<div class="option clearfix" :class="{'height-auto':moreTruckLength}">
-					<MultipleSelector :optionList="truckLengthList" :defaultOption="selectTruckLengthIndex" @multipleSelect="selectTruckLength"></MultipleSelector>
+					<TruckLengthSelector :optionList="truckLengthList" :defaultOption="selectTruckLengthIndex" @multipleSelect="selectTruckLength"></TruckLengthSelector>
 					<span class="more fr" :class="{'fold': moreTruckLength}" v-text="moreText1" @click.stop="more('moreTruckLength')"></span>
 				</div>
 				</div>
@@ -15,7 +15,7 @@
 				<span class="labels">车型：</span>
 				<div class="optionBox clearfix">
 					<div class="option clearfix" :class="{'height-auto':moreTruckClass}">
-						<SimpleSelector :styleClass="1" :optionList="truckTypeList" :defaultOption="selectedTruckClass" @simpleSelect="selectTruckClass"></SimpleSelector>
+						<TruckTypeSelector :optionList="truckTypeList" :defaultOption="selectedTruckClass" @simpleSelect="selectTruckClass"></TruckTypeSelector>
 						<span class="more fr" :class="{'fold': moreTruckClass}" v-text="moreText2" @click.stop="more('moreTruckClass')"></span>
 					</div>
 				</div>
@@ -42,7 +42,7 @@
 			<div class="form-item End last">
 				<span class="labels">目的地：</span>
 				<div class="text-input AreaSelect" @click.stop="selectEndArea($event)">
-			        <span class="selectTips" v-for="endArea in endAreaList" v-if="endArea.province.key">
+			        <span class="selectTips" v-for="endArea in endAreaList" v-if="endArea.province.key" :key="endArea.province.key">
 						<span v-text="endArea.province.value"></span>
 						<span v-text="endArea.city.value"></span>
 						<span v-text="endArea.dist.value"></span>
@@ -60,8 +60,8 @@
 <script>
 	import AreaSelector from './AreaSelector'
 	import AreaSelectorMultiple from './AreaSelectorMultiple'
-	import MultipleSelector from './MultipleSelector'
-	import SimpleSelector from './SimpleSelector'
+	import TruckLengthSelector from './TruckLengthSelector'
+	import TruckTypeSelector from './TruckTypeSelector'
 	import CheckBox from './CheckBox'
 	import common from '../../common/common'
 	export default {
@@ -106,9 +106,15 @@
 				},
 
 				selectTruckLengthList: '',
-				selectTruckLengthIndex: [0],
+				selectTruckLengthIndex: [{
+					"code": 100000044,
+					"name": "不限"
+				}],
 				selectTruckClassLi: '',
-				selectedTruckClass: 0,
+				selectedTruckClass: {
+					"code": 100000044,
+					"name": "不限"
+				},
 				selectTruckStatusLi: ''
 			}
 		},
@@ -131,64 +137,64 @@
 				return this.startArea.dist.key || this.startArea.city.key || this.startArea.province.key
 			},
 			selectedEndArea() {
-				return this.areaArrToStr(this.endAreaList);
+				return this.areaArrToStr(this.endAreaList)
 			}
 		},
 		created() {
-			this.getConst('TruckLength');
-			this.getConst('TruckType');
+			this.getConst('TruckLength')
+			this.getConst('TruckType')
 		},
 		methods: {
 			more(type) {
 				if (type == 'moreTruckLength') {
-					this.moreTruckLength = !this.moreTruckLength;
+					this.moreTruckLength = !this.moreTruckLength
 				}else if (type == 'moreTruckClass') {
-					this.moreTruckClass = !this.moreTruckClass;
+					this.moreTruckClass = !this.moreTruckClass
 				}
 			},
 			isReturn(boolean) {
-				this.isComeBack = boolean?'Y':'N';
+				this.isComeBack = boolean?'Y':'N'
 			},
 			selectStartArea(e) {
-				common.trigger(document);
+				common.trigger(document)
 				this.selectStartAreaOption = {
 					isShow: true,
 					left: e.target.offsetLeft+'px',
 					top: (e.target.offsetHeight+4)+'px'
-				};
+				}
 			},
 			getStartArea(obj) {
-				this.startArea = obj;
-				// console.log(JSON.stringify(this.selectedStartArea));
+				this.startArea = obj
+				// console.log(JSON.stringify(this.selectedStartArea))
 			},
 			selectEndArea(e) {
-				common.trigger(document);
+				common.trigger(document)
 				this.selectEndAreaOption = {
 					isShow: true,
 					left: e.target.offsetLeft+'px',
 					top: (e.target.offsetHeight+4)+'px'
-				};
+				}
 			},
 			getEndArea(arr) {
-				this.endAreaList = arr;
-				// console.log(JSON.stringify(this.selectedEndArea));
+				this.endAreaList = arr
+				// console.log(JSON.stringify(this.selectedEndArea))
 			},
 			//删除已选的标签
 			closeTips(key) {
 				for (let i in this.endAreaList) {
 					if(this.endAreaList[i].province.key == key) {
-						this.endAreaList.splice(i,1);
+						this.endAreaList.splice(i,1)
 					}
-				};
-				// console.log(JSON.stringify(this.endAreaList));
+				}
+				// console.log(JSON.stringify(this.endAreaList))
 			},
-			selectTruckLength(obj) {
-				this.selectTruckLengthList = this.arrToStr(obj,'code');
-				// console.log(JSON.stringify(this.selectTruckLengthList));
+			selectTruckLength(lengths) {
+				this.selectTruckLengthList = lengths.map(item => item.code).join(',').includes(100000044) ? '' : lengths.map(item => item.code).join(',')
+				// console.log(JSON.stringify(this.selectTruckLengthList))
 			},
 			selectTruckClass(obj) {
-				this.selectTruckClassLi = obj.code;
-				// console.log(JSON.stringify(this.selectTruckClassLi));
+				this.selectTruckClassLi = obj.code == 100000044 ? '' : obj.code
+				// console.log(JSON.stringify(this.selectTruckClassLi))
 			},
 			find() {
 				var params = {
@@ -196,15 +202,15 @@
 					"areaTo": this.selectedEndArea,
 					"length": this.selectTruckLengthList,
 					"type": this.selectTruckClassLi
-				};
-				this.$emit('search',params);
+				}
+				this.$emit('search',params)
 			}
 		},
 		components: {
 			AreaSelector,
 			AreaSelectorMultiple,
-			MultipleSelector,
-			SimpleSelector,
+			TruckLengthSelector,
+			TruckTypeSelector,
 			CheckBox
 		}
 	}

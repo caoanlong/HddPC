@@ -49,6 +49,8 @@
 	export default {
 		data() {
 			return {
+				areaFrom: '',
+				areaTo: '',
 				tabs: 1,
 				pageNum: 1,
 				pagecount: 1,
@@ -91,8 +93,6 @@
 				let params = {
 					"areaFrom": this.areaFrom,
 					"areaTo": this.areaTo,
-					"length": this.length,
-					"type": this.type,
 					"pageSize": this.PAGESIZE,
 					"pageNum": pageNum
 				}
@@ -115,8 +115,6 @@
 				let params = {
 					"areaFrom": this.areaFrom,
 					"areaTo": this.areaTo,
-					"length": this.length,
-					"type": this.type,
 					"pageSize": this.PAGESIZE,
 					"pageNum": pageNum
 				}
@@ -131,10 +129,13 @@
 				})
 			},
 			findGoods(param) {
+				console.log(JSON.stringify(param))
+				this.areaFrom = param.areaFrom
+				this.areaTo = param.areaTo
 				if (this.tabs == 1) {
-					this.getGoodsList(param)
+					this.getGoodsList()
 				}else {
-					this.getMyGoodsList(param)
+					this.getMyGoodsList()
 				}			
 			}
 		},

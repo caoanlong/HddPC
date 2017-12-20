@@ -47,7 +47,11 @@
 	import Swiper from './commonComponents/Swiper'
 	export default {
 		created() {
-			this.$store.commit({type:'selectChange',selected:-1});
+			this.$store.commit({type:'selectChange',selected:-1})
+			let url = this.__webserver__ + 'area/tree'
+			this.$http.get(url).then(res => {
+				console.log(JSON.stringify(res.body.data))
+			})
 		},
 		components: {
 			Swiper
