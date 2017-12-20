@@ -101,37 +101,31 @@
 				var params = {
 					memID: this.memberInfo.memID
 				};
-				this.$http.get(URL,{params:params}).then(
-					(res) => {
-						if (res.body.code == 200) {
-							// console.log(JSON.stringify(res.body.data));
-							this.memberBaseInfo = res.body.data;
-							this.$nextTick(() => {
-								if (this.memberBaseInfo.person.memCertifyPersonPicture.pictureFront) {
-									this.frontFaceImg = this.__imgserver__ + this.memberBaseInfo.person.memCertifyPersonPicture.pictureFront;
-								};
-								if (this.memberBaseInfo.person.memCertifyPersonPicture.iDCardFrontPic) {
-									this.frontIDCardImg = this.__imgserver__ + this.memberBaseInfo.person.memCertifyPersonPicture.iDCardFrontPic;
-								};
-								if (this.memberBaseInfo.memCertifyEnterpricePicture.companyFacadePic) {
-									this.doorImg = this.__imgserver__ + this.memberBaseInfo.memCertifyEnterpricePicture.companyFacadePic;
-								};
-								if (this.memberBaseInfo.memCertifyEnterpricePicture.businessLicensePic) {
-									this.licenseImg = this.__imgserver__ + this.memberBaseInfo.memCertifyEnterpricePicture.businessLicensePic;
-								};
-								if (this.memberBaseInfo.memCertifyEnterpricePicture.transportationLicensePicID) {
-									this.roadTransPermitImg = this.__imgserver__ + this.memberBaseInfo.memCertifyEnterpricePicture.transportationLicensePicID;
-								};
-							})
-						}else {
-							this.showMsg(this,{msg: res.body.message,delay: 1000});
-						}
-					},
-					(res) => {
-						this.showMsg(this,{msg: '请求失败',delay: 1000});
-						console.log(JSON.stringify(res.body));
+				this.$http.get(URL,{params:params}).then((res) => {
+					if (res.body.code == 200) {
+						// console.log(JSON.stringify(res.body.data));
+						this.memberBaseInfo = res.body.data;
+						this.$nextTick(() => {
+							if (this.memberBaseInfo.person.memCertifyPersonPicture.pictureFront) {
+								this.frontFaceImg = this.__imgserver__ + this.memberBaseInfo.person.memCertifyPersonPicture.pictureFront;
+							};
+							if (this.memberBaseInfo.person.memCertifyPersonPicture.iDCardFrontPic) {
+								this.frontIDCardImg = this.__imgserver__ + this.memberBaseInfo.person.memCertifyPersonPicture.iDCardFrontPic;
+							};
+							if (this.memberBaseInfo.memCertifyEnterpricePicture.companyFacadePic) {
+								this.doorImg = this.__imgserver__ + this.memberBaseInfo.memCertifyEnterpricePicture.companyFacadePic;
+							};
+							if (this.memberBaseInfo.memCertifyEnterpricePicture.businessLicensePic) {
+								this.licenseImg = this.__imgserver__ + this.memberBaseInfo.memCertifyEnterpricePicture.businessLicensePic;
+							};
+							if (this.memberBaseInfo.memCertifyEnterpricePicture.transportationLicensePicID) {
+								this.roadTransPermitImg = this.__imgserver__ + this.memberBaseInfo.memCertifyEnterpricePicture.transportationLicensePicID;
+							};
+						})
+					}else {
+						this.showMsg(this,{msg: res.body.message,delay: 1000});
 					}
-				)
+				})
 			},
 		},
 		components: {

@@ -82,35 +82,29 @@
 					// endIndex: pageIndex,
 					pageSize: this.PAGESIZE
 				};
-				this.$http.get(URL,{params:params}).then(
-					(res) => {
-						console.log(JSON.stringify(res.body.message));
-						if (res.body.code == 200) {
-							this.total = res.body.data.total;
-							this.GoodsList = res.body.data.list;
-							// console.log(JSON.stringify(res.body.data.list));
-						}
-					},
-					(res) => {
-						console.log(JSON.stringify(res));
+				this.$http.get(URL,{params:params}).then((res) => {
+					if (res.body.code == 200) {
+						this.total = res.body.data.total;
+						this.GoodsList = res.body.data.list;
+						// console.log(JSON.stringify(res.body.data.list));
 					}
-				)
+				})
 			},
 			checkAll(value,isChecked) {
 				if (!isChecked) {
 					//如果没有全选，应将剩余未选的子项添加进来
 					for (let i = 0; i < this.GoodsList.length; i++) {
-						let index = this.selectedList.indexOf(this.GoodsList[i]);
+						let index = this.selectedList.indexOf(this.GoodsList[i])
 						if (index == -1) {
-							this.selectedList.push(this.GoodsList[i]);
+							this.selectedList.push(this.GoodsList[i])
 						}
 					}
 				}else {
 					//如果全选，则从已选的项去除当前页所有的项
 					for (let j = 0; j < this.GoodsList.length; j++) {
-						let index = this.selectedList.indexOf(this.GoodsList[j]);
+						let index = this.selectedList.indexOf(this.GoodsList[j])
 						if (index > -1) {
-							this.selectedList.splice(index,1);
+							this.selectedList.splice(index,1)
 						}
 					}
 				}
@@ -119,12 +113,12 @@
 				if (!isChecked) {
 					this.selectedList.push(value);
 				}else {
-					let index = this.selectedList.indexOf(value);
+					let index = this.selectedList.indexOf(value)
 					if (index > -1) {
-						this.selectedList.splice(index,1);
+						this.selectedList.splice(index,1)
 					}
 				};
-				// console.log(JSON.stringify(this.selectedList));
+				// console.log(JSON.stringify(this.selectedList))
 			}
 		},
 		components: {

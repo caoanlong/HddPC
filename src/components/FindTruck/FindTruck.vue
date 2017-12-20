@@ -14,7 +14,7 @@
 	import RecommendTruck from './RecommendTruck'
 	export default {
 		created() {
-			this.$store.commit({type:'selectChange',selected:2});
+			this.$store.commit({type:'selectChange',selected:2})
 		},
 		components: {
 			RecommendTruck,

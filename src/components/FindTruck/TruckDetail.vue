@@ -146,8 +146,8 @@
 				this.$http.get(URL,{params:params}).then(
 					(res) => {
 						if (res.body.code == 200) {
-							this.AuthenticationInfo = res.body.data;
-							console.log(res.body.data);
+							this.AuthenticationInfo = res.body.data
+							// console.log(res.body.data)
 						}
 					}
 				)
@@ -162,21 +162,16 @@
 				let params = {
 					"memID": this.$route.query.memID
 				}
-				this.$http.get(URL,{params:params}).then(
-					(res) => {
-						if (res.body.code == 200) {
-							this.truckSourceDetail = res.body.data;
-							this.$nextTick(() => {
-								this.lng = this.truckSourceDetail.lng
-								this.lat = this.truckSourceDetail.lat
-							})
-							console.log(res.body.data);
-						}
-					},
-					(res) => {
-						console.log(JSON.stringify(res.body.message));
+				this.$http.get(URL,{params:params}).then((res) => {
+					if (res.body.code == 200) {
+						this.truckSourceDetail = res.body.data;
+						this.$nextTick(() => {
+							this.lng = this.truckSourceDetail.lng
+							this.lat = this.truckSourceDetail.lat
+						})
+						// console.log(res.body.data)
 					}
-				)
+				})
 			}
         },
 		components: {
