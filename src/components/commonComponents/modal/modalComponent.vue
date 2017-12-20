@@ -58,7 +58,7 @@
 			closeModal() {
 				this.isShow = false;
 				document.body.style.position = 'static'
-				delete window.$modal;
+				delete window.$modal
 			},
 			sureClick() {
 				this.closeModal();
