@@ -101,7 +101,7 @@
 							this.pagecount = res.body.data.pages
 							this.pageNum = res.body.data.pageNum
 							this.TruckFieldSourceList = res.body.data.list
-							console.log(JSON.stringify(res.body.data))
+							// console.log(JSON.stringify(res.body.data))
 						}else if (res.body.code ==10006){
 							localStorage.removeItem('memberInfo')
 							localStorage.removeItem('authorization')

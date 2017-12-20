@@ -18,7 +18,7 @@
 			}
 		},
 		created() {
-			this.$store.commit({type:'selectChange',selected:3});
+			this.$store.commit({type:'selectChange',selected:3})
 		},
 		components: {
 			RecommendGoods,

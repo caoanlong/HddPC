@@ -191,7 +191,7 @@
 					(res) => {
 						if (res.body.code == 200) {
 							this.authenticationInfo = res.body.data
-							console.log(JSON.stringify(res.body.data))
+							// console.log(JSON.stringify(res.body.data))
 						}
 					}
 				)
@@ -210,7 +210,7 @@
 					(res) => {
 						if (res.body.code == 200) {
 							this.goodsDetail = res.body.data
-							console.log(JSON.stringify(res.body.data))
+							// console.log(JSON.stringify(res.body.data))
 						}else if (res.body.code ==10006){
 							localStorage.removeItem('memberInfo')
 							localStorage.removeItem('authorization')

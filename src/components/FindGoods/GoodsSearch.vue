@@ -96,24 +96,18 @@
 					"pageSize": this.PAGESIZE,
 					"pageNum": pageNum
 				}
-				this.$http.get(URL,{params:params}).then(
-					(res) => {
-						console.log(JSON.stringify(res.body.message))
-						if (res.body.code == 200) {
-							this.pagecount = res.body.data.pages
-							this.pageNum = res.body.data.pageNum
-							this.GoodsList = res.body.data.list
-							console.log(JSON.stringify(res.body.data))
-						}else if (res.body.code ==10006){
-							localStorage.removeItem('memberInfo')
-							localStorage.removeItem('authorization')
-							this.$router.push({name:'Login'})
-						}
-					},
-					(res) => {
-						console.log(JSON.stringify(res.body.message));
+				this.$http.get(URL,{params:params}).then((res) => {
+					if (res.body.code == 200) {
+						this.pagecount = res.body.data.pages
+						this.pageNum = res.body.data.pageNum
+						this.GoodsList = res.body.data.list
+						// console.log(JSON.stringify(res.body.data))
+					}else if (res.body.code ==10006){
+						localStorage.removeItem('memberInfo')
+						localStorage.removeItem('authorization')
+						this.$router.push({name:'Login'})
 					}
-				)
+				})
 			},
 			getMyGoodsList(pageNum, bool) {
 				if (bool) return
@@ -126,26 +120,21 @@
 					"pageSize": this.PAGESIZE,
 					"pageNum": pageNum
 				}
-				this.$http.get(URL,{params:params}).then(
-					(res) => {
-						console.log(JSON.stringify(res.body.message))
-						if (res.body.code == 200) {
-							this.pagecount = res.body.data.pages
-							this.pageNum = res.body.data.pageNum
-							this.myGoodsList = res.body.data.list
-							console.log(JSON.stringify(res.body.data.list))
-						}
-					},
-					(res) => {
-						console.log(JSON.stringify(res.body.message));
+				this.$http.get(URL,{params:params}).then((res) => {
+					console.log(JSON.stringify(res.body.message))
+					if (res.body.code == 200) {
+						this.pagecount = res.body.data.pages
+						this.pageNum = res.body.data.pageNum
+						this.myGoodsList = res.body.data.list
+						// console.log(JSON.stringify(res.body.data.list))
 					}
-				)
+				})
 			},
 			findGoods(param) {
 				if (this.tabs == 1) {
-					this.getGoodsList(param);
+					this.getGoodsList(param)
 				}else {
-					this.getMyGoodsList(param);
+					this.getMyGoodsList(param)
 				}			
 			}
 		},
