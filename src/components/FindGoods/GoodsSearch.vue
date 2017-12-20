@@ -274,8 +274,7 @@
 					line-height 34px
 					display block
 			.tab
-				padding 5px
-				background #f2f2f2
+				background #f6f6f6
 				.hd
 					height 40px
 					.publishBtn

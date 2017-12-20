@@ -80,7 +80,7 @@
 					&.vehicleInfo
 						background-image url('../../../static/img/vehicle_icon.png')
 					&.pos
-						background url('../../../static/img/pos_icon.png') -4px center no-repeat
+						background url('../../../static/img/pos_icon.png') left center no-repeat
 			.view-btn
 				position absolute
 				height 28px

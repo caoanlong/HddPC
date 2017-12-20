@@ -23,19 +23,12 @@
 			</div>
 			<div class="userInfo fl">
 				<p class="user">{{data.realName}}<span class="score"></span> <span class="attention">未关注</span></p>
-				<p class="goods" v-text="data.cargoDesc" :title="data.cargoDesc"></p>
-				<p class="vehicleInfo" v-text="data.truckDesc" :title="data.truckDesc"></p>
+				<p class="goods"><span>{{data.cargoName}}</span><span>{{data.cargoWeight || 0}}吨</span><span>{{data.cargoVolume || 0}}方</span><span>{{data.cargoNum}}{{data.cargoPackage}}</span></p>
+				<p class="vehicleInfo"><span>{{data.truckTypeName}}</span><span>{{data.truckLength || 0}}</span><span>需要{{data.truckNum}}车</span><span>剩{{data.surplusTruckNum}}车</span></p>
 			</div>
 			<div class="loadingTime fl">
 				<p class="title">可装货时间：</p>
-				<p class="time">
-					<span>{{data.loadingDate}}</span>
-					<span v-if="data.loadingTimeSlot=='NoLimit'">全天</span>
-					<span v-else-if="data.loadingTimeSlot=='AM'">上午</span>
-					<span v-else-if="data.loadingTimeSlot=='PM'">下午</span>
-					<span v-else-if="data.loadingTimeSlot=='Night'">晚上</span>
-					<span v-else-if="data.loadingTimeSlot=='Limit'"></span>
-				</p>
+				<p class="time">{{data.loadingDate}}</p>
 			</div>
 			<router-link :to="{name:'GoodsDetail',query:{cargoSourceID:data.cargoSourceIDStr}}" title="查看详情" class="view-btn">查看详情</router-link>
 		</div>
@@ -66,7 +59,7 @@
 <style lang="stylus" scoped>
 	.listItem
 		padding:20px 100px 20px 0
-		height 130px
+		height 135px
 		position relative
 		border-bottom 1px solid #f0f0f0
 		.businessModels
@@ -113,8 +106,8 @@
 			background-repeat no-repeat
 			background-position left center
 		.lineInfo
-			padding 0 20px 0 10px
-			width 175px
+			padding 5px 20px 0 10px
+			width 210px
 			p
 				&.start
 					background-image url('../../../static/img/start_icon.png')
@@ -125,13 +118,13 @@
 					color #afafaf
 					font-size 12px
 		.userInfo
-			padding:0 20px
-			width 260px
+			padding 5px 20px 0
+			width 300px
 			border-left 1px solid #f0f0f0
 			border-right 1px solid #f0f0f0
 			p
-				line-height 22px
-				height 22px
+				line-height 30px
+				height 30px
 				overflow hidden
 				text-overflow ellipsis
 				white-space nowrap
@@ -141,14 +134,12 @@
 					background-image url('../../../static/img/vehicle_icon.png')
 				&.goods
 					background-image url('../../../static/img/goods_icon.png')
-				&.company_name
-					background-image url('../../../static/img/company_icon.png')
-					color #6cc
+				span
+					margin-right 10px
 		.loadingTime
 			padding 15px 0 15px 30px
 			width 160px
 			p
-
 				&.title
 					background-image url('../../../static/img/clock_icon.png')
 				&.time

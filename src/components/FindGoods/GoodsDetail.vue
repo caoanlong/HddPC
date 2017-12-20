@@ -15,7 +15,7 @@
 					</p>
 					<p><label>联系电话：</label>{{goodsDetail.mobile}}</p>
 					<p><label>所在区域：</label>云南昆明</p>
-					<p><span><label>发布货源：</label>{{goodsDetail.cargoSourceNum || 0}}次</span><span><label>平台成交：</label>{{goodsDetail.dealNum || 0}}笔</span><span><label>好评率：</label>{{goodsDetail.feedbackRate}}%</span></p>
+					<p><span class="c1"><label>发布货源：</label>{{goodsDetail.cargoSourceNum || 0}}次</span><span class="c1"><label>平台成交：</label>{{goodsDetail.dealNum || 0}}笔</span><span class="c1"><label>好评率：</label>{{goodsDetail.feedbackRate}}%</span></p>
 					<!-- <span class="attention attentioned">已关注</span> -->
 					<span class="attention">未关注</span>
 				</div>
@@ -25,7 +25,7 @@
 						<p><span class="start">{{goodsDetail.areaFromName|clearComma}}</span><span class="arrow"></span><span class="end">{{goodsDetail.areaToName|clearComma}}</span></p>
 					</div>
 					<div class="goodsDetail ">
-						<p><label>货物信息：</label><span>{{goodsDetail.cargoName}}</span><span>{{goodsDetail.cargoWeight}}吨</span><span>{{goodsDetail.cargoVolume}}</span><span>{{goodsDetail.cargoNum}}</span></p>
+						<p><label>货物信息：</label><span>{{goodsDetail.cargoName}}</span><span>{{goodsDetail.cargoWeight || 0}}吨</span><span>{{goodsDetail.cargoVolume || 0}}方</span><span>{{goodsDetail.cargoNum}}{{goodsDetail.cargoPackage}}</span></p>
 						<p><label>需求车型：</label>
 							<span v-for="(truckLength,i) in goodsDetail.truckLengthList">{{truckLength.name+((i==goodsDetail.remarkList.length-1)?'':'/')}}</span>
 							<span>{{goodsDetail.truckTypeConstant?goodsDetail.truckTypeConstant.name:''}}</span>
@@ -307,7 +307,7 @@
 				padding-left 10px
 				line-height 30px
 				span
-					margin-right 20px
+					margin-right 10px
 			.pushBtn
 				position absolute
 				right 10px
