@@ -46,7 +46,7 @@ export default function install(Vue, options) {
 		}else {
 			typeN = 'const'
 		};
-		let URL = this.__webserver__ + '/adv/baseConstant/findByType'
+		let URL = this.__webserver__ + 'adv/baseConstant/findByType'
 		var params = {
 			type: type||''
 		};
