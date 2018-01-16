@@ -1,26 +1,9 @@
 <template>
 	<div class="con">
-		<p class="des">货多多是一款免费的手机配货软件，是中国目前广受欢迎的返程车找货源、货主找车、货车司机找货、空车配货、回程车配货的公路物流调度云平台。基于先进的LBS定位系统和云计算车货数据匹配进行的空车找货、返程车找货、手机配货、在线找车、在线发货，货车司机和货主可以通过手机APP、PC轻松发布空车和货源信息，将货车与货源精准匹配，解决回程车、回头车、返程车、回程货问题，提高中国公路物流运输效率</p>
-		<div class="timLine">
-			<div class="item">
-				<span class="year">2017</span>
-				<p class="month">2017年5月</p>
-				<p>货多多是一款免费的手机配货软件，是中国目前广受欢迎的返程车找货源、货主找车、货车司机找货、空车配货、回程车配货的公路物流调度云平台。</p>
-				<p class="month">2017年6月</p>
-				<p>货多多是一款免费的手机配货软件，是中国目前广受欢迎的返程车找货源、货主找车、货车司机找货、空车配货、回程车配货的公路物流调度云平台。</p>
-				<p class="month">2017年7月</p>
-				<p>货多多是一款免费的手机配货软件，是中国目前广受欢迎的返程车找货源、货主找车、货车司机找货、空车配货、回程车配货的公路物流调度云平台。</p>
-			</div>
-			<div class="item">
-				<span class="year">2016</span>
-				<p class="month">2016年5月</p>
-				<p>货多多是一款免费的手机配货软件，是中国目前广受欢迎的返程车找货源、货主找车、货车司机找货、空车配货、回程车配货的公路物流调度云平台。</p>
-				<p class="month">2016年6月</p>
-				<p>货多多是一款免费的手机配货软件，是中国目前广受欢迎的返程车找货源、货主找车、货车司机找货、空车配货、回程车配货的公路物流调度云平台。</p>
-				<p class="month">2016年7月</p>
-				<p>货多多是一款免费的手机配货软件，是中国目前广受欢迎的返程车找货源、货主找车、货车司机找货、空车配货、回程车配货的公路物流调度云平台。</p>
-			</div>
-		</div>
+		<p class="des">云南微服物流大数据运营有限公司成立于2013年，致力于结合传统物流业务运作，嫁接互联网的创新思维为云南物流行业从业者提供专业、深入、全面的物流供应链服务，是专业为物流供应链上下游提供智能物流运输信息化解决方案的服务商。</p>
+		<p><label>公司理念：</label>服务,无微不至
+		<p><label>公司目标：</label>全球最专业的物流信息化服务商
+		<p><label>公司愿景：</label>科技让物流更简单</p>
 	</div>
 </template>
 <script>
@@ -32,28 +15,15 @@
 </script>
 <style lang="stylus" scoped>
 	.con
-		padding 20px 20px 100px
+		padding 40px 460px 100px 20px
+		height 510px
+		background url('../../../static/img/about1.jpg') top right no-repeat
 		font-size 14px
 		color #585757
-		.des
-			line-height 30px
+		p
+			line-height 40px
 			text-indent 2em
-		.timLine
-			.item
-				padding 20px 0 20px 130px
-				position relative
-				border-bottom 1px solid #f0f0f0
-				&:last-child
-					border-bottom none
-				.year
-					color #6cc
-					font-size 30px
-					position absolute
-					left 30px
-				p
-					padding-bottom 10px
-					&.month
-						font-size 12px
-						color #a3a3a3
-						padding 10px 0
+			label
+				font-weight bold
+				color #3480b1
 </style>

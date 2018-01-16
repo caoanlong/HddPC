@@ -6,16 +6,12 @@
     			<div class="clearfix">
                     <div class="lside">
                         <ul class="sideNav">
-                        	<router-link :to="{name: 'AboutUs',query:{cur:1}}" tag="li" :class="{'active':$route.query.cur==1}">我们是谁</router-link>
-                        	<router-link :to="{name: 'Chronicle',query:{cur:2}}" tag="li" :class="{'active':$route.query.cur==2}">大事记</router-link>
-                        	<router-link :to="{name: 'Organization',query:{cur:3}}" tag="li" :class="{'active':$route.query.cur==3}">组织架构</router-link>
-                        	<router-link :to="{name: 'Team',query:{cur:4}}" tag="li" :class="{'active':$route.query.cur==4}">团队介绍</router-link>
-                        	<router-link :to="{name: 'Products',query:{cur:5}}" tag="li" :class="{'active':$route.query.cur==5}">产品服务</router-link>
-                        	<router-link :to="{name: 'Solve',query:{cur:6}}" tag="li" :class="{'active':$route.query.cur==6}">我们能解决</router-link>
-                        	<router-link :to="{name: 'Partners',query:{cur:7}}" tag="li" :class="{'active':$route.query.cur==7}">合作伙伴</router-link>
-                        	<router-link :to="{name: 'ContactUs',query:{cur:8}}" tag="li" :class="{'active':$route.query.cur==8}">联系我们</router-link>
+                        	<router-link :to="{name: 'AboutUs',query:{cur:1}}" tag="li" :class="{'active':$route.query.cur==1}">关于货多多</router-link>
+                        	<router-link :to="{name: 'NewsList',query:{cur:2}}" tag="li" :class="{'active':$route.query.cur==2}">新闻中心</router-link>
+                        	<router-link :to="{name: 'Team',query:{cur:3}}" tag="li" :class="{'active':$route.query.cur==3}">项目团队</router-link>
+                        	<router-link :to="{name: 'JoinUs',query:{cur:4}}" tag="li" :class="{'active':$route.query.cur==4}">招贤纳士</router-link>
+                        	<router-link :to="{name: 'ContactUs',query:{cur:5}}" tag="li" :class="{'active':$route.query.cur==5}">联系我们</router-link>
                         </ul>
-                        
                     </div>
                     <div class="rside">
                         <router-view></router-view>

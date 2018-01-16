@@ -92,7 +92,6 @@
 				height 400px
 		.contactInfo
 			height 200px
-			padding-left 40px
 			p
 				font-size 14px
 				color #666

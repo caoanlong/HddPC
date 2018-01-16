@@ -126,14 +126,14 @@ const router = new Router({
 					component: resolve => require(['@/components/About/AboutUs'], resolve),
 				},
 				{
-					path: '/About/NewsList',
-					name: 'NewsList',
-					component: resolve => require(['@/components/About/NewsList'], resolve),
+					path: '/About/Chronicle',
+					name: 'Chronicle',
+					component: resolve => require(['@/components/About/Chronicle'], resolve),
 				},
 				{
-					path: '/About/NewsDetail',
-					name: 'NewsDetail',
-					component: resolve => require(['@/components/About/NewsDetail'], resolve),
+					path: '/About/Organization',
+					name: 'Organization',
+					component: resolve => require(['@/components/About/Organization'], resolve),
 				},
 				{
 					path: '/About/Team',
@@ -141,9 +141,19 @@ const router = new Router({
 					component: resolve => require(['@/components/About/Team'], resolve),
 				},
 				{
-					path: '/About/JoinUs',
-					name: 'JoinUs',
-					component: resolve => require(['@/components/About/JoinUs'], resolve),
+					path: '/About/Products',
+					name: 'Products',
+					component: resolve => require(['@/components/About/Products'], resolve),
+				},
+				{
+					path: '/About/Solve',
+					name: 'Solve',
+					component: resolve => require(['@/components/About/Solve'], resolve),
+				},
+				{
+					path: '/About/Partners',
+					name: 'Partners',
+					component: resolve => require(['@/components/About/Partners'], resolve),
 				},
 				{
 					path: '/About/ContactUs',
