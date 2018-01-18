@@ -23,8 +23,12 @@
 			</div>
 			<div class="userInfo fl">
 				<p class="user">{{data.realName}}<span class="score"></span> <span class="attention">未关注</span></p>
-				<p class="goods"><span>{{data.cargoName}}</span><span>{{data.cargoWeight || 0}}吨</span><span>{{data.cargoVolume || 0}}方</span><span>{{data.cargoNum}}{{data.cargoPackage}}</span></p>
-				<p class="vehicleInfo"><span>{{data.truckTypeName}}</span><span>{{data.truckLength || 0}}</span><span>需要{{data.truckNum}}车</span><span>剩{{data.surplusTruckNum}}车</span></p>
+				<p class="goods">
+					<span>{{data.cargoName}}</span><span>{{data.cargoWeight || 0}}吨</span><span>{{data.cargoVolume || 0}}方</span><span>{{data.cargoNum}}{{data.cargoPackage}}</span>
+					</p>
+				<p class="vehicleInfo">
+					<span>{{data.truckTypeName}}</span><span>{{data.truckLength || 0}}</span><span>需要{{data.truckNum}}车</span><span>剩{{data.surplusTruckNum}}车</span>
+				</p>
 			</div>
 			<div class="loadingTime fl">
 				<p class="title">可装货时间：</p>

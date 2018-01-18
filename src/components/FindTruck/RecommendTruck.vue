@@ -1,21 +1,58 @@
 <template>
     <div class="recommend">
         <div class="tit">推荐车辆</div>
-            <router-link :to="{name:'TruckDetail'}" title="11111" ref="TruckFleet" class="recommendItem" v-for="i in 5" key="i">
-                <div class="pic fl"><img src="../../../static/img/pic2.jpg" /></div>
+            <router-link :to="{name:'TruckDetail', query:{memID: truck.memIDStr}}" title="11111" ref="TruckFleet" class="recommendItem" v-for="truck in TruckFieldSourceList" :key="truck.memIDStr">
+                <div class="pic fl">
+                    <img :src="__imgserver__ + truck.headPicture" @error="errorImg"/>
+                </div>
                 <div class="vehicleInfo fl">
-                <p>贾坤 云A·12345</p>
-                <p>高低平板全挂 17.5米 35吨</p>
+                <p><span>{{truck.realName}}</span><span>{{truck.plateNo}}</span></p>
+                <p v-html="truck.truckLengthName+'&nbsp;'+truck.loads+'吨'+'&nbsp;'+truck.truckTypeName"></p>
+                <!-- <p>高低平板全挂 17.5米 35吨</p> -->
                 </div>
             </router-link>
     </div>
 </template>
 <script>
+    import {defaultImg} from '../../assets/icons'
     export default {
         props: {
             truckStatus:{
                 type: Number,
                 default:3
+            }
+        },
+        data() {
+            return {
+                TruckFieldSourceList: []
+            }
+        },
+        created() {
+            this.getTruckList(1)
+        },
+        methods: {
+            getTruckList(pageNum) {
+				let URL = this.__webserver__ + 'adv/truck/list'
+				let params = {
+					"pageSize": this.PAGESIZE,
+					"pageNum": pageNum
+				}
+				this.$http.get(URL,{params: params}).then(
+					(res) => {
+						if (res.body.code == 200) {
+							this.TruckFieldSourceList = res.body.data.list
+							// console.log(JSON.stringify(res.body.data))
+						}else if (res.body.code ==10006){
+							localStorage.removeItem('memberInfo')
+							localStorage.removeItem('authorization')
+							this.$router.push({name:'Login'})
+						}
+					}
+				)
+			},
+            errorImg (e) {
+                e.target.src = defaultImg
+                e.target.onerror = null
             }
         },
         components: {

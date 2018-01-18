@@ -1,36 +1,77 @@
 <template>
 	<div class="recommend">
 		<div class="tit">推荐货源</div>
-		<router-link :to="{name:'GoodsDetail'}" title="查看详情" class="recommendItem">
-            <div class="pic"><img src="../../../static/img/pic2.jpg" /></div>
+		<router-link :to="{name:'GoodsDetail', query: {cargoSourceID: goods.cargoSourceIDStr}}" title="查看详情" class="recommendItem" v-for="goods in GoodsList" :key="goods.cargoSourceIDStr">
+            <div class="pic">
+				<img :src="__imgserver__ + goods.headPicture" @error="errorImg"/>
+			</div>
             <div class="userInfo">
-            	<p>贾坤<span class="user_sort user_sort1" v-if="UserSort==1">物流公司</span>
+            	<p>{{goods.realName}}<span class="user_sort user_sort1" v-if="UserSort==1">物流公司</span>
     				<span class="user_sort user_sort2" v-else-if="UserSort==2">物流信息部</span>
     				<span class="user_sort user_sort3" v-else-if="UserSort==3">个人</span>
-    				<span class="user_sort user_sort4" v-else="UserSort==4">无车承运人</span>
+    				<span class="user_sort user_sort4" v-else-if="UserSort==4">无车承运人</span>
                     <span class="publish-time fr">刚刚 发布</span>
                 </p>
                 <p>
     				<span class="businessModels businessModels1" v-if="businessModels==1">定价</span>
     				<span class="businessModels businessModels2" v-else-if="businessModels==2">议价</span>
-    				<span class="businessModels businessModels3" v-else="businessModels==3">中介</span>
+    				<span class="businessModels businessModels3" v-else-if="businessModels==3">中介</span>
     				
                 </p>
             </div>
-            <p class="lineInfo"><span>广东深圳</span><span class="arrow"></span><span>云南昆明</span></p>
-            <p class="date">2017-08-14 全天装货</p>
-            <p class="goods">食品 30吨 45方 裸装</p>
-            <p class="vehicleInfo">6.8米/7.2米 集装箱车 3车</p>
+            <p class="lineInfo">
+				<span>{{goods.areaFromName.split(',').join('').substr(0, 6)}}</span>
+				<span class="arrow"></span>
+				<span>{{goods.areaToName.split(',').join('').substr(0, 6)}}</span>
+			</p>
+            <p class="date">{{goods.loadingDate}}</p>
+            <p class="goods">
+				<span>{{goods.cargoName}}</span><span>{{goods.cargoWeight || 0}}吨</span><span>{{goods.cargoVolume || 0}}方</span><span>{{goods.cargoNum}}{{goods.cargoPackage}}</span>
+			</p>
+            <p class="vehicleInfo">
+				<span>{{goods.truckTypeName}}</span>
+				<span>{{goods.truckLengthName || 0}}</span>
+				<span>需要{{goods.truckNum}}车</span>
+				<span>剩{{goods.surplusTruckNum}}车</span>
+			</p>
         </router-link>
 	</div>
 </template>
 <script>
+	import {defaultImg} from '../../assets/icons'
 	export default {
 		data() {
 			return {
 				UserSort: 1,
-				businessModels: 1
+				businessModels: 1,
+				GoodsList: []
 			}
+		},
+		created() {
+			this.getGoodsList(1)
+		},
+		methods: {
+			getGoodsList(pageNum) {
+				let URL = this.__webserver__ + 'adv/cargoSource/list'
+				let params = {
+					"pageSize": this.PAGESIZE,
+					"pageNum": pageNum
+				}
+				this.$http.get(URL,{params:params}).then((res) => {
+					if (res.body.code == 200) {
+						this.GoodsList = res.body.data.list
+						// console.log(JSON.stringify(res.body.data))
+					}else if (res.body.code ==10006){
+						localStorage.removeItem('memberInfo')
+						localStorage.removeItem('authorization')
+						this.$router.push({name:'Login'})
+					}
+				})
+			},
+			errorImg (e) {
+                e.target.src = defaultImg
+                e.target.onerror = null
+            }
 		},
 		components: {
 		}
@@ -73,6 +114,9 @@
 				&.goods
 					background-image url('../../../static/img/goods_icon.png')
 				&.vehicleInfo
+					overflow hidden
+					text-overflow ellipsis
+					white-space nowrap
 					background-image url('../../../static/img/vehicle_icon.png')
 				.publish-time
 					font-size 12px
