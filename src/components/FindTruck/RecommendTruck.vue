@@ -1,7 +1,7 @@
 <template>
     <div class="recommend">
         <div class="tit">推荐车辆</div>
-            <router-link :to="{name:'TruckDetail', query:{memID: truck.memIDStr}}" title="11111" ref="TruckFleet" class="recommendItem" v-for="truck in TruckFieldSourceList" :key="truck.memIDStr">
+            <router-link :to="{name:'TruckDetail', query:{memID: truck.memIDStr}}" ref="TruckFleet" class="recommendItem" v-for="truck in TruckFieldSourceList" :key="truck.memIDStr">
                 <div class="pic fl">
                     <img :src="__imgserver__ + truck.headPicture" @error="errorImg"/>
                 </div>

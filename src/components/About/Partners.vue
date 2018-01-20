@@ -25,7 +25,7 @@
 		font-size 14px
 		color #585757
 		height 570px
-		background url('../../../static/img/partner.jpg' ) no-repeat 410px 20px 
+		background url('../../../static/img/partner1.jpg' ) no-repeat 410px 20px 
 		.tit
 			color #74bc43
 			text-align center

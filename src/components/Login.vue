@@ -411,6 +411,8 @@
 					color #ddd
 	.partner
 		padding 30px 50px 20px
+		background #fff
+		margin 20px 0
 		.tit
 			border-top 1px dashed #ebebeb
 			position relative

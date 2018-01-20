@@ -40,7 +40,14 @@
 				</div>
 				<div class="tabCon clearfix"  v-show="tab==2">
 					<ul class="oftenLine">
-						<li v-for="item in truckSourceDetail.recentlineList" key="item" ><p class="lineInfo fl"><span class="start">{{item.areaFromName}}</span><span class="arrow"></span><span class="end">{{item.areaToName}}</span></p></li>
+						<li v-for="item in truckSourceDetail.recentlineList" key="item" >
+							<p class="lineInfo fl">
+								<!-- <span class="start">{{item.areaFromName.split(',')}}</span> -->
+								<span class="start">{{item.areaFromName?(item.areaFromName.split(',').length == 4 ? item.areaFromName.split(',')[1] + item.areaFromName.split(',')[2] : item.areaFromName.split(',')[0] + item.areaFromName.split(',')[1]):''}}</span>
+								<span class="arrow"></span>
+								<span class="end">{{item.areaToName?(item.areaToName.split(',').length == 4 ? item.areaToName.split(',')[1]+item.areaToName.split(',')[2] :item.areaToName.split(',')[0] + item.areaToName.split(',')[1]):''}}</span>
+							</p>
+						</li>
 					</ul>
 				</div>
 				<div class="tabCon clearfix" v-show="tab==3">
@@ -48,7 +55,7 @@
 						<li>
 							<label>身份证</label>
 							<p>
-								<span class="attention" v-if="AuthenticationInfo.iDCardAuditStatus=='N'">未认证</span>
+								<span class="attention" v-if="AuthenticationInfo.certifyStatus=='N'">未认证</span>
 								<span class="attentioned" v-else>已认证</span>
 							</p>
 						</li>
@@ -71,15 +78,15 @@
 						<li>
 							<label>从业资格证</label>
 							<p>
-								<span class="attention" v-if="AuthenticationInfo.qualificationAuditStatus=='N'">未认证</span>
-								<span class="attentioned" v-else>已认证</span>
+								<span class="commited" v-if="AuthenticationInfo.qualificationCode !=''">已提交</span>
+								<span class="uncommited" v-else>未提交</span>
 							</p>
 						</li>
 						<li>
 							<label>道路运输许可证</label>
 							<p>
-								<span class="attention" v-if="AuthenticationInfo.transportLicenceAuditStatus=='N'">未认证</span>
-								<span class="attentioned" v-else>已认证</span>
+								<span class="commited" v-if="AuthenticationInfo.transportLicenceCode  !=''">已提交</span>
+								<span  class="uncommited" v-else>未提交</span>
 							</p>
 						</li>
 					</ul>
@@ -117,6 +124,9 @@
         created() {
         	this.getTruckDetail();
         },
+        watch:{
+	        '$route':'getTruckDetail'
+	    },
         http: {
 		    headers: {
 		      'Authorization': localStorage.getItem('authorization')||''
@@ -147,7 +157,7 @@
 					(res) => {
 						if (res.body.code == 200) {
 							this.AuthenticationInfo = res.body.data
-							// console.log(res.body.data)
+							console.log(res.body.data)
 						}
 					}
 				)
@@ -169,7 +179,7 @@
 							this.lng = this.truckSourceDetail.lng
 							this.lat = this.truckSourceDetail.lat
 						})
-						// console.log(res.body.data)
+						console.log(res.body.data)
 					}
 				})
 			}
@@ -320,6 +330,10 @@
 								font-size 12px
 								background url('../../assets/img/attentioned_icon1.png') no-repeat left center
 								padding-left 16px
+							.commited
+								color #6cc
+							.uncommited
+								color #868686	
 		.similar
 			background #fff
 			border 1px solid #f0f0f0
