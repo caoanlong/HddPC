@@ -132,7 +132,7 @@
 				};
 				this.$http.post(URL, params).then(
 					(res) => {
-						this.msg('短信验证码：'+ res.body.data);
+						// this.msg('短信验证码：'+ res.body.data);
 						console.log(JSON.stringify(res.body));
 					},
 					(res) => {
@@ -210,7 +210,7 @@
 						if (res.body.code == 200) {
 							//存入缓存
 							// 18627208285
-							console.log(res.headers)
+							// console.log(res.headers)
 							// console.log(res.body.data)
 							localStorage.setItem('authorization',res.headers.get('authorization'))
 							// localStorage.setItem('memInfo',JSON.stringify(res.body.data))

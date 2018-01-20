@@ -17,7 +17,7 @@
 		</div>	
 		<div v-show="tabs==1" class="contactInfo">
 			<p class="companyName"><img src="../../assets/img/icon1.png" /><span>云南微服物流大数据运营有限公司</span></p>
-			<p><img src="../../assets/img/icon2.png" /><label>网址：</label><span>www.we-service.cn</span></p>
+			<p><img src="../../assets/img/icon2.png" /><label>网址：</label><span>www.hdd56.com</span></p>
 			<p><img src="../../assets/img/icon3.png" /><label>电话：</label><span>0871-67366835</span></p>
 			<p><img src="../../assets/img/icon4.png" /><label>传真：</label><span>0871-67366835</span></p>
 			<p><img src="../../assets/img/icon5.png" /><label>邮箱：</label><span>we-service@vfu56.com</span></p>
@@ -25,7 +25,7 @@
 		</div>
 		<div v-show="tabs==2" class="contactInfo">
 			<p class="companyName"><img src="../../assets/img/icon1.png" /><span>深圳前海微服大数据科技有限公司</span></p>
-			<p><img src="../../assets/img/icon2.png" /><label>网址：</label><span>www.we-service.cn</span></p>
+			<p><img src="../../assets/img/icon2.png" /><label>网址：</label><span>www.hdd56.com</span></p>
 			<p><img src="../../assets/img/icon3.png" /><label>电话：</label><span>0755-26607376</span></p>
 			<p><img src="../../assets/img/icon5.png" /><label>邮箱：</label><span>qhwf@vfu56.com</span></p>
 			<p><img src="../../assets/img/icon6.png" /><label>地址：</label><span>广东省深圳市南山区深圳市软件产业基地易思博软件大厦1105室</span></p>

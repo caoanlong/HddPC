@@ -7,9 +7,20 @@ export default function install(Vue, options) {
 	// Vue.prototype.__webserver__ = 'http://test.hdd.we-service.cn:8888/'
 	/*开发图片服务器*/
 	// Vue.prototype.__imgserver__ = 'http://test.hdd.we-service.cn:8888/'
-	Vue.prototype.__imgserver__ = 'http://develop.we-service.cn/hdd/image/'
+	
 	/*测试服务器*/
-	Vue.prototype.__webserver__ = 'http://develop.we-service.cn/test-hdd/v2/'
+
+	// Vue.prototype.__webserver__ = 'http://develop.we-service.cn/test-hdd/v2/'
+	// Vue.prototype.__imgserver__ = 'http://develop.we-service.cn/hdd/image/'
+
+	// Vue.prototype.__webserver__ = 'http://192.168.1.110/hdd/api/'
+	// Vue.prototype.__imgserver__ = 'http://192.168.1.110/hdd/image/'
+	
+	// 线上环境
+	Vue.prototype.__webserver__ = 'http://api.hdd56.com/hdd/api/'
+	Vue.prototype.__imgserver__ = 'http://www.hdd56.com/hdd/image/'
+
+
 	/*测试图片服务器*/
 	// Vue.prototype.__imgserver__ = 'http://develop.we-service.cn/test-hdd/v2/'
 	/*邹文臣电脑*/
@@ -19,6 +30,8 @@ export default function install(Vue, options) {
 	/*农新考电脑*/
 	// Vue.prototype.__webserver__ = 'http://192.168.1.49:4441/'
 	/*每页条数*/
+
+
 	Vue.prototype.PAGESIZE = 10
     /*获取localStorage中的会员信息*/
     // Vue.prototype.MEMBERINFO = JSON.parse(localStorage.getItem('memberInfo'))
