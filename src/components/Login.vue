@@ -334,6 +334,7 @@
 					margin-right 20px
 					background url('../assets/img/vcode.png') no-repeat 12px center
 					padding-left 36px
+					vertical-align top
 				.GetVcode
 					height 40px
 					line-height 40px
