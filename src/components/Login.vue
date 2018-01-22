@@ -133,7 +133,7 @@
 				}
 				this.$http.post(URL, params).then(
 					(res) => {
-						this.msg(res.body.message)
+						this.msg.show(res.body.message)
 						console.log(JSON.stringify(res.body))
 					}
 				)
@@ -151,7 +151,7 @@
 							this.$store.commit('login',JSON.stringify(res.body.data))
 							//判断是否认证
 							if (res.body.data.certifyStatus == 'Y') {
-								this.msg({
+								this.msg.show({
 									content:'注册成功',
 									time: 1000
 								})
@@ -181,14 +181,14 @@
 								})
 							}
 						}else {
-							this.msg({
+							this.msg.show({
 								content: res.body.message,
 								time: 1000
 							})
 						}
 					},
 					(res) => {
-						this.msg({
+						this.msg.show({
 							content:'请求失败',
 							time: 1000
 						})
@@ -215,7 +215,7 @@
 							this.$store.commit('login',JSON.stringify(res.body.data))
 							//判断是否认证
 							if (res.body.data.certifyStatus == 'Y') {
-								this.msg({
+								this.msg.show({
 									content:'登录成功',
 									time: 1000
 								})
@@ -247,14 +247,14 @@
 								})
 							}
 						}else {
-							this.msg({
+							this.msg.show({
 								content: res.body.message,
 								time: 1000
 							})
 						}
 					},
 					(res) => {
-						this.msg({
+						this.msg.show({
 							content:'请求失败',
 							time: 1000
 						})
