@@ -3,7 +3,7 @@
 		<div class="preview-wrap clearfix">
 			<div class="itemInfo-wrap">
 				<div class="ownerInfo">
-					<img :src="__imgserver__ + goodsDetail.headPicture" class="ownerPic" @error="errorImg"/>
+					<img v-if="goodsDetail.headPicture" :src="__imgserver__ + goodsDetail.headPicture" class="ownerPic" @error="errorImg"/>
 					<p><label>货主姓名：</label>{{goodsDetail.realName}}
 					<span class="user_sort user_sort1" v-if="goodsDetail.memberType=='3PL'">物流公司</span>
 					<span class="user_sort user_sort2" v-else-if="goodsDetail.memberType=='InfoDept'">物流信息部</span>
@@ -25,16 +25,23 @@
 						<p><span class="start">{{goodsDetail.areaFromName|clearComma}}</span><span class="arrow"></span><span class="end">{{goodsDetail.areaToName|clearComma}}</span></p>
 					</div>
 					<div class="goodsDetail ">
-						<p><label>货物信息：</label><span>{{goodsDetail.cargoName}}</span><span>{{goodsDetail.cargoWeight || 0}}吨</span><span>{{goodsDetail.cargoVolume || 0}}方</span><span>{{goodsDetail.cargoNum}}{{goodsDetail.cargoPackage}}</span></p>
-						<p><label>需求车型：</label>
-							<span v-for="(truckLength,i) in goodsDetail.truckLengthList">{{truckLength.name+((i==goodsDetail.remarkList.length-1)?'':'/')}}</span>
-							<span>{{goodsDetail.truckTypeConstant?goodsDetail.truckTypeConstant.name:''}}</span>
-							<span>{{goodsDetail.truckNum}}</span>
+						<p>
+							<label>货物信息：</label>
+							<span>
+								{{goodsDetail.cargoName}}{{goodsDetail.cargoWeight ? '/' + goodsDetail.cargoWeight + '吨' : ''}}{{goodsDetail.cargoVolume ? '/' + goodsDetail.cargoVolume + '方' : ''}}{{goodsDetail.cargoNum ? '/' + goodsDetail.cargoNum + '件' : ''}}
+							</span>
 						</p>
-						<p><label>装车时间：</label>
-							<span class="c1">{{goodsDetail.loadingDate}}</span>
+						<p>
+							<label>需求车型：</label>
+							<span>{{goodsDetail.truckLengthList && goodsDetail.truckLengthList.map(item => item.name).join('/')}}{{goodsDetail.truckTypeConstant ? '/' + goodsDetail.truckTypeConstant.name : ''}}{{goodsDetail.surplusTruckNum ? '/剩' + goodsDetail.surplusTruckNum + '车' : ''}}</span>
 						</p>
-						<p><label>货主留言：</label>{{goodsDetail.remark || '无'}}</p>
+						<p>
+							<label>装车时间：</label>
+							<span class="c1">{{goodsDetail.loadingDate}} 装车</span>
+						</p>
+						<p>
+							<label>货主留言：</label>{{goodsDetail.remarkName || '无'}}
+						</p>
 					</div>
 				</div>
 			</div>
@@ -164,7 +171,7 @@
 			}
         },
         created() {
-        	this.getGoodsDetail();
+        	this.getGoodsDetail()
         },
         watch:{
 	        '$route':'getGoodsDetail'
@@ -189,7 +196,7 @@
 				}
             	let params = {
 					"memID": this.goodsDetail.memIDStr
-				};
+				}
 				this.$http.get(URL,{params:params}).then(
 					(res) => {
 						if (res.body.code == 200) {

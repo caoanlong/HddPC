@@ -110,56 +110,54 @@
 		    validationGroup: ['mobile', 'vCode']
 		},
 		created() {
-			this.$store.commit({type:'selectChange',selected:-1});
+			this.$store.commit({type:'selectChange',selected:-1})
 		},
 		methods: {
             tabLoginRegister(boolean) {
-            	this.isLogin = boolean;
-            	this.mobile = '';
-            	this.vCode = '';
+            	this.isLogin = boolean
+            	this.mobile = ''
+            	this.vCode = ''
             },
             agreement(boolean) {
-            	this.isAgree = boolean;
+            	this.isAgree = boolean
             },
 			getVcode() {
 				if (this.isGetVCode) {
 					return
-				};
-				this.timeGo();
-				let URL = this.__webserver__ + 'verifyCode';
+				}
+				this.timeGo()
+				let URL = this.__webserver__ + 'verifyCode'
 				var params = {
-					"mobile": this.mobile
-				};
+					"mobile": this.mobile,
+					"type": 'VERFIFY_CODE_' + (this.isLogin ? 'SINGIN' : 'REGISTER')
+				}
 				this.$http.post(URL, params).then(
 					(res) => {
-						// this.msg('短信验证码：'+ res.body.data);
-						console.log(JSON.stringify(res.body));
-					},
-					(res) => {
-						console.log(JSON.stringify(res.body));
+						this.msg(res.body.message)
+						console.log(JSON.stringify(res.body))
 					}
 				)
 			},
 			register() {
-				let URL = this.__webserver__ + 'register';
+				let URL = this.__webserver__ + 'register'
 				var params = {
 					"mobile": this.mobile,
 					"verifyCode": this.vCode
-				};
+				}
 				this.$http.post(URL,params).then(
 					(res) => {
 						if (res.body.code == 200) {
 							//存入缓存
-							this.$store.commit('login',JSON.stringify(res.body.data));
+							this.$store.commit('login',JSON.stringify(res.body.data))
 							//判断是否认证
 							if (res.body.data.certifyStatus == 'Y') {
 								this.msg({
 									content:'注册成功',
 									time: 1000
-								});
-								this.$router.push({name:'Home'});
+								})
+								this.$router.push({name:'Home'})
 							}else {
-								let that = this;
+								let that = this
 								this.modal({
 									width: '320px',
 									title: '提示',
@@ -175,10 +173,10 @@
 										class: 'default'
 									}],
 									sure: function() {
-										that.$router.push({name:'CompleteInfo',query:{active:32}});
+										that.$router.push({name:'CompleteInfo',query:{active:32}})
 									},
 									cancel: function() {
-										that.$router.push({name:'Home'});
+										that.$router.push({name:'Home'})
 									},
 								})
 							}
@@ -186,27 +184,27 @@
 							this.msg({
 								content: res.body.message,
 								time: 1000
-							});
+							})
 						}
 					},
 					(res) => {
 						this.msg({
 							content:'请求失败',
 							time: 1000
-						});
-						console.log(JSON.stringify(res.body));
+						})
+						console.log(JSON.stringify(res.body))
 					}
 				)
 			},
 			signin() {
-				let URL = this.__webserver__ + 'signin';
+				let URL = this.__webserver__ + 'signin'
 				var params = {
 					"mobile": this.mobile,
 					"verifyCode": this.vCode
-				};
+				}
 				this.$http.post(URL,params).then(
 					(res) => {
-						console.log(res.headers.get('authorization'));
+						console.log(res.headers.get('authorization'))
 						if (res.body.code == 200) {
 							//存入缓存
 							// 18627208285
@@ -214,16 +212,16 @@
 							// console.log(res.body.data)
 							localStorage.setItem('authorization',res.headers.get('authorization'))
 							// localStorage.setItem('memInfo',JSON.stringify(res.body.data))
-							this.$store.commit('login',JSON.stringify(res.body.data));
+							this.$store.commit('login',JSON.stringify(res.body.data))
 							//判断是否认证
 							if (res.body.data.certifyStatus == 'Y') {
 								this.msg({
 									content:'登录成功',
 									time: 1000
-								});
-								this.$router.push({name:'Home'});
+								})
+								this.$router.push({name:'Home'})
 							}else {
-								let that = this;
+								let that = this
 								this.modal({
 									width: '320px',
 									title: '提示',
@@ -241,10 +239,10 @@
 										}
 									],
 									sure: function() {
-										that.$router.push({name:'CompleteInfo',query:{active:32}});
+										that.$router.push({name:'CompleteInfo',query:{active:32}})
 									},
 									cancel: function() {
-										that.$router.push({name:'Home'});
+										that.$router.push({name:'Home'})
 									},
 								})
 							}
@@ -252,36 +250,36 @@
 							this.msg({
 								content: res.body.message,
 								time: 1000
-							});
+							})
 						}
 					},
 					(res) => {
 						this.msg({
 							content:'请求失败',
 							time: 1000
-						});
-						console.log(JSON.stringify(res.body));
+						})
+						console.log(JSON.stringify(res.body))
 					}
 				)
 			},
 			timeGo() {
 				if (this.wait == 0) {
-					this.getVcodeText = '点击获取';
-					this.isGetVCode = false;
-					this.wait = 30;
-					return;
+					this.getVcodeText = '点击获取'
+					this.isGetVCode = false
+					this.wait = 30
+					return
 				} else {
-					var that = this;
-					this.isGetVCode = true;
-					this.getVcodeText = this.wait+'s';
-					this.wait--;
+					var that = this
+					this.isGetVCode = true
+					this.getVcodeText = this.wait+'s'
+					this.wait--
 					setTimeout(function() {
-						that.timeGo();
+						that.timeGo()
 					}, 1000)
 				}
 			},
 			showRegisterRule() {
-				let that = this;
+				let that = this
 				this.modal({
 					content: `<p>一、前言</p>
 					<p>本合作协议内容包括合作协议正文、《货多多纠纷处理规则（司机被放空保障）》、《货多多消费规则》及将来可能发布的各类规则或补充协议。所有规则为合作协议不可分割的一部分，与合作协议正文具有同等法律效力，当您点击鼠标确认或通过访问、注册、预定或以任何方式进入货多多或使用货多多服务均表示您已充分阅读、理解并同意接受本协议，接受了以下协议的约束。</p>
@@ -424,7 +422,7 @@
 				font-size 16px
 				text-align center
 				color #999
-				background #fff;
+				background #fff
 				display inline-block
 				position absolute
 				left 50%

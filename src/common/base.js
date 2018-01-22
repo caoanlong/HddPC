@@ -29,9 +29,11 @@ export default function install(Vue, options) {
 	//15084798888 
 	/*农新考电脑*/
 	// Vue.prototype.__webserver__ = 'http://192.168.1.49:4441/'
+	/*孟飞龙电脑*/
+	// Vue.prototype.__webserver__ = 'http://192.168.1.43:4441/'
+
+
 	/*每页条数*/
-
-
 	Vue.prototype.PAGESIZE = 10
     /*获取localStorage中的会员信息*/
     // Vue.prototype.MEMBERINFO = JSON.parse(localStorage.getItem('memberInfo'))
@@ -147,14 +149,18 @@ export default function install(Vue, options) {
 	 * 通过经纬度获取地址
 	 * @param lat,lng 代表要转化的坐标
 	 */
-	Vue.prototype.getAddress = function(lat,lng) {
+	Vue.prototype.getAddress = function(lat, lng) {
 		var URL = 'http://api.map.baidu.com/geocoder/v2/?location='+lat+','+lng+'&output=json&ak=AjsVKu7N9iBX2klb9ktqGfAvA5dkfRBs'
-		this.$http.jsonp(URL).then((res) => {
-			// console.log(res.body.result.addressComponent.province+res.body.result.addressComponent.city);
-			if (this.address) {
-				this.address = res.body.result.addressComponent.province+res.body.result.addressComponent.city;
-			}
-			return (res.body.result.addressComponent.province+res.body.result.addressComponent.city);
+		return new Promise((resolve, reject) => {
+			this.$http.jsonp(URL).then((res) => {
+				// console.log(res.body.result.addressComponent)
+				// if (this.address) {
+				// 	this.address = res.body.result.addressComponent.province+res.body.result.addressComponent.city
+				// }
+				resolve(res.body.result.addressComponent)
+			}, res => {
+				reject(res.body)
+			})
 		})
 	}
 	/**author:Caoanlong *day:2017-08-25

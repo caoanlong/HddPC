@@ -2,39 +2,35 @@
 	<div class="recommend">
 		<div class="tit">推荐货源</div>
 		<router-link :to="{name:'GoodsDetail', query: {cargoSourceID: goods.cargoSourceIDStr}}" title="查看详情" class="recommendItem" v-for="goods in GoodsList" :key="goods.cargoSourceIDStr">
-            <div class="pic">
-				<img :src="__imgserver__ + goods.headPicture" @error="errorImg"/>
+			<div class="pic">
+				<img v-if="goods.headPicture" :src="__imgserver__ + goods.headPicture" @error="errorImg"/>
 			</div>
-            <div class="userInfo">
-            	<p>{{goods.realName}}<span class="user_sort user_sort1" v-if="UserSort==1">物流公司</span>
-    				<span class="user_sort user_sort2" v-else-if="UserSort==2">物流信息部</span>
-    				<span class="user_sort user_sort3" v-else-if="UserSort==3">个人</span>
-    				<span class="user_sort user_sort4" v-else-if="UserSort==4">无车承运人</span>
-                    <span class="publish-time fr">刚刚 发布</span>
-                </p>
-                <p>
-    				<span class="businessModels businessModels1" v-if="businessModels==1">定价</span>
-    				<span class="businessModels businessModels2" v-else-if="businessModels==2">议价</span>
-    				<span class="businessModels businessModels3" v-else-if="businessModels==3">中介</span>
-    				
-                </p>
-            </div>
-            <p class="lineInfo">
+			<div class="userInfo">
+				<p>{{goods.realName}}<span class="user_sort user_sort1" v-if="UserSort==1">物流公司</span>
+					<span class="user_sort user_sort2" v-else-if="UserSort==2">物流信息部</span>
+					<span class="user_sort user_sort3" v-else-if="UserSort==3">个人</span>
+					<span class="user_sort user_sort4" v-else-if="UserSort==4">无车承运人</span>
+					<span class="publish-time fr">刚刚 发布</span>
+				</p>
+				<p>
+					<span class="businessModels businessModels1" v-show="goods.cargoFreightType=='Fix'">定价</span>
+					<span class="businessModels businessModels2" v-show="goods.cargoFreightType=='Talk'">议价</span>
+					<span class="businessModels businessModels3" v-show="goods.cargoFreightType=='Agent'">中介</span>
+				</p>
+			</div>
+			<p class="lineInfo">
 				<span>{{goods.areaFromName.split(',').join('').substr(0, 6)}}</span>
 				<span class="arrow"></span>
 				<span>{{goods.areaToName.split(',').join('').substr(0, 6)}}</span>
 			</p>
-            <p class="date">{{goods.loadingDate}}</p>
-            <p class="goods">
-				<span>{{goods.cargoName}}</span><span>{{goods.cargoWeight || 0}}吨</span><span>{{goods.cargoVolume || 0}}方</span><span>{{goods.cargoNum}}{{goods.cargoPackage}}</span>
+			<p class="date">{{goods.loadingDate}}</p>
+			<p class="goods">
+				<span>{{goods.cargoName && goods.cargoName}}{{goods.cargoWeight ? '/' + goods.cargoWeight + '吨' : ''}}{{goods.cargoVolume ? '/' + goods.cargoVolume + '方' : ''}}{{goods.cargoNum ? '/' + goods.cargoNum + '件' : ''}}</span>
 			</p>
-            <p class="vehicleInfo">
-				<span>{{goods.truckTypeName}}</span>
-				<span>{{goods.truckLengthName || 0}}</span>
-				<span>需要{{goods.truckNum}}车</span>
-				<span>剩{{goods.surplusTruckNum}}车</span>
+			<p class="vehicleInfo">
+				<span>{{goods.truckLengthName.split(',').join('/')}}{{goods.truckTypeName ? '/' + goods.truckTypeName : ''}}{{goods.truckNum ? '/剩' + goods.surplusTruckNum + '车' : ''}}</span>
 			</p>
-        </router-link>
+		</router-link>
 	</div>
 </template>
 <script>
@@ -43,7 +39,6 @@
 		data() {
 			return {
 				UserSort: 1,
-				businessModels: 1,
 				GoodsList: []
 			}
 		},
@@ -61,7 +56,7 @@
 					if (res.body.code == 200) {
 						this.GoodsList = res.body.data.list
 						// console.log(JSON.stringify(res.body.data))
-					}else if (res.body.code ==10006){
+					}else if (res.body.code == 10006) {
 						localStorage.removeItem('memberInfo')
 						localStorage.removeItem('authorization')
 						this.$router.push({name:'Login'})
@@ -69,9 +64,9 @@
 				})
 			},
 			errorImg (e) {
-                e.target.src = defaultImg
-                e.target.onerror = null
-            }
+				e.target.src = defaultImg
+				e.target.onerror = null
+			}
 		},
 		components: {
 		}

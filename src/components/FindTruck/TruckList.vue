@@ -2,13 +2,14 @@
 	<div class="content">
 		<div class="listItem">
 			<div class="pic fl">
-				<img :src="__imgserver__+dataDetail.headPicture" @error="errorImg"/>
+				<img v-if="dataDetail.headPicture" :src="__imgserver__ + dataDetail.headPicture" @error="errorImg"/>
 				
 			</div>
 			<div class="userInfo fl">
 				<p class="user"><span>{{dataDetail.realName}}</span><span>{{dataDetail.plateNo}}</span></p>
-				<p class="vehicleInfo" v-html="dataDetail.truckLengthName+'&nbsp;'+dataDetail.loads+'吨'+'&nbsp;'+dataDetail.truckTypeName"></p>
-				<p class="pos">{{dataDetail.posAreaName}}</p>
+				<!-- <p class="vehicleInfo" v-html="dataDetail.truckLengthName+'&nbsp;'+dataDetail.loads+'吨'+'&nbsp;'+dataDetail.truckTypeName"></p> -->
+				<p class="vehicleInfo">{{dataDetail.truckLengthName && dataDetail.truckLengthName}}{{dataDetail.truckTypeName ? '/' + dataDetail.truckTypeName : ''}}</p>
+				<p class="pos">{{dataDetail.posUpdateTimeStr}} {{dataDetail.posAreaName}}</p>
 			</div>
 			<span class="attention attentioned" v-if="dataDetail.focusType == 'Familiar' || dataDetail.focusType == 'Selft' || dataDetail.focusType == 'Attach'">已关注</span>
 			<span class="attention" v-else>未关注</span>

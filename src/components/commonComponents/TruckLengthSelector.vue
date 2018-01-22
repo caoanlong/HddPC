@@ -1,6 +1,6 @@
 <template>
 	<ul class="multiple fl">
-		<li v-for="option in optionList" v-text="option.name" :class="{'selected':selectedList.map(item => item.code).includes(option.code)}" @click.stop="selectChange(option)" :key="option.code"></li>
+		<li v-for="option in optionList" v-text="option.name" :class="{'selected': selectedList.map(item => item.name).includes(option.name)}" @click.stop="selectChange(option)" :key="option.name"></li>
 	</ul>
 </template>
 <script>
@@ -17,29 +17,37 @@
 			return {
 				selectedList: this.defaultOption
 			}
-        },
+		},
 		methods: {
-            selectChange (option) {
-                // 如果选择不限
-                if (option.code == 100000044) {
-                    this.selectedList = []
-                    this.selectedList.push(option)
-                } else {
-                    if (this.selectedList.map(item => item.code).includes(option.code)) {
-                        this.selectedList.splice(this.selectedList.map(item => item.code).indexOf(option.code), 1)
-                        return
-                    }
-                    if (this.selectedList.map(item => item.code).includes(100000044)) {
-                        this.selectedList.splice(this.selectedList.map(item => item.code).indexOf(100000044), 1)
-                    }
-                    if (this.selectedList.length == 3) {
-                        this.msg('最多选择3个车长')
-                        return
-                    }
-                    this.selectedList.push(option)
-                }
-                this.$emit('multipleSelect', this.selectedList)
-            }
+			selectChange (obj) {
+				let names = this.selectedList.map(item => item.name)
+				// 如果选择的选项已经勾选
+				if (names.includes(obj.name)) {
+					this.selectedList.splice(names.indexOf(obj.name), 1)
+					return
+				// 如果选择的选项没有勾选
+				} else {
+					// 如果选择不限
+					if (obj.name == '不限') {
+						this.selectedList = []
+						this.selectedList.push(obj)
+					// 如果勾选的是“其他”
+					} else {
+						// 如果包含不限
+						if (names.includes('不限')) {
+							this.selectedList = []
+							this.selectedList.push(obj)
+						} else {
+							if (this.selectedList.length == 3) {
+								this.msg('最多选择3个车长！')
+								return
+							}
+							this.selectedList.push(obj)
+						}
+					}
+					this.$emit('multipleSelect', this.selectedList)
+				}
+			}
 		}
 	}
 </script>

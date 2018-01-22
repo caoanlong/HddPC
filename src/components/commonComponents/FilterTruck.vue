@@ -5,7 +5,7 @@
 			<div class="form-item">
 				<span class="labels">车长：</span>
 				<div class="optionBox clearfix">
-				<div class="option clearfix" :class="{'height-auto':moreTruckLength}">
+				<div class="option clearfix" :class="{'height-auto': moreTruckLength}">
 					<TruckLengthSelector :optionList="truckLengthList" :defaultOption="selectTruckLengthIndex" @multipleSelect="selectTruckLength"></TruckLengthSelector>
 					<span class="more fr" :class="{'fold': moreTruckLength}" v-text="moreText1" @click.stop="more('moreTruckLength')"></span>
 				</div>
@@ -107,12 +107,10 @@
 
 				selectTruckLengthList: '',
 				selectTruckLengthIndex: [{
-					"code": 100000044,
 					"name": "不限"
 				}],
 				selectTruckClassLi: '',
 				selectedTruckClass: {
-					"code": 100000044,
 					"name": "不限"
 				},
 				selectTruckStatusLi: ''
@@ -189,7 +187,7 @@
 				// console.log(JSON.stringify(this.endAreaList))
 			},
 			selectTruckLength(lengths) {
-				this.selectTruckLengthList = lengths.map(item => item.code).join(',').includes(100000044) ? '' : lengths.map(item => item.code).join(',')
+				this.selectTruckLengthList = lengths.map(item => item.name).join(',').includes('不限') ? '' : lengths.map(item => item.code).join(',')
 				// console.log(JSON.stringify(this.selectTruckLengthList))
 			},
 			selectTruckClass(obj) {
@@ -197,7 +195,8 @@
 				// console.log(JSON.stringify(this.selectTruckClassLi))
 			},
 			find() {
-				var params = {
+				common.trigger(document)
+				let params = {
 					"areaFrom": this.selectedStartArea,
 					"areaTo": this.selectedEndArea,
 					"length": this.selectTruckLengthList,

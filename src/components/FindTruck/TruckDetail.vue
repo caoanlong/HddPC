@@ -2,7 +2,7 @@
 	<div class="lside fl">
 		<div class="preview-wrap clearfix">
 			<div class="itemInfo-wrap clearfix">
-				<img :src="__imgserver__ + truckSourceDetail.headPicture" class="driverPic"  @error="errorImg"/>
+				<img v-if="truckSourceDetail.headPicture" :src="__imgserver__ + truckSourceDetail.headPicture" class="driverPic"  @error="errorImg"/>
 				<div class="driverInfo">
 					<p>
 						<span><label>驾驶员：</label>{{truckSourceDetail.realName}}</span><span><label>电话：</label>{{truckSourceDetail.mobile}}</span>
@@ -29,13 +29,13 @@
 			<div class="bd">
 				<div class="tabCon" v-show="tab==1">
 					<baidu-map class="map"
-						:center="{lng: lng, lat: lat}"
+						:center="position"
 						:zoom="15">
 						<bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-navigation>
-						<bm-marker :position="{lng: lng, lat: lat}"></bm-marker>
-						<bm-info-window :position="{lng: lng, lat: lat}" title="详细地址：" :show="true">
-					      	<strong v-text="truckSourceDetail.posAreaName"></strong>
-					    </bm-info-window>
+						<bm-marker :position="position"></bm-marker>
+						<bm-info-window :position="position" :offset="{width: 0, height: -15}" title="详细地址：" :show="true">
+							<strong v-text="addressDetail"></strong>
+						</bm-info-window>
 					</baidu-map>
 				</div>
 				<div class="tabCon clearfix"  v-show="tab==2">
@@ -107,43 +107,48 @@
 			}
 		},
 		data () {
-            return {
-            	tab: 1,
-                truckSourceDetail: {},
-                lng: 0,
-                lat: 0,
-                AuthenticationInfo: {},
-                isAuth: false
-            }
-        },
-        computed: {
+			return {
+				tab: 1,
+				truckSourceDetail: {},
+				position: {
+					lng: 0,
+					lat: 0
+				},
+				addressDetail: '',
+				AuthenticationInfo: {},
+				isAuth: false
+			}
+		},
+		watch: {
+			'$route'(newVal) {
+				this.getTruckDetail()
+			}
+		},
+		computed: {
 			isLogin () {
 				return localStorage.getItem('memberInfo') && localStorage.getItem('authorization')
 			}
 		},
-        created() {
-        	this.getTruckDetail();
-        },
-        watch:{
-	        '$route':'getTruckDetail'
-	    },
-        http: {
-		    headers: {
-		      'Authorization': localStorage.getItem('authorization')||''
-		    }
+		created() {
+			this.getTruckDetail()
 		},
-        methods: {
-        	errorImg (e) {
-                e.target.src = defaultImg
-                e.target.onerror = null
-            }, 
-            getAuthenticationInfo() {
-            	this.tab =3
-            	if (this.isAuth) {
-            		return
-            	}
-            	this.isAuth =true
-            	let URL = ''
+		http: {
+			headers: {
+			  'Authorization': localStorage.getItem('authorization') || ''
+			}
+		},
+		methods: {
+			errorImg (e) {
+				e.target.src = defaultImg
+				e.target.onerror = null
+			}, 
+			getAuthenticationInfo() {
+				this.tab =3
+				if (this.isAuth) {
+					return
+				}
+				this.isAuth =true
+				let URL = ''
 				if(this.isLogin){
 					URL = this.__webserver__ + 'mem/certifyPerson/findByMemId'
 				}
@@ -157,13 +162,13 @@
 					(res) => {
 						if (res.body.code == 200) {
 							this.AuthenticationInfo = res.body.data
-							console.log(res.body.data)
+							// console.log(res.body.data)
 						}
 					}
 				)
-            },
-        	getTruckDetail() {
-        		let URL = ''
+			},
+			getTruckDetail() {
+				let URL = ''
 				if(this.isLogin){
 					URL = this.__webserver__ + 'truck/fleet/findByMemID'
 				}else{
@@ -172,18 +177,32 @@
 				let params = {
 					"memID": this.$route.query.memID
 				}
-				this.$http.get(URL,{params:params}).then((res) => {
-					if (res.body.code == 200) {
-						this.truckSourceDetail = res.body.data;
-						this.$nextTick(() => {
-							this.lng = this.truckSourceDetail.lng
-							this.lat = this.truckSourceDetail.lat
+				this.$http.get(URL,{params: params}).then((res) => {
+					this.truckSourceDetail = res.body.data
+					new Promise((resolve, reject) => {
+						if (res.body.code == 200) {
+							resolve(res.body.data)
+						} else {
+							reject(res.body.message)
+						}
+					}).then(resp => {
+						this.position = {
+							lng: resp.lng,
+							lat: resp.lat
+						}
+						this.getAddress(resp.lat, resp.lng).then(response => {
+							let addressInfo = response
+							this.addressDetail = addressInfo.province + addressInfo.city + addressInfo.district + addressInfo.street
+							// console.log(addressInfo)
+						}).catch(response => {
+							console.log(response)
 						})
-						console.log(res.body.data)
-					}
+					}).catch(resp => {
+						console.log(resp)
+					})
 				})
 			}
-        },
+		},
 		components: {
 			ImagePerview
 		}
@@ -396,7 +415,7 @@
 		border 1px solid transparent
 		border-radius 4px
 		margin-left 5px
-		background #fff;
+		background #fff
 		&.truckStatus1
 			border-color #20a0ff
 			color #20a0ff

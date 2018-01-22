@@ -10,7 +10,7 @@
 				<span class="businessModels businessModels3" v-else-if="data.cargoFreightType=='Agent'"></span>
 			</div>
 			<div class="pic fl">
-				<img :src="__imgserver__+data.headPicture" @error="errorImg"/>
+				<img v-if="data.headPicture" :src="__imgserver__ + data.headPicture" @error="errorImg"/>
 				<span class="user_sort user_sort1" v-if="data.memberType=='3PL'">物流公司</span>
 				<span class="user_sort user_sort2" v-else-if="data.memberType=='InfoDept'">物流信息部</span>
 				<span class="user_sort user_sort3" v-else-if="data.memberType=='IndShipper'">个人</span>
@@ -19,15 +19,15 @@
 			<div class="lineInfo fl">
 				<p class="start">{{data.areaFromName|clearComma}}</p>
 				<p class="end">{{data.areaToName|clearComma}}</p>
-				<p class="pos">广西桂林 1分钟前</p>
+				<p class="pos">{{data.createTimeStr}}</p>
 			</div>
 			<div class="userInfo fl">
 				<p class="user">{{data.realName}}<span class="score"></span> <span class="attention">未关注</span></p>
 				<p class="goods">
-					<span>{{data.cargoName}}</span><span>{{data.cargoWeight || 0}}吨</span><span>{{data.cargoVolume || 0}}方</span><span>{{data.cargoNum}}{{data.cargoPackage}}</span>
-					</p>
-				<p class="vehicleInfo">
-					<span>{{data.truckTypeName}}</span><span>{{data.truckLength || 0}}</span><span>需要{{data.truckNum}}车</span><span>剩{{data.surplusTruckNum}}车</span>
+					<span>{{data.cargoName && data.cargoName}}{{data.cargoWeight ? '/' + data.cargoWeight + '吨' : ''}}{{data.cargoVolume ? '/' + data.cargoVolume + '方' : ''}}{{data.cargoNum ? '/' + data.cargoNum + '件' : ''}}</span>
+				</p>
+				<p class="vehicleInfo" :title="data.truckLengthName.split(',').join('/') + (data.truckTypeName ? '/' + data.truckTypeName : '') + (data.truckNum ? '/剩' + data.surplusTruckNum + '车' : '') + (data.loadingDateStr ? '/' + data.loadingDateStr + '装车' : '')">
+					<span>{{data.truckLengthName.split(',').join('/')}}{{data.truckTypeName ? '/' + data.truckTypeName : ''}}{{data.truckNum ? '/剩' + data.surplusTruckNum + '车' : ''}}{{data.loadingDateStr ? '/' + data.loadingDateStr + '装车' : ''}}</span>
 				</p>
 			</div>
 			<div class="loadingTime fl">
@@ -142,7 +142,7 @@
 					margin-right 10px
 		.loadingTime
 			padding 15px 0 15px 30px
-			width 160px
+			width 170px
 			p
 				&.title
 					background-image url('../../../static/img/clock_icon.png')
