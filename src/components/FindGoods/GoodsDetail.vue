@@ -173,9 +173,9 @@
         created() {
         	this.getGoodsDetail()
         },
-        watch:{
-	        '$route':'getGoodsDetail'
-	    },
+		watch:{
+			'$route':'getGoodsDetail'
+		},
 		methods: {
 			errorImg (e) {
                 e.target.src = defaultImg
