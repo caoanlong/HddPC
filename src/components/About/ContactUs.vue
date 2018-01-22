@@ -9,7 +9,7 @@
 			<baidu-map class="map" :center="position" :zoom="18">
 				<bm-navigation anchor="BMAP_ANCHOR_TOP_RIGHT"></bm-navigation>
 				<bm-marker :position="position"></bm-marker>
-				<bm-info-window :position="position" title="详细地址：" :show="true">
+				<bm-info-window :position="position" :offset="{width: 0, height: -15}" title="详细地址：" :show="true">
 			      	<strong v-show="tabs==1">云南省昆明经开区出口加工区经景路38号</strong>
 			      	<strong v-show="tabs==2">广东省深圳市南山区深圳市软件产业基地易思博软件大厦1105室</strong>
 			    </bm-info-window>

@@ -26,25 +26,25 @@
 		data() {
 			return {
 				bannerList: [
-			        {
-			        	img: '../../../static/img/banner1.jpg'
-			        },
-			        {
-			        	img: '../../../static/img/banner2.jpg'
-			        },
-			        {
-			        	img: '../../../static/img/banner3.jpg'
-			        },
-			        {
-			        	img: '../../../static/img/banner4.jpg'
-			        },
-			        {
-			        	img: '../../../static/img/banner5.jpg'
-			        }
-		        ],
-		        index: 0,
-		        isShowBtn: false,
-		        timer: {}
+					{
+						img: '../../../static/img/banner1.png'
+					},
+					// {
+					// 	img: '../../../static/img/banner2.jpg'
+					// },
+					// {
+					// 	img: '../../../static/img/banner3.jpg'
+					// },
+					// {
+					// 	img: '../../../static/img/banner4.jpg'
+					// },
+					// {
+					// 	img: '../../../static/img/banner5.jpg'
+					// }
+				],
+				index: 0,
+				isShowBtn: false,
+				timer: {}
 			}
 		},
 		mounted() {

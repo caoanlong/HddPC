@@ -1,6 +1,6 @@
 <template>
 	<ul class="single fl">
-		<li :class="{'selected': selectedType.code == option.code}" @click.stop="selectChange(option)" v-for="option in trukcTypeList" v-text="option.name" :key="option.code"></li>
+		<li :class="{'selected': selectedType.name == option.name}" @click.stop="selectChange(option)" v-for="option in trukcTypeList" v-text="option.name" :key="option.name"></li>
 	</ul>
 </template>
 <script>
