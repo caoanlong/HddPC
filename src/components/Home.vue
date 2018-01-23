@@ -2,7 +2,7 @@
 	<div>
 		<Swiper :autoPlay="true" :auto-play-time="3000"></Swiper>
 		<div class="advantage">
-        	<div class="tit"><span>我们的优势</span></div>
+			<div class="tit"><span>我们的优势</span></div>
 			<div class="page-w">
 				<div class="item">
 					<img src="../../static/img/advantage_icon1.png" />
@@ -25,22 +25,27 @@
 					<p>快速调车</p>
 				</div>
 			</div>
-        </div>
-        <div class="appDownload">
-            <div class="tit"><span>货多多APP下载</span></div>
-            <div class="page-w">
-                <div class="item fl">
-                	<img src="../../static/img/app1.png" class="pic" />
-                    <p class="title">货主端 - 发货，找车，管车、跟踪</p>
-                    <p class="des">货多多为广大企业提供了海量真实车源信息，物流企业可以发布自己货源给司机，司机接单后系统实时监控在途运输货源状 态，让您的轻轻松松调度管理车辆。</p>
-                </div>
-                <div class="item fr">
-                	<img src="../../static/img/app2.png" class="pic" />
-                    <p class="title">司机端 - 量身打造的赚钱工具</p>
-                    <p class="des">广大货车司机可以通过货多多找到海量实时货源信息，并承接运输任务，也可发布自己的求货信息，货多多会第一时间帮您联系有需要的货主，让您轻轻松松赚大钱。</p>
-                </div>
-            </div>
-        </div>
+		</div>
+		<div class="appDownload">
+			<div class="tit"><span>货多多下载</span></div>
+			<div class="page-w">
+				<div class="item fl">
+					<img src="../../static/img/app1.png" class="pic" />
+					<p class="title">货主端 - 发货，找车，管车、跟踪</p>
+					<p class="des">货多多为广大企业提供了海量真实车源信息，物流企业可以发布自己货源给司机，司机接单后系统实时监控在途运输货源状 态，让您的轻轻松松调度管理车辆。</p>
+				</div>
+				<div class="item fl">
+					<img src="../../static/img/app2.png" class="pic" />
+					<p class="title">司机端 - 量身打造的赚钱工具</p>
+					<p class="des">广大货车司机可以通过货多多找到海量实时货源信息，并承接运输任务，也可发布自己的求货信息，货多多会第一时间帮您联系有需要的货主，让您轻轻松松赚大钱。</p>
+				</div>
+				<div class="item fl">
+					<img src="../../static/img/app3.png" class="pic" />
+					<p class="title">微信公众号 - 简单方便，来钱快</p>
+					<p class="des">广大货车司机可以通过货多多找到海量实时货源信息，并承接运输任务，也可发布自己的求货信息，货多多会第一时间帮您联系有需要的货主，让您轻轻松松赚大钱。</p>
+				</div>
+			</div>
+		</div>
 	</div>
 </template>
 <script>
@@ -115,19 +120,22 @@
 				text-align center
 				line-height 30px
 				font-size 18px
-		.item
-			width 540px
-			padding:30px 80px 0 200px
-			position relative
-			height 160px
-			.title
-				color #fff
-				font-size 16px
-			.pic
-				position absolute
-				left 80px
-			.des
-				color:#868c9e
-				line-height 24px
-				margin-top 15px
+		.page-w
+			width 1280px
+			margin 0 auto
+			.item
+				width 426px
+				padding 30px 0 0 200px
+				position relative
+				height 160px
+				.title
+					color #fff
+					font-size 15px
+				.pic
+					position absolute
+					left 80px
+				.des
+					color #868c9e
+					line-height 24px
+					margin-top 15px
 </style>

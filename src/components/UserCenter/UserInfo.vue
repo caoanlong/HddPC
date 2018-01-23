@@ -37,7 +37,7 @@
 			<div class="info-con">
 				<div class="form-item">
 		        	<span class="labels">公司名称</span>
-					<p v-text="memberBaseInfo.enterprice.companyname"></p>
+					<p v-text="memberBaseInfo.enterprice.companyName"></p>
 		        </div>
 		        <div class="form-item">
 		        	<span class="labels">所在区域</span>
@@ -45,7 +45,7 @@
 		        </div>
 		        <div class="form-item">
 		        	<span class="labels">详细地址</span>
-					<p v-text="memberBaseInfo.enterprice.gpsaddress"></p>
+					<p v-text="memberBaseInfo.enterprice.detailAddress"></p>
 		        </div>
 		        <div class="form-item">
 		        	<span class="labels">门头照</span>
@@ -89,11 +89,11 @@
 		},
 		computed: {
 			memberInfo() {
-				return this.$store.state.memberInfo;
+				return this.$store.state.memberInfo
 			}
 		},
 		created() {
-			this.getMemberBaseInfo();
+			this.getMemberBaseInfo()
 		},
 		methods: {
 			getMemberBaseInfo() {
@@ -103,27 +103,27 @@
 				};
 				this.$http.get(URL,{params:params}).then((res) => {
 					if (res.body.code == 200) {
-						// console.log(JSON.stringify(res.body.data));
-						this.memberBaseInfo = res.body.data;
+						// console.log(JSON.stringify(res.body.data))
+						this.memberBaseInfo = res.body.data
 						this.$nextTick(() => {
 							if (this.memberBaseInfo.person.memCertifyPersonPicture.pictureFront) {
-								this.frontFaceImg = this.__imgserver__ + this.memberBaseInfo.person.memCertifyPersonPicture.pictureFront;
-							};
+								this.frontFaceImg = this.__imgserver__ + this.memberBaseInfo.person.memCertifyPersonPicture.pictureFront
+							}
 							if (this.memberBaseInfo.person.memCertifyPersonPicture.iDCardFrontPic) {
-								this.frontIDCardImg = this.__imgserver__ + this.memberBaseInfo.person.memCertifyPersonPicture.iDCardFrontPic;
-							};
+								this.frontIDCardImg = this.__imgserver__ + this.memberBaseInfo.person.memCertifyPersonPicture.iDCardFrontPic
+							}
 							if (this.memberBaseInfo.memCertifyEnterpricePicture.companyFacadePic) {
-								this.doorImg = this.__imgserver__ + this.memberBaseInfo.memCertifyEnterpricePicture.companyFacadePic;
-							};
+								this.doorImg = this.__imgserver__ + this.memberBaseInfo.memCertifyEnterpricePicture.companyFacadePic
+							}
 							if (this.memberBaseInfo.memCertifyEnterpricePicture.businessLicensePic) {
-								this.licenseImg = this.__imgserver__ + this.memberBaseInfo.memCertifyEnterpricePicture.businessLicensePic;
-							};
-							if (this.memberBaseInfo.memCertifyEnterpricePicture.transportationLicensePicID) {
-								this.roadTransPermitImg = this.__imgserver__ + this.memberBaseInfo.memCertifyEnterpricePicture.transportationLicensePicID;
-							};
+								this.licenseImg = this.__imgserver__ + this.memberBaseInfo.memCertifyEnterpricePicture.businessLicensePic
+							}
+							if (this.memberBaseInfo.memCertifyEnterpricePicture.transportationLicensePic) {
+								this.roadTransPermitImg = this.__imgserver__ + this.memberBaseInfo.memCertifyEnterpricePicture.transportationLicensePic
+							}
 						})
 					}else {
-						this.showMsg(this,{msg: res.body.message,delay: 1000});
+						this.msg.show(res.body.message)
 					}
 				})
 			},

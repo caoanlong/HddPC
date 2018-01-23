@@ -1,7 +1,7 @@
 <template>
 	<div class="imgPerview clearfix">
 		<div class="imgLi" :style="{'width':width+'px','height':height+'px'}">
-			<img :src="__imgserver__ + fileUrl" @error="errorImg">
+			<img v-if="fileUrl" :src="__imgserver__ + fileUrl" @error="errorImg">
 			<div class="controller">
 				<div class="controllerBtn">
 					<div class="perviewBtn" @click.stop="showImgModal"></div>

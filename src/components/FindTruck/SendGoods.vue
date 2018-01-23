@@ -84,8 +84,8 @@
 				};
 				this.$http.get(URL,{params:params}).then((res) => {
 					if (res.body.code == 200) {
-						this.total = res.body.data.total;
-						this.GoodsList = res.body.data.list;
+						this.total = res.body.data.total
+						this.GoodsList = res.body.data.list
 						// console.log(JSON.stringify(res.body.data.list));
 					}
 				})

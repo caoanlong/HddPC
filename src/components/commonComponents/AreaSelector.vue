@@ -80,92 +80,92 @@
 		},
 		mounted() {
 			document.addEventListener('click',() => {
-				this.hideAreaSelector();
-			},false);
+				this.hideAreaSelector()
+			},false)
 		},
 		methods: {
 			//隐藏选择框
 			hideAreaSelector() {
 				if (this.option.isShow) {
-					this.option.isShow = false;
-					this.$emit('selectArea',this.selectedArea);
+					this.option.isShow = false
+					this.$emit('selectArea',this.selectedArea)
 				}
 			},
 			//点击全部
 			showAll() {
 				//清空选择的标签
-				this.clearArea(true,true,true);
+				this.clearArea(true,true,true)
 
-				this.isShowProvince = false;
-				this.isShowCity = false;
-				this.showProvinceList = true;
-				this.showCityList = false;
-				this.showDistList = false;
-				this.$emit('selectArea',this.selectedArea);
+				this.isShowProvince = false
+				this.isShowCity = false
+				this.showProvinceList = true
+				this.showCityList = false
+				this.showDistList = false
+				this.$emit('selectArea',this.selectedArea)
 			},
 			//点击省份
 			showProvince() {
 				//清空选择的标签
-				this.clearArea(false,true,true);
+				this.clearArea(false,true,true)
 
-				this.isShowProvince = true;
-				this.isShowCity = false;
-				this.showProvinceList = false;
-				this.showCityList = true;
-				this.showDistList = false;
+				this.isShowProvince = true
+				this.isShowCity = false
+				this.showProvinceList = false
+				this.showCityList = true
+				this.showDistList = false
 			},
 			//选择省份
 			selectProvince(obj,i) {
 				//清空选择的标签
-				this.clearArea(true,true,true);
-				this.$emit('clearArea');
+				this.clearArea(true,true,true)
+				this.$emit('clearArea')
 
-				this.isShowProvince = true;
-				this.showProvinceList = false;
-				this.showCityList = true;
-				this.showDistList = false;
+				this.isShowProvince = true
+				this.showProvinceList = false
+				this.showCityList = true
+				this.showDistList = false
 				
-				this.selectedArea.province = {'key': i, 'value': obj};
-				this.cityList = ChineseDistricts[i];
+				this.selectedArea.province = {'key': i, 'value': obj}
+				this.cityList = ChineseDistricts[i]
 			},
 			//选择城市
 			selectCity(obj,i) {
-				this.isShowProvince = true;
-				this.isShowCity = true;
-				this.showProvinceList = false;
-				this.showCityList = false;
-				this.showDistList = true;
+				this.isShowProvince = true
+				this.isShowCity = true
+				this.showProvinceList = false
+				this.showCityList = false
+				this.showDistList = true
 				
-				this.selectedArea.city = {'key': i, 'value': obj};
-				this.distList = ChineseDistricts[i];
+				this.selectedArea.city = {'key': i, 'value': obj}
+				this.distList = ChineseDistricts[i]
 			},
 			//选择区县
 			selectDist(obj,i) {
-				this.isShowProvince = false;
-				this.isShowCity = false;
-				this.showProvinceList = true;
-				this.showCityList = false;
-				this.showDistList = false;
+				this.isShowProvince = false
+				this.isShowCity = false
+				this.showProvinceList = true
+				this.showCityList = false
+				this.showDistList = false
 				
-				this.selectedArea.dist = {'key': i, 'value': obj};
-				this.hideAreaSelector();
+				this.selectedArea.dist = {'key': i, 'value': obj}
+				this.hideAreaSelector()
 			},
 			//清空选择
 			clearArea(p,c,d) {
 				//清除省
 				if (p) {
-					this.selectedArea.province.key = '';
-					this.selectedArea.province.value = '';
-				};
+					this.selectedArea.province.key = ''
+					this.selectedArea.province.value = ''
+				}
 				//清除市
 				if (c) {
-					this.selectedArea.city.key = '';
-					this.selectedArea.city.value = '';
-				};
+					this.selectedArea.city.key = ''
+					this.selectedArea.city.value = ''
+				}
 				//清除县区
 				if (d) {
-					this.selectedArea.dist.key = '';
-					this.selectedArea.dist.value = '';
+					this.selectedArea.dist.key = ''
+					this.selectedArea.dist.value = ''
 				}
 			},
 		}

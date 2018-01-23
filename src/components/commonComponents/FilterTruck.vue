@@ -35,6 +35,7 @@
 						<span v-text="startArea.province.value"></span>
 						<span v-text="startArea.city.value"></span>
 						<span v-text="startArea.dist.value"></span>
+						<span class="close-icon" title="关闭" @click.stop="closeTips('simple')"></span>
 					</span>
 		        </div>
 				<AreaSelector :option="selectStartAreaOption" @selectArea="getStartArea"></AreaSelector>
@@ -46,7 +47,7 @@
 						<span v-text="endArea.province.value"></span>
 						<span v-text="endArea.city.value"></span>
 						<span v-text="endArea.dist.value"></span>
-						<span class="close-icon" title="关闭" @click.stop="closeTips(endArea.province.key)"></span>
+						<span class="close-icon" title="关闭" @click.stop="closeTips('multiple', endArea.province.key)"></span>
 					</span>
 				</div>
 		        <AreaSelectorMultiple :option="selectEndAreaOption" @selectArea="getEndArea"></AreaSelectorMultiple>
@@ -178,10 +179,27 @@
 				// console.log(JSON.stringify(this.selectedEndArea))
 			},
 			//删除已选的标签
-			closeTips(key) {
-				for (let i in this.endAreaList) {
-					if(this.endAreaList[i].province.key == key) {
-						this.endAreaList.splice(i,1)
+			closeTips(type, key) {
+				if (type == 'simple') {
+					this.startArea = {
+						"province": {
+							"key": '',
+							"value": '',
+						},
+						"city": {
+							"key": '',
+							"value": '',
+						},
+						"dist": {
+							"key": '',
+							"value": '',
+						}
+					}
+				} else {
+					for (let i in this.endAreaList) {
+						if(this.endAreaList[i].province.key == key) {
+							this.endAreaList.splice(i,1)
+						}
 					}
 				}
 				// console.log(JSON.stringify(this.endAreaList))

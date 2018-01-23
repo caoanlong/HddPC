@@ -27,7 +27,7 @@
 			return {
 				bannerList: [
 					{
-						img: '../../../static/img/banner1.png'
+						img: require('../../../static/img/banner1.png')
 					},
 					// {
 					// 	img: '../../../static/img/banner2.jpg'

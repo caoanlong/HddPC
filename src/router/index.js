@@ -3,7 +3,7 @@ import Router from 'vue-router'
 import store from '../store/store'
 import common from '../common/common.js'
 
-Vue.use(Router);
+Vue.use(Router)
 
 const router = new Router({
 	// mode: 'history',
@@ -163,21 +163,21 @@ const router = new Router({
 			]
 		},
 	]
-});
+})
 //刷新页面重新从缓存中获取会员信息
 if (localStorage.getItem('memberInfo')) {
-		store.commit('login',localStorage.getItem('memberInfo'));
-};
+		store.commit('login', localStorage.getItem('memberInfo'))
+}
 
 router.beforeEach((to, from, next) => {
 	if (to.meta.loginout) {
 		if (store.state.memberInfo) {
-			next({name: 'Home'});
+			next({name: 'Home'})
 		}else {
-			next();
+			next()
 		}
 	}else {
 		next()
 	}
 });
-export default router;
+export default router

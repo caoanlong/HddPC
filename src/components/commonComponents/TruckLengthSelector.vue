@@ -39,7 +39,7 @@
 							this.selectedList.push(obj)
 						} else {
 							if (this.selectedList.length == 3) {
-								this.msg('最多选择3个车长！')
+								this.msg.show('最多选择3个车长！')
 								return
 							}
 							this.selectedList.push(obj)

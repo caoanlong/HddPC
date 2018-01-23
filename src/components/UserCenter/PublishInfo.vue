@@ -4,184 +4,194 @@
 		<div class="tit" v-show="!isEdit">发布货源</div>
 		<div class="tit" v-show="isEdit">编辑常发货源</div>
 		<div class="con">
-		    <p class="title">装卸信息</p>
-		    <div class="form-item" :class="{'error':$v.startAreaValid.$error}">
-		        <span class="labels"><b>*</b>起始地</span>
-		        <div class="text-input AreaSelect" @click.stop="selectStartArea($event)">
-		        	<span class="selectTips" v-if="startAreaValid">
+			<p class="title">装卸信息</p>
+			<div class="form-item" :class="{'error':$v.startAreaValid.$error}">
+				<span class="labels"><b>*</b>起始地</span>
+				<div class="text-input AreaSelect" @click.stop="selectStartArea($event)">
+					<span class="selectTips" v-if="startAreaValid">
 						<span v-text="startArea.province.value"></span>
 						<span v-text="startArea.city.value"></span>
 						<span v-text="startArea.dist.value"></span>
 					</span>
-		        </div>
-		        <AreaSelector :option="selectStartAreaOption" @selectArea="getStartArea"></AreaSelector>
-		        <p v-if="$v.startAreaValid.$dirty">
-	        		<span class="tips" v-if="!$v.startAreaValid.required">起始地不能为空</span>
-	        	</p>
-		    </div>
-		    <div class="form-item" :class="{'error':$v.endAreaList.$error}">
-		        <span class="labels"><b>*</b>目的地</span>
-		        <div class="text-input AreaSelect height-auto" @click.stop="selectEndArea($event)">
-			        <span class="selectTips" v-for="endArea in endAreaList" v-if="endArea.province.key">
+				</div>
+				<AreaSelector :option="selectStartAreaOption" @selectArea="getStartArea"></AreaSelector>
+				<p v-if="$v.startAreaValid.$dirty">
+					<span class="tips" v-if="!$v.startAreaValid.required">起始地不能为空</span>
+				</p>
+			</div>
+			<div class="form-item" :class="{'error':$v.endAreaList.$error}">
+				<span class="labels"><b>*</b>目的地</span>
+				<div class="text-input AreaSelect height-auto" @click.stop="selectEndArea($event)">
+					<span class="selectTips" v-for="endArea in endAreaList" v-if="endArea.province.key">
 						<span v-text="endArea.province.value"></span>
 						<span v-text="endArea.city.value"></span>
 						<span v-text="endArea.dist.value"></span>
 						<span class="close-icon" title="关闭" @click.stop="closeTips(endArea.province.key)"></span>
 					</span>
 				</div>
-		        <AreaSelectorMultiple :option="selectEndAreaOption" @selectArea="getEndArea"></AreaSelectorMultiple>
-		        <p v-if="$v.endAreaList.$dirty">
-	        		<span class="tips" v-if="!$v.endAreaList.required">目的地不能为空</span>
-	        	</p>
-		    </div>
-		    <div class="form-item" :class="{'error':$v.loadDate.$error}">
-		        <span class="labels"><b>*</b>装货时间</span>
-		        <input type="text" id="goodsDate" class="text-input" placeholder="请选择装货时间" v-model="loadDate"/>
-		        <p v-if="$v.loadDate.$dirty">
-	        		<span class="tips" v-if="!$v.loadDate.required">装货时间不能为空</span>
-	        	</p>
-		    </div>
-		    <div class="clearfix">
-		        <p class="title">货物信息</p>
-		        <div class="form-item" :class="{'error':$v.goodsName.$error}">
-		            <span class="labels"><b>*</b>货物名称</span>
-		            <input type="text" class="text-input" placeholder="请输入货物名称" v-model.trim="goodsName" @input="$v.goodsName.$touch()"/>
-		            <p v-if="$v.goodsName.$dirty">
-		        		<span class="tips" v-if="!$v.goodsName.required">货物名称不能为空</span>
-		        	</p>
-		        </div>
-		        <div class="form-item" :class="{'error':$v.selectGoodsType.$error}">
-		            <span class="labels"><b>*</b>货物类型</span>
-		            <Multiselect :options="cargoTypeList" v-model="selectGoodsType" label="name" :searchable="false" :close-on-select="true" :show-labels="false" @close="$v.selectGoodsType.$touch()" placeholder="请选择货物类型"></Multiselect>
-		            <p v-if="$v.selectGoodsType.$dirty">
-		        		<span class="tips" v-if="!$v.selectGoodsType.required">货物类型不能为空</span>
-		        	</p>
-		        </div>
-		        <div class="form-item inline">
-		            <span class="labels"><b>*</b>包装</span>
-		            <Multiselect :options="cargoPackageList" v-model="selectPackageType" label="name" :searchable="false" :close-on-select="true" :show-labels="false" placeholder="请选择货物包装" @close="$v.selectPackageType.$touch()"></Multiselect>
-		        </div>
-		        <div class="form-item inline">
-		            <span class="labels"><b>*</b>重量</span>
-		            <input type="text" class="text-input hasUnit" placeholder="请输入重量" v-model.trim="goodsWeight" @input="$v.goodsWeight.$touch()"/>
-		            <span class="unit">吨</span>
-		        </div>
-		        <p v-if="$v.selectPackageType.$dirty">
-	        		<span class="tips inlineTips" v-if="!$v.selectPackageType.required">货物包装不能为空</span>
-	        	</p>
-	        	<p v-if="$v.goodsWeight.$dirty">
-	        		<span class="tips inlineTips" v-if="!$v.goodsWeight.required">重量不能为空</span>
-	        	</p>
-		    </div>
-		    <div class="clearfix">
-		        <div class="form-item inline">
-		            <span class="labels"><b>*</b>体积</span>
-		            <input type="text" class="text-input hasUnit" placeholder="请输入体积" v-model.trim="goodsVolume" @input="$v.goodsVolume.$touch()"/>
-		            <span class="unit">方</span>
-		        </div>
-		        <div class="form-item inline">
-		            <span class="labels"><b>*</b>数量</span>
-		            <input type="text" class="text-input hasUnit" placeholder="请输入数量" v-model.trim="goodsCount" @input="$v.goodsCount.$touch()"/>
-		            <span class="unit">件</span>
-		        </div>
-		        <p v-if="$v.goodsVolume.$dirty">
-	        		<span class="tips inlineTips" v-if="!$v.goodsVolume.required">货物包装不能为空</span>
-	        	</p>
-	        	<p v-if="$v.goodsCount.$dirty">
-	        		<span class="tips inlineTips" v-if="!$v.goodsCount.required">重量不能为空</span>
-	        	</p>
-		    </div>
-		    <div class="clearfix">
-		        <p class="title">用车要求</p>
-		        <div class="form-item" :class="{'error':$v.selectTruckSort.$error}">
-		            <span class="labels"><b>*</b>车型</span>
-		            <Multiselect :options="truckTypeList" v-model="selectTruckSort" label="name" :searchable="false" :close-on-select="true" :show-labels="false" placeholder="请选择车型" @close="$v.selectTruckSort.$touch()"></Multiselect>
-		            <p v-if="$v.selectTruckSort.$dirty">
-		        		<span class="tips" v-if="!$v.selectTruckSort.required">车型不能为空</span>
-		        	</p>
-		        </div>
-		        <div class="form-item" :class="{'error':$v.selectTruckLength.$error}">
-		            <span class="labels"><b>*</b>车长</span>
-		            <Multiselect :options="truckLengthList" v-model="selectTruckLength" :multiple="true" label="name" :searchable="false" :close-on-select="true" :show-labels="false" track-by="name" :hide-selected="true" placeholder="请选择车长" @close="$v.selectTruckLength.$touch()"></Multiselect>
-		            <p v-if="$v.selectTruckLength.$dirty">
-		        		<span class="tips" v-if="!$v.selectTruckLength.required">车长不能为空</span>
-		        	</p>
-		        </div>
-		        <div class="form-item" :class="{'error':$v.truckCount.$error}">
-		            <span class="labels"><b>*</b>数量</span>
-		            <input type="text" class="text-input" placeholder="请输入数量" v-model.trim="truckCount" @input="$v.truckCount.$touch()"/>
-		            <p v-if="$v.truckCount.$dirty">
-		        		<span class="tips" v-if="!$v.truckCount.required">数量不能为空</span>
-		        	</p>
-		        </div>
-		    </div>
-		    <div class="clearfix">
-		        <p class="title">价格模式</p>
-			    <div class="form-item" :class="{'error':$v.selectPriceModel.$error}">
-		            <span class="labels"><b>*</b>模式</span>
-		            <Multiselect :options="PriceModel" v-model="selectPriceModel" label="name" :searchable="false" :close-on-select="true" :show-labels="false" placeholder="请选择价格模式" @close="$v.selectPriceModel.$touch()"></Multiselect>
-		            <p v-if="$v.selectPriceModel.$dirty">
-		        		<span class="tips" v-if="!$v.selectPriceModel.required">价格模式不能为空</span>
-		        	</p>
-		        </div>
-			    <div class="form-item inline">
-		            <span class="labels"><b>*</b>单价</span>
-		            <input type="text" class="text-input hasUnit" placeholder="请输入单价" v-model="unitPrice" @input="$v.unitPrice.$touch()"/>
-		            <span class="unit">元/吨</span>
-		        </div>
-		        <div class="form-item inline">
-		            <span class="labels"><b>*</b>总价</span>
-		            <input type="text" class="text-input hasUnit" placeholder="总价" v-model="totalPrice" @input="$v.totalPrice.$touch()"/>
-		            <span class="unit">元</span>
-		        </div>
-		        <p v-if="$v.unitPrice.$dirty">
-	        		<span class="tips inlineTips" v-if="!$v.unitPrice.required">单价不能为空</span>
-	        	</p>
-	        	<p v-if="$v.totalPrice.$dirty">
-	        		<span class="tips inlineTips" v-if="!$v.totalPrice.required">总价不能为空</span>
-	        	</p>
-		    </div>
-		    <div class="clearfix">
-		        <p class="title">其它</p>
-		        <div class="form-item">
-			        <span class="labels">备注</span>
-			        <div class="text-input remark height-auto" ref="remark" @click.stop="addRemark($event)">
-			        	<span class="selectTips" v-for="selectedLabel in selectedLabels">
-			        		<span v-text="selectedLabel.name"></span>
+				<AreaSelectorMultiple :option="selectEndAreaOption" @selectArea="getEndArea"></AreaSelectorMultiple>
+				<p v-if="$v.endAreaList.$dirty">
+					<span class="tips" v-if="!$v.endAreaList.required">目的地不能为空</span>
+				</p>
+			</div>
+			<div class="form-item" :class="{'error':$v.loadDate.$error}">
+				<span class="labels"><b>*</b>装货时间</span>
+				<input type="text" id="goodsDate" class="text-input" placeholder="请选择装货时间" v-model="loadDate"/>
+				<p v-if="$v.loadDate.$dirty">
+					<span class="tips" v-if="!$v.loadDate.required">装货时间不能为空</span>
+				</p>
+			</div>
+			<div class="clearfix">
+				<p class="title">货物信息</p>
+				<div class="form-item" :class="{'error':$v.goodsName.$error}">
+					<span class="labels"><b>*</b>货物名称</span>
+					<input type="text" class="text-input" placeholder="请输入货物名称" v-model.trim="goodsName" @input="$v.goodsName.$touch()"/>
+					<p v-if="$v.goodsName.$dirty">
+						<span class="tips" v-if="!$v.goodsName.required">货物名称不能为空</span>
+					</p>
+				</div>
+				<div class="form-item" :class="{'error':$v.selectGoodsType.$error}">
+					<span class="labels"><b>*</b>货物类型</span>
+					<Multiselect :options="cargoTypeList" v-model="selectGoodsType" label="name" :searchable="false" :close-on-select="true" :show-labels="false" @close="$v.selectGoodsType.$touch()" placeholder="请选择货物类型"></Multiselect>
+					<p v-if="$v.selectGoodsType.$dirty">
+						<span class="tips" v-if="!$v.selectGoodsType.required">货物类型不能为空</span>
+					</p>
+				</div>
+				<div class="form-item inline">
+					<span class="labels"><b>*</b>包装</span>
+					<Multiselect :options="cargoPackageList" v-model="selectPackageType" label="name" :searchable="false" :close-on-select="true" :show-labels="false" placeholder="请选择货物包装" @close="$v.selectPackageType.$touch()"></Multiselect>
+				</div>
+				<div class="form-item inline">
+					<span class="labels"><b>*</b>重量</span>
+					<input type="text" class="text-input hasUnit" placeholder="请输入重量" v-model.trim="goodsWeight" @input="$v.goodsWeight.$touch()"/>
+					<span class="unit">吨</span>
+				</div>
+				<p v-if="$v.selectPackageType.$dirty">
+					<span class="tips inlineTips" v-if="!$v.selectPackageType.required">货物包装不能为空</span>
+				</p>
+				<p v-if="$v.goodsWeight.$dirty">
+					<span class="tips inlineTips" v-if="!$v.goodsWeight.required">重量不能为空</span>
+					<span class="tips inlineTips" v-else-if="!$v.goodsWeight.maxLength">超重了</span>
+					<span class="tips inlineTips" v-else-if="!$v.goodsWeight.numberUse">必须为正整数</span>
+				</p>
+			</div>
+			<div class="clearfix">
+				<div class="form-item inline">
+					<span class="labels"><b>*</b>体积</span>
+					<input type="text" class="text-input hasUnit" placeholder="请输入体积" v-model.trim="goodsVolume" @input="$v.goodsVolume.$touch()"/>
+					<span class="unit">方</span>
+				</div>
+				<div class="form-item inline">
+					<span class="labels"><b>*</b>数量</span>
+					<input type="text" class="text-input hasUnit" placeholder="请输入数量" v-model.trim="goodsCount" @input="$v.goodsCount.$touch()"/>
+					<span class="unit">件</span>
+				</div>
+				<p v-if="$v.goodsVolume.$dirty">
+					<span class="tips inlineTips" v-if="!$v.goodsVolume.required">体积不能为空</span>
+					<span class="tips inlineTips" v-else-if="!$v.goodsVolume.maxLength">体积过大</span>
+					<span class="tips inlineTips" v-else-if="!$v.goodsVolume.numberUse">必须为正整数</span>
+				</p>
+				<p v-if="$v.goodsCount.$dirty">
+					<span class="tips inlineTips" v-if="!$v.goodsCount.required">数量不能为空</span>
+					<span class="tips inlineTips" v-else-if="!$v.goodsCount.maxLength">数量过大</span>
+					<span class="tips inlineTips" v-else-if="!$v.goodsCount.numberUse">必须为正整数</span>
+				</p>
+			</div>
+			<div class="clearfix">
+				<p class="title">用车要求</p>
+				<div class="form-item" :class="{'error':$v.selectTruckSort.$error}">
+					<span class="labels"><b>*</b>车型</span>
+					<Multiselect :options="truckTypeList" v-model="selectTruckSort" label="name" :searchable="false" :close-on-select="true" :show-labels="false" placeholder="请选择车型" @close="$v.selectTruckSort.$touch()"></Multiselect>
+					<p v-if="$v.selectTruckSort.$dirty">
+						<span class="tips" v-if="!$v.selectTruckSort.required">车型不能为空</span>
+					</p>
+				</div>
+				<div class="form-item" :class="{'error':$v.selectTruckLength.$error}">
+					<span class="labels"><b>*</b>车长</span>
+					<Multiselect :options="truckLengthList" v-model="selectTruckLength" :multiple="true" label="name" :searchable="false" :close-on-select="true" :show-labels="false" track-by="name" :hide-selected="true" placeholder="请选择车长" @input="controlSelcetLength" @close="$v.selectTruckLength.$touch()"></Multiselect>
+					<p v-if="$v.selectTruckLength.$dirty">
+						<span class="tips" v-if="!$v.selectTruckLength.required">车长不能为空</span>
+					</p>
+				</div>
+				<div class="form-item" :class="{'error':$v.truckCount.$error}">
+					<span class="labels"><b>*</b>数量</span>
+					<input type="text" class="text-input" placeholder="请输入数量" v-model.trim="truckCount" @input="$v.truckCount.$touch()"/>
+					<p v-if="$v.truckCount.$dirty">
+						<span class="tips" v-if="!$v.truckCount.required">数量不能为空</span>
+						<span class="tips" v-else-if="!$v.truckCount.maxLength">数量过大</span>
+						<span class="tips" v-else-if="!$v.truckCount.numberUse">必须为正整数</span>
+					</p>
+				</div>
+			</div>
+			<div class="clearfix">
+				<p class="title">价格模式</p>
+				<div class="form-item" :class="{'error':$v.selectPriceModel.$error}">
+					<span class="labels"><b>*</b>模式</span>
+					<Multiselect :options="PriceModel" v-model="selectPriceModel" label="name" :searchable="false" :close-on-select="true" :show-labels="false" placeholder="请选择价格模式" @close="$v.selectPriceModel.$touch()"></Multiselect>
+					<p v-if="$v.selectPriceModel.$dirty">
+						<span class="tips" v-if="!$v.selectPriceModel.required">价格模式不能为空</span>
+					</p>
+				</div>
+				<div class="form-item inline">
+					<span class="labels"><b>*</b>单价</span>
+					<input type="text" class="text-input hasUnit" placeholder="请输入单价" v-model="unitPrice" @input="$v.unitPrice.$touch()"/>
+					<span class="unit">元/吨</span>
+				</div>
+				<div class="form-item inline">
+					<span class="labels"><b>*</b>总价</span>
+					<input type="text" class="text-input hasUnit" placeholder="总价" v-model="totalPrice" @input="$v.totalPrice.$touch()"/>
+					<span class="unit">元</span>
+				</div>
+				<p v-if="$v.unitPrice.$dirty">
+					<span class="tips inlineTips" v-if="!$v.unitPrice.required">单价不能为空</span>
+					<span class="tips inlineTips" v-else-if="!$v.unitPrice.numberUse">必须为正整数</span>
+				</p>
+				<p v-if="$v.totalPrice.$dirty">
+					<span class="tips inlineTips" v-if="!$v.totalPrice.required">总价不能为空</span>
+					<span class="tips inlineTips" v-else-if="!$v.totalPrice.numberUse">必须为正整数</span>
+				</p>
+			</div>
+			<div class="clearfix">
+				<p class="title">其它</p>
+				<div class="form-item">
+					<span class="labels">备注</span>
+					<div class="text-input remark height-auto" ref="remark" @click.stop="addRemark($event)">
+						<span class="selectTips" v-for="selectedLabel in selectedLabels">
+							<span v-text="selectedLabel.name"></span>
 							<span class="close-icon" title="关闭" @click.stop="closeRemark(selectedLabel)"></span>
 						</span>
-			        </div>
-			        <SelectByLabel :selectedLabels="selectedLabels" :obj="truckSrcRemarkList" :option="selectByLabelOption" @pushLabel="pushLabel"></SelectByLabel>
-			    </div>
-			    <div class="form-item">
-			        <span class="labels">不可见城市</span>
-			        <div class="text-input AreaSelect height-auto" @click.stop="selectInvisibleArea($event)">
-				        <span class="selectTips" v-for="invisibleArea in invisibleAreaList" v-if="invisibleArea.province.key">
+					</div>
+					<SelectByLabel :selectedLabels="selectedLabels" :obj="truckSrcRemarkList" :option="selectByLabelOption" @pushLabel="pushLabel"></SelectByLabel>
+				</div>
+				<div class="form-item">
+					<span class="labels">不可见城市</span>
+					<div class="text-input AreaSelect height-auto" @click.stop="selectInvisibleArea($event)">
+						<span class="selectTips" v-for="invisibleArea in invisibleAreaList" v-if="invisibleArea.province.key">
 							<span v-text="invisibleArea.province.value"></span>
 							<span v-text="invisibleArea.city.value"></span>
 							<span v-text="invisibleArea.dist.value"></span>
 							<span class="close-icon" title="关闭" @click.stop="closeTips2(invisibleArea.province.key)"></span>
 						</span>
 					</div>
-			        <AreaSelectorMultiple :option="selectInvisibleAreaOption" @selectArea="getInvisibleArea"></AreaSelectorMultiple>
-			    </div>
-			    <div class="form-item">
-			        <span class="labels">推送车辆</span>
-			        <div class="text-input remark AddSendTruck height-auto" @click.stop="addSendTruck">
-			        	<span class="selectTips" v-for="selectSendTruck in selectSendTruckList">
+					<AreaSelectorMultiple :option="selectInvisibleAreaOption" @selectArea="getInvisibleArea"></AreaSelectorMultiple>
+				</div>
+				<div class="form-item">
+					<span class="labels">推送车辆</span>
+					<div class="text-input remark AddSendTruck height-auto" @click.stop="addSendTruck">
+						<span class="selectTips" v-for="selectSendTruck in selectSendTruckList">
 							<span v-text="selectSendTruck.realName"></span>
 							<span class="close-icon" title="关闭" @click.stop="removeSendTruck(selectSendTruck)"></span>
 						</span>
-			        </div>
-			    </div>
-		    </div>
-		    <div class="form-item checkboxItem" v-if="!isEdit">
-		        <CheckBox content="存为常发货源" @isChecked="checkOften"></CheckBox>
-		    </div>
-		    <div class="form-item">
-		        <button type="button" class="btn" :disabled="$v.validationGroup.$invalid" @click="publishGoods()" v-if="!isEdit">发布货源</button>
-		        <button type="button" class="btn" :disabled="$v.validationGroup.$invalid" v-else>保存</button>
-		    </div>
+					</div>
+				</div>
+			</div>
+			<div class="form-item checkboxItem" v-if="!isEdit">
+				<CheckBox content="存为常发货源" @isChecked="checkOften"></CheckBox>
+			</div>
+			<div class="form-item">
+				<button type="button" class="btn" :disabled="$v.validationGroup.$invalid" @click="publishGoods()" v-if="!isEdit">发布货源</button>
+				<button type="button" class="btn" :disabled="$v.validationGroup.$invalid" v-else>保存</button>
+			</div>
 		</div>
 	</div>
 	<div v-show="!isAddSendTruck">
@@ -193,16 +203,16 @@
 				<div class="posr AreaSelectBox">
 					<div class="text-input AreaSelect" @click.stop="selectSearchArea($event)">
 						<span class="placeholder" v-show="searchPlaceholder">请选择城市</span>
-			        	<span class="selectAreaResult" :title="searchArea.province.value+searchArea.city.value+searchArea.dist.value" v-text="searchArea.province.value+searchArea.city.value+searchArea.dist.value">
+						<span class="selectAreaResult" :title="searchArea.province.value+searchArea.city.value+searchArea.dist.value" v-text="searchArea.province.value+searchArea.city.value+searchArea.dist.value">
 						</span>
-			        </div>
-			        <AreaSelector :option="selectSearchAreaOption" @selectArea="getSearchArea"></AreaSelector>
-		        </div>
+					</div>
+					<AreaSelector :option="selectSearchAreaOption" @selectArea="getSearchArea"></AreaSelector>
+				</div>
 				<Multiselect :options="cargoTypeList" label="label" :searchable="false" :close-on-select="true" :show-labels="false" @close="$v.selectGoodsType.$touch()" placeholder="请选择车辆范围"></Multiselect>
 				<Multiselect :options="cargoTypeList" label="label" :searchable="false" :close-on-select="true" :show-labels="false" @close="$v.selectGoodsType.$touch()" placeholder="请选择车辆状态"></Multiselect>
 				<button type="button" class="btn">搜索</button>
 				<p class="checkboxItem">
-		        	<CheckBox content="车源流向：云南昆明 至 广东深圳"></CheckBox>
+					<CheckBox content="车源流向：云南昆明 至 广东深圳"></CheckBox>
 				</p>
 			</div>
 			<div class="clearfix mb">
@@ -245,29 +255,29 @@
 				<p class="title">已选择</p>
 				<div class="selectedCon">
 					<div class="selectedItem" v-for="selectSendTruck in selectSendTruckList">
-		                <div class="pic fl">
-		                	<img v-if="selectSendTruck.headPicture" :src="__imgserver__+selectSendTruck.headPicture"/>
-		                	<img v-else src='../../assets/img/defaultImg.svg'/>
-		                </div>
-		                <div class="vehicleInfo fl">
-		                <p>{{selectSendTruck.realName}} {{selectSendTruck.plateNo}} 
+						<div class="pic fl">
+							<img v-if="selectSendTruck.headPicture" :src="__imgserver__+selectSendTruck.headPicture"/>
+							<img v-else src='../../assets/img/defaultImg.svg'/>
+						</div>
+						<div class="vehicleInfo fl">
+						<p>{{selectSendTruck.realName}} {{selectSendTruck.plateNo}} 
 							<span class="truckStatus truckStatus1" v-if="selectSendTruck.transStatus=='OnWay'&&selectSendTruck.isReturn=='Y'">运输中<b>回</b></span>
 							<span class="truckStatus truckStatus2" v-else-if="selectSendTruck.transStatus=='OnWay'&&selectSendTruck.isReturn!='Y'">运输中</span>
 							<span class="truckStatus truckStatus3" v-else-if="selectSendTruck.transStatus=='Empty'&&selectSendTruck.isReturn=='Y'">空车<b>回</b></span>
 							<span class="truckStatus truckStatus4" v-else-if="selectSendTruck.transStatus=='Empty'&&selectSendTruck.isReturn!='Y'">空车</span>
 							<span class="truckStatus" v-else="selectSendTruck.transStatus==''"></span>
-		                </p>
-		                <p v-html="selectSendTruck.truckTypeName.name+'&nbsp;'+selectSendTruck.plateNo+'&nbsp;'+selectSendTruck.lengthName.name+'&nbsp;'+selectSendTruck.loads+'吨'"></p>
-		                </div>
-		                <p class="lineInfo">
-			                <span>{{(selectSendTruck.areaFromBaseArea?selectSendTruck.areaFromBaseArea.fullName:'')|clearComma}}</span>
-			                <span class="arrow"></span>
-			                <span>
-			                	<span v-for="(item,i) in selectSendTruck.areaToBaseAreaList">{{item.fullName|clearComma}}<b v-if="selectSendTruck.areaToBaseAreaList.length-1 != i">，</b></span>
-			                </span>
-		                </p>
-		                <span class="removeBtn" @click.stop="removeSendTruck(selectSendTruck)"></span>
-		            </div>
+						</p>
+						<p v-html="selectSendTruck.truckTypeName.name+'&nbsp;'+selectSendTruck.plateNo+'&nbsp;'+selectSendTruck.lengthName.name+'&nbsp;'+selectSendTruck.loads+'吨'"></p>
+						</div>
+						<p class="lineInfo">
+							<span>{{(selectSendTruck.areaFromBaseArea?selectSendTruck.areaFromBaseArea.fullName:'')|clearComma}}</span>
+							<span class="arrow"></span>
+							<span>
+								<span v-for="(item,i) in selectSendTruck.areaToBaseAreaList">{{item.fullName|clearComma}}<b v-if="selectSendTruck.areaToBaseAreaList.length-1 != i">，</b></span>
+							</span>
+						</p>
+						<span class="removeBtn" @click.stop="removeSendTruck(selectSendTruck)"></span>
+					</div>
 				</div>
 			</div>
 			</div>
@@ -286,11 +296,12 @@
 	import AreaSelectorMultiple from '../commonComponents/AreaSelectorMultiple'
 	import SelectByLabel from '../commonComponents/SelectByLabel'
 	import Multiselect from 'vue-multiselect'
-	import { required,alphaNum,minLength,maxLength } from 'vuelidate/lib/validators'
 	import RateDisplay from '../commonComponents/RateDisplay'
 	import Paging from '../commonComponents/Paging'
 	import CheckBoxCircle from '../commonComponents/CheckBoxCircle'
 	import common from '../../common/common'
+	import { required, alphaNum, minLength, maxLength, numeric } from 'vuelidate/lib/validators'
+	import { numberUse } from '../../common/validators'
 	export default {
 		data() {
 			return {
@@ -338,25 +349,25 @@
 					},
 				},
 				truckTypeList: [],
-                truckLengthList:[],
-                selectedtruckLength: [],
-                cargoTypeList:[],
-                PriceModel:[
-	                {
-                		code:1,
+				truckLengthList:[],
+				selectedtruckLength: [],
+				cargoTypeList:[],
+				PriceModel:[
+					{
+						code:1,
 						name: '定价'
-                	},
-                	{
-                		code:2,
+					},
+					{
+						code:2,
 						name: '议价'
-                	},
-                	{
-                		code:3,
+					},
+					{
+						code:3,
 						name: '信息费'
-                	},
-                ],
-                cargoPackageList:[],
-                truckSrcRemarkList: [],
+					},
+				],
+				cargoPackageList:[],
+				truckSrcRemarkList: [],
 				selectedLabels: [],
 				selectedRole: 1,
 				selectStartAreaOption: {
@@ -406,193 +417,203 @@
 			},
 			isCheckTruckSourceAll() {
 				for(let i = 0; i < this.truckSourceList.length; i++){
-			       	if(this.selectSendTruckList.indexOf(this.truckSourceList[i]) == -1) {
-			       		return false;
-			       	}
-			    }
-			    return true;
+					if(this.selectSendTruckList.indexOf(this.truckSourceList[i]) == -1) {
+						return false;
+					}
+				}
+				return true;
 			}
 		},
 		validations: {
-		    startAreaValid: {
-		      	required
-		    },
-		    endAreaList: {
-		    	required
-		    },
-		    loadDate: {
-		    	required
-		    },
-		    goodsName: {
-		    	required
-		    },
-		    selectGoodsType: {
-		    	required
-		    },
-		    selectPackageType: {
-		    	required
-		    },
-		    goodsWeight: {
-		    	required
-		    },
-		    goodsVolume: {
-		    	required
-		    },
-		    goodsCount: {
-		    	required
-		    },
-		    selectTruckSort: {
-		    	required
-		    },
-		    selectTruckLength: {
-		    	required
-		    },
-		    truckCount: {
-		    	required
-		    },
-		    selectPriceModel: {
-		    	required
-		    },
-		    unitPrice: {
-		    	required
-		    },
-		    totalPrice: {
-		    	required
-		    },
-		    validationGroup: [
-			    'startAreaValid',
-			    'endAreaList',
-			    'loadDate',
-			    'goodsName',
-			    'selectGoodsType',
-			    'selectPackageType',
-			    'goodsWeight',
-			    'goodsVolume',
-			    'goodsCount',
-			    'selectTruckSort',
-			    'selectTruckLength',
-			    'truckCount',
-			    'selectPriceModel',
-			    'unitPrice',
-			    'totalPrice',
-		    ]
+			startAreaValid: {
+				required
+			},
+			endAreaList: {
+				required
+			},
+			loadDate: {
+				required
+			},
+			goodsName: {
+				required
+			},
+			selectGoodsType: {
+				required
+			},
+			selectPackageType: {
+				required
+			},
+			goodsWeight: {
+				required,
+				numberUse,
+				maxLength: maxLength(2)
+			},
+			goodsVolume: {
+				required,
+				numberUse,
+				maxLength: maxLength(3)
+			},
+			goodsCount: {
+				required,
+				numberUse,
+				maxLength: maxLength(6)
+			},
+			selectTruckSort: {
+				required
+			},
+			selectTruckLength: {
+				required
+			},
+			truckCount: {
+				required,
+				numberUse,
+				maxLength: maxLength(3)
+			},
+			selectPriceModel: {
+				required
+			},
+			unitPrice: {
+				required,
+				numberUse
+			},
+			totalPrice: {
+				required,
+				numberUse
+			},
+			validationGroup: [
+				'startAreaValid',
+				'endAreaList',
+				'loadDate',
+				'goodsName',
+				'selectGoodsType',
+				'selectPackageType',
+				'goodsWeight',
+				'goodsVolume',
+				'goodsCount',
+				'selectTruckSort',
+				'selectTruckLength',
+				'truckCount',
+				'selectPriceModel',
+				'unitPrice',
+				'totalPrice',
+			]
 		},
 		created() {
-			this.getConst('CargoType');
-			this.getConst('CargoPackage');
-			this.getConst('TruckType');
-			this.getConst('TruckLength');
-			this.getConst('TruckSrcRemark');
+			this.getConst('CargoType')
+			this.getConst('CargoPackage')
+			this.getConst('TruckType')
+			this.getConst('TruckLength')
+			this.getConst('TruckSrcRemark')
 			if (this.isEdit) {
 				this.getOftenPublishDetail()
 			}
 		},
 		mounted() {
-			var that = this;
+			var that = this
 			laydate.render({
 				elem: '#goodsDate',
 				done: function(value, date){
-					that.loadDate = value;
-					that.$v.loadDate.$touch();
-				    console.log('你选择的日期是：' + value + '\n获得的对象是' + JSON.stringify(date));
-		  		}
-			});
+					that.loadDate = value
+					that.$v.loadDate.$touch()
+					console.log('你选择的日期是：' + value + '\n获得的对象是' + JSON.stringify(date))
+				}
+			})
 		},
 		methods: {
 			selectStartArea(e) {
-				common.trigger(document);
+				common.trigger(document)
 				this.selectStartAreaOption = {
 					isShow: true,
 					left: e.target.offsetLeft+'px',
 					top: (e.target.offsetHeight+4)+'px'
-				};
+				}
 			},
 			getStartArea(obj) {
-				this.startArea = obj;
-				console.log(JSON.stringify(this.startArea));
-				this.$v.startAreaValid.$touch();
+				this.startArea = obj
+				console.log(JSON.stringify(this.startArea))
+				this.$v.startAreaValid.$touch()
 			},
 			selectEndArea(e) {
-				common.trigger(document);
+				common.trigger(document)
 				this.selectEndAreaOption = {
 					isShow: true,
 					left: e.target.offsetLeft+'px',
 					top: (e.target.offsetHeight+4)+'px'
-				};
+				}
 			},
 			getEndArea(arr) {
-				this.endAreaList = arr;
-				console.log(JSON.stringify(this.endAreaList));
-				this.$v.endAreaList.$touch();
+				this.endAreaList = arr
+				console.log(JSON.stringify(this.endAreaList))
+				this.$v.endAreaList.$touch()
 			},
 			selectInvisibleArea(e) {
 				this.selectInvisibleAreaOption = {
 					isShow: true,
 					left: e.target.offsetLeft+'px',
 					top: (e.target.offsetHeight+4)+'px'
-				};
+				}
 			},
 			getInvisibleArea(arr) {
-				this.invisibleAreaList = arr;
-				console.log(JSON.stringify(this.invisibleAreaList));
+				this.invisibleAreaList = arr
+				console.log(JSON.stringify(this.invisibleAreaList))
 			},
 			//删除已选的标签
 			closeTips(key) {
 				for (let i in this.endAreaList) {
 					if(this.endAreaList[i].province.key == key) {
-						this.endAreaList.splice(i,1);
+						this.endAreaList.splice(i,1)
 					}
-				};
-				console.log(JSON.stringify(this.endAreaList));
+				}
+				console.log(JSON.stringify(this.endAreaList))
 			},
 			closeTips2(key) {
 				for (let i in this.invisibleAreaList) {
 					if(this.invisibleAreaList[i].province.key == key) {
-						this.invisibleAreaList.splice(i,1);
+						this.invisibleAreaList.splice(i,1)
 					}
-				};
-				console.log(JSON.stringify(this.invisibleAreaList));
+				}
+				console.log(JSON.stringify(this.invisibleAreaList))
 			},
 			addRemark(e) {
 				this.selectByLabelOption = {
 					isShow: true,
 					width: e.target.offsetWidth+'px',
 					left: e.target.offsetLeft+'px',
-				};
+				}
 			},
 			closeRemark(obj) {
 				if (obj) {
-					let index = this.selectedLabels.indexOf(obj);
+					let index = this.selectedLabels.indexOf(obj)
 					if (index > -1) {
-						this.selectedLabels.splice(index,1);
+						this.selectedLabels.splice(index,1)
 					}
-				};
-				console.log(JSON.stringify(this.selectedLabels));
+				}
+				console.log(JSON.stringify(this.selectedLabels))
 			},
 			pushLabel(obj) {
-				this.selectedLabels = obj;
-				console.log(JSON.stringify(this.selectedLabels));
+				this.selectedLabels = obj
+				console.log(JSON.stringify(this.selectedLabels))
 			},
 			//进入选择推送车辆
 			addSendTruck() {
-				this.isAddSendTruck = false;
-				this.getTruckList();
+				this.isAddSendTruck = false
+				this.getTruckList()
 			},
 			//查询车辆列表
 			getTruckList() {
-				let URL = this.__webserver__ + 'truck/fleet/findPage';
+				let URL = this.__webserver__ + 'truck/fleet/findPage'
 				var params = {
 					// pageSize: 5
-				};
+				}
 				this.$http.post(URL,params).then(
 					(res) => {
-						console.log(JSON.stringify(res.body.message));
+						console.log(JSON.stringify(res.body.message))
 						if (res.body.code == 200) {
-							this.truckSourceList = res.body.data.list;
+							this.truckSourceList = res.body.data.list
 						}
 					},
 					(res) => {
-						console.log(JSON.stringify(res));
+						console.log(JSON.stringify(res))
 					}
 				)
 			},
@@ -601,59 +622,88 @@
 					isShow: true,
 					left: e.target.offsetLeft+'px',
 					top: (e.target.offsetHeight+4)+'px'
-				};
+				}
 			},
 			getSearchArea(obj) {
-				this.searchPlaceholder = false;
+				this.searchPlaceholder = false
 				if (obj.province.key) {
-					this.searchPlaceholder = false;
-					this.searchArea = obj;
+					this.searchPlaceholder = false
+					this.searchArea = obj
 				}else {
-					this.searchPlaceholder = true;
+					this.searchPlaceholder = true
 				}
-				console.log(JSON.stringify(this.startArea));
+				console.log(JSON.stringify(this.startArea))
 			},
 			checkAllSendTruck(value,isChecked) {
 				if (!isChecked) {
 					//如果没有全选，应将剩余未选的子项添加进来
 					for (let i = 0; i < this.truckSourceList.length; i++) {
-						let index = this.selectSendTruckList.indexOf(this.truckSourceList[i]);
+						let index = this.selectSendTruckList.indexOf(this.truckSourceList[i])
 						if (index == -1) {
-							this.selectSendTruckList.push(this.truckSourceList[i]);
+							this.selectSendTruckList.push(this.truckSourceList[i])
 						}
 					}
 				}else {
 					//如果全选，则从已选的项去除当前页所有的项
 					for (let j = 0; j < this.truckSourceList.length; j++) {
-						let index = this.selectSendTruckList.indexOf(this.truckSourceList[j]);
+						let index = this.selectSendTruckList.indexOf(this.truckSourceList[j])
 						if (index > -1) {
-							this.selectSendTruckList.splice(index,1);
+							this.selectSendTruckList.splice(index, 1)
 						}
 					}
 				}
 			},
 			checkOneSendTruck(value,isChecked) {
 				if (!isChecked) {
-					this.selectSendTruckList.push(value);
+					this.selectSendTruckList.push(value)
 				}else {
-					let index = this.selectSendTruckList.indexOf(value);
+					let index = this.selectSendTruckList.indexOf(value)
 					if (index > -1) {
-						this.selectSendTruckList.splice(index,1);
+						this.selectSendTruckList.splice(index, 1)
 					}
-				};
+				}
 			},
 			removeSendTruck(value) {
-				let index = this.selectSendTruckList.indexOf(value);
+				let index = this.selectSendTruckList.indexOf(value)
 				if (index > -1) {
-					this.selectSendTruckList.splice(index,1);
-				};
+					this.selectSendTruckList.splice(index, 1)
+				}
 			},
 			checkOften(bool) {
-				this.isOften = bool;
+				this.isOften = bool
+			},
+			controlSelcetLength(selectedOption) {
+				// let current = selectedOption[selectedOption.length - 1]
+				// let names = this.selectTruckLength.map(item => item.name)
+				// // 如果选择的选项已经勾选
+				// if (names.includes(current.name)) {
+				// 	this.selectTruckLength.splice(names.indexOf(current.name), 1)
+				// 	return
+				// // 如果选择的选项没有勾选
+				// } else {
+				// 	// 如果选择不限
+				// 	if (current.name == '不限') {
+				// 		this.selectTruckLength = []
+				// 		this.selectTruckLength.push(current)
+				// 	// 如果勾选的是“其他”
+				// 	} else {
+				// 		// 如果包含不限
+				// 		if (names.includes('不限')) {
+				// 			this.selectTruckLength = []
+				// 			this.selectTruckLength.push(current)
+				// 		} else {
+				// 			if (this.selectTruckLength.length == 3) {
+				// 				this.msg.show('最多选择3个车长！')
+				// 				return
+				// 			}
+				// 			this.selectTruckLength.push(current)
+				// 		}
+				// 	}
+				// }
 			},
 			//发布货源
 			publishGoods() {
-				let URL = this.__webserver__ + 'cargoSource/add';
+				let URL = this.__webserver__ + 'cargoSource/add'
 				var params = {
 					"memID": this.memID,
 					"areaFrom": this.startArea.dist.key || this.startArea.city.key || this.startArea.province.key,
@@ -675,31 +725,31 @@
 					"invisibleCity": this.areaArrToStr(this.invisibleAreaList),
 					"publishTo": this.arrToStr(this.selectSendTruckList,'memID'),
 					"isFrequent": this.isOften?'Y':'N'
-				};
-				console.log(JSON.stringify(params));
+				}
+				console.log(JSON.stringify(params))
 				this.$http.post(URL,params).then(
 					(res) => {
 						if (res.body.code == 200) {
-							this.showMsg(this,{msg: '发布成功', delay: 1000});
-							this.$router.push({name:'OftenPublish',query: {active: 22}});
+							this.showMsg(this,{msg: '发布成功', delay: 1000})
+							this.$router.push({name:'OftenPublish',query: {active: 22}})
 						}else {
-							this.showMsg(this,{msg: res.body.message, delay: 1000});
+							this.showMsg(this,{msg: res.body.message, delay: 1000})
 						}
 					},
 					(res) => {
-						console.log(JSON.stringify(res));
+						console.log(JSON.stringify(res))
 					}
 				)
 			},
 			getOftenPublishDetail() {
-				let URL = this.__webserver__ + 'frequent/detail';
+				let URL = this.__webserver__ + 'frequent/detail'
 				var params = {
 					frequentConcernID: this.$route.query.id
-				};
+				}
 				this.$http.get(URL,{params:params}).then(
 					(res) => {
 						if (res.body.code == 200) {
-							this.oftenPublishDetail = res.body.data;
+							this.oftenPublishDetail = res.body.data
 							this.$nextTick(() => {
 								this.startArea = {
 									"province": {
@@ -715,36 +765,36 @@
 										"value": '',
 									}
 								}
-								this.loadDate = res.body.data.loadingDate;
-								this.goodsName = res.body.data.cargoName;
+								this.loadDate = res.body.data.loadingDate
+								this.goodsName = res.body.data.cargoName
 								this.selectGoodsType = {
 									code: res.body.data.cargoTypeID,
 									name: this.arrFindName(this.cargoTypeList, res.body.data.cargoTypeID)
-								};
+								}
 								this.selectPackageType = {
 									code: res.body.data.cargoPackage,
 									name: this.arrFindName(this.cargoPackageList, res.body.data.cargoPackage)
-								};
-								this.goodsWeight = res.body.data.cargoWeight;
-								this.goodsVolume = res.body.data.cargoVolume;
-								this.goodsCount = res.body.data.cargoNum;
+								}
+								this.goodsWeight = res.body.data.cargoWeight
+								this.goodsVolume = res.body.data.cargoVolume
+								this.goodsCount = res.body.data.cargoNum
 								this.selectTruckSort = {
 									code: res.body.data.truckType,
 									name: this.arrFindName(this.truckTypeList, res.body.data.truckType)
-								};
-								this.truckCount = res.body.data.truckNum;
+								}
+								this.truckCount = res.body.data.truckNum
 								this.selectPriceModel = {
 									code: '',
 									name: res.body.data.cargoFreightType
-								};
-								this.unitPrice = res.body.data.cargoFreightPrice;
-								this.totalPrice = res.body.data.cargoFreightTotalPrice;
+								}
+								this.unitPrice = res.body.data.cargoFreightPrice
+								this.totalPrice = res.body.data.cargoFreightTotalPrice
 							})
-							// console.log(JSON.stringify(this.oftenPublishDetail));
+							// console.log(JSON.stringify(this.oftenPublishDetail))
 						}
 					},
 					(res) => {
-						console.log(JSON.stringify(res));
+						console.log(JSON.stringify(res))
 					}
 				)
 			}
@@ -1084,7 +1134,7 @@
 		margin-left 3px
 		&.truckStatus1
 			border-color #20a0ff
-			background #fff;
+			background #fff
 			color #20a0ff
 			padding:0 20px 0 5px
 			position relative

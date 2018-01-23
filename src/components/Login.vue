@@ -14,24 +14,24 @@
 							<div class="bd">
 								<!--登录注册-->
 								<div class="tabCon">
-								    <div class="form-item">
-								    	<input type="text" placeholder="请输入手机号" class="text-input phone" v-model="mobile" :maxlength="11"/>
-								    </div>
-								    <div class="form-item">
-								    	<input type="text" placeholder="手机验证码" class="text-input VcodeInput" v-model="vCode" :maxlength="6"/>
-								    	<button :disabled="$v.mobile.$invalid||isGetVCode" v-text="getVcodeText" @click.stop="getVcode()" class="GetVcode"></button>
-								    </div>
-								    <div class="form-item checkboxItem" v-show="isLogin">
+									<div class="form-item">
+										<input type="text" placeholder="请输入手机号" class="text-input phone" v-model="mobile" :maxlength="11"/>
+									</div>
+									<div class="form-item">
+										<input type="text" placeholder="手机验证码" class="text-input VcodeInput" v-model="vCode" :maxlength="6"/>
+										<button :disabled="$v.mobile.$invalid||isGetVCode" v-text="getVcodeText" @click.stop="getVcode()" class="GetVcode"></button>
+									</div>
+									<div class="form-item checkboxItem" v-show="isLogin">
 										<CheckBox content="一个月内记住登录状态"></CheckBox>
 									</div>
-								    <div class="form-item checkboxItem" v-show="!isLogin">
-							        	<CheckBox content="我已阅读并同意" @isChecked="agreement"></CheckBox>
-							        	<span class="c2 agreementBtn" @click="showRegisterRule">《货多多注册条款》</span>
-							        </div>
-								    <div class="form-item">
+									<div class="form-item checkboxItem" v-show="!isLogin">
+										<CheckBox content="我已阅读并同意" @isChecked="agreement"></CheckBox>
+										<span class="c2 agreementBtn" @click="showRegisterRule">《货多多注册条款》</span>
+									</div>
+									<div class="form-item">
 										<button :disabled="$v.validationGroup.$invalid" type="button" v-show="isLogin" @click.stop="signin()" class="btn loginBtn">登录</button>
 										<button :disabled="$v.validationGroup.$invalid||!isAgree" type="button" v-show="!isLogin" @click="register()" class="btn regBtn">注册</button>
-								    </div>
+									</div>
 									<div class="tips" v-show="isLogin">
 										<ul>
 											<li>登录后，您将可以：</li>
@@ -59,40 +59,13 @@
 </template>
 <script>
 	import CheckBox from './commonComponents/CheckBox'
-	import { required,minLength,maxLength } from 'vuelidate/lib/validators'
+	import { required, minLength, maxLength } from 'vuelidate/lib/validators'
+	import { mobile, verCode } from '../common/validators'
 	export default {
 		data() {
-			// const validateMobile = (rule, value, callback) => {
-   //              if (value === '') {
-   //              	this.isCorrectMobile = false;
-   //                  callback(new Error('手机号不能为空'));
-   //              } else {
-   //                  if(!(/^1[34578]\d{9}$/.test(value))){
-   //                  	this.isCorrectMobile = false;
-   //                  	callback(new Error('手机号格式不正确')); 
-			// 	    }else {
-			// 	    	this.isCorrectMobile = true;
-			// 	    }
-   //                  callback();
-   //              }
-   //          };
-   //          const validateVCode = (rule, value, callback) => {
-   //              if (value === '') {
-   //              	this.isCorrectVCode = false;
-   //                  callback(new Error('验证码不能为空'));
-   //              } else {
-   //                  if(!(/^\d{6}$/.test(value))){
-   //                  	this.isCorrectVCode = false;
-   //                  	callback(new Error('验证码格式不正确')); 
-			// 	    }else {
-			// 	    	this.isCorrectVCode = true;
-			// 	    }
-   //                  callback();
-   //              }
-   //          };
 			return {
 				mobile: '',
-                vCode: '',
+				vCode: '',
 				isLogin: true,
 				getVcodeText: '点击获取',
 				isGetVCode: false,
@@ -101,26 +74,28 @@
 			}
 		},
 		validations: {
-		    mobile: {
-		      	required
-		    },
-		    vCode: {
-		      	required
-		    },
-		    validationGroup: ['mobile', 'vCode']
+			mobile: {
+				required,
+				mobile
+			},
+			vCode: {
+				required,
+				verCode
+			},
+			validationGroup: ['mobile', 'vCode']
 		},
 		created() {
 			this.$store.commit({type:'selectChange',selected:-1})
 		},
 		methods: {
-            tabLoginRegister(boolean) {
-            	this.isLogin = boolean
-            	this.mobile = ''
-            	this.vCode = ''
-            },
-            agreement(boolean) {
-            	this.isAgree = boolean
-            },
+			tabLoginRegister(boolean) {
+				this.isLogin = boolean
+				this.mobile = ''
+				this.vCode = ''
+			},
+			agreement(boolean) {
+				this.isAgree = boolean
+			},
 			getVcode() {
 				if (this.isGetVCode) {
 					return
