@@ -6,7 +6,7 @@
 					<img :src="__imgserver__ + truck.headPicture" @error="errorImg"/>
 				</div>
 				<div class="vehicleInfo fl">
-				<p><span>{{truck.realName}}</span><span>{{truck.plateNo}}</span></p>
+				<p><span>{{truck.realName}}</span> / <span>{{truck.plateNo}}</span></p>
 				<p v-html="truck.truckLengthName+'&nbsp;'+truck.loads+'吨'+'&nbsp;'+truck.truckTypeName"></p>
 				<!-- <p>高低平板全挂 17.5米 35吨</p> -->
 				</div>

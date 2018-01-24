@@ -17,7 +17,8 @@
 					<p><label>所在区域：</label>云南昆明</p>
 					<p><span class="c1"><label>发布货源：</label>{{goodsDetail.cargoSourceNum || 0}}次</span><span class="c1"><label>平台成交：</label>{{goodsDetail.dealNum || 0}}笔</span><span class="c1"><label>好评率：</label>{{goodsDetail.feedbackRate}}%</span></p>
 					<!-- <span class="attention attentioned">已关注</span> -->
-					<span class="attention">未关注</span>
+					<!-- <span class="attention">未关注</span> -->
+					<router-link to="" class="contactBtn">联系货主</router-link>
 				</div>
 				<div class="goodsInfo clearfix">
 					<p class="title">货源信息</p>
@@ -54,9 +55,9 @@
 			</ul>
 			<div class="bd">
 				<div class="tabCon" v-show="tab==1">
-					<div class="filterTab clearfix">
+					<!-- <div class="filterTab clearfix">
 						<SimpleSelector :optionList="todayOrMore" :defaultOption="selectedRange" :styleClass="3"></SimpleSelector>
-					</div>
+					</div> -->
 					<div class="listItem" v-for="item in 5" key="item">
 						<span class="businessModels businessModels1" v-if="businessModels==1">定价</span>
 						<span class="businessModels businessModels2" v-else-if="businessModels==2">议价</span>
@@ -258,8 +259,19 @@
 		.ownerInfo
 			padding 0 100px 0 160px
 			position relative
-			height 140px
 			overflow hidden
+			.contactBtn
+				padding 0 20px 0 30px
+				height 28px
+				line-height 28px
+				display inline-block
+				background url('../../assets/img/call.png') no-repeat 8px center #ffc426
+				color #fff
+				border-radius 4px
+				&:hover
+					background-color #fbbd17
+				&:active
+					background-color #fcb802
 			.ownerPic
 				width 140px
 				height 140px
@@ -318,6 +330,7 @@
 				line-height 30px
 				span
 					margin-right 10px
+			
 			.pushBtn
 				position absolute
 				right 10px

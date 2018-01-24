@@ -22,7 +22,7 @@
 				<p class="pos">{{data.createTimeStr}}</p>
 			</div>
 			<div class="userInfo fl">
-				<p class="user">{{data.realName}}<span class="score"></span> <span class="attention">未关注</span></p>
+				<p class="user">{{data.realName}}<span class="score"></span></p>
 				<p class="goods">
 					<span>{{data.cargoName && data.cargoName}}{{data.cargoWeight ? '/' + data.cargoWeight + '吨' : ''}}{{data.cargoVolume ? '/' + data.cargoVolume + '方' : ''}}{{data.cargoNum ? '/' + data.cargoNum + '件' : ''}}</span>
 				</p>

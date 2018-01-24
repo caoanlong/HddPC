@@ -16,7 +16,8 @@
 				<div class="otherInfo">
 					<p><span class="c1"><label>平台承运：</label>{{truckSourceDetail.waybillNum ? truckSourceDetail.waybillNum : '0'}}笔</span><span class="c1"><label>累计里程：</label>{{truckSourceDetail.mileage ? truckSourceDetail.mileage : '0'}}km</span><span class="c1"><label>好评率：</label>{{truckSourceDetail.feedbackRate}}%</span></p>
 				</div>
-				<router-link :to="{name: 'SendGoods',query: {memID: truckSourceDetail.memIDStr}}" class="pushBtn" v-if="isLogin && truckSourceDetail.certifyStatus =='Y'">推送货源</router-link>
+				<!-- <router-link :to="{name: 'SendGoods',query: {memID: truckSourceDetail.memIDStr}}" class="pushBtn" v-if="isLogin && truckSourceDetail.certifyStatus =='Y'">推送货源</router-link> -->
+				<router-link to="" class="contactBtn">联系司机</router-link>
 			</div>
 		</div>
 		<!-- 车源详情 Start-->
@@ -239,6 +240,18 @@
 				padding 10px 0
 			.otherInfo
 				padding-bottom 20px
+			.contactBtn
+				padding 0 20px 0 30px
+				height 28px
+				line-height 28px
+				display inline-block
+				background url('../../assets/img/call.png') no-repeat 8px center #ffc426
+				color #fff
+				border-radius 4px
+				&:hover
+					background-color #fbbd17
+				&:active
+					background-color #fcb802
 			.pushBtn
 				padding 0 20px 0 30px
 				height 28px

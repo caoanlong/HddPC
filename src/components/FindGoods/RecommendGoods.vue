@@ -2,7 +2,7 @@
 	<div class="recommend">
 		<div class="tit">推荐货源</div>
 		<router-link :to="{name:'GoodsDetail', query: {cargoSourceID: goods.cargoSourceIDStr}}" title="查看详情" class="recommendItem" v-for="goods in GoodsList" :key="goods.cargoSourceIDStr">
-			<div class="pic">
+			<!-- <div class="pic">
 				<img v-if="goods.headPicture" :src="__imgserver__ + goods.headPicture" @error="errorImg"/>
 			</div>
 			<div class="userInfo">
@@ -17,7 +17,7 @@
 					<span class="businessModels businessModels2" v-show="goods.cargoFreightType=='Talk'">议价</span>
 					<span class="businessModels businessModels3" v-show="goods.cargoFreightType=='Agent'">中介</span>
 				</p>
-			</div>
+			</div> -->
 			<p class="lineInfo">
 				<span>{{goods.areaFromName.split(',').join('').substr(0, 6)}}</span>
 				<span class="arrow"></span>
@@ -55,7 +55,7 @@
 				this.$http.get(URL,{params:params}).then((res) => {
 					if (res.body.code == 200) {
 						this.GoodsList = res.body.data.list
-						// console.log(JSON.stringify(res.body.data))
+						console.log(JSON.stringify(res.body.data))
 					}else if (res.body.code == 10006) {
 						localStorage.removeItem('memberInfo')
 						localStorage.removeItem('authorization')
@@ -88,8 +88,8 @@
 			font-size 14px
 			font-weight bold
 		.recommendItem
-			padding-top 60px
-			height 164px
+			// padding-top 60px
+			height 104px
 			border-bottom 1px solid #f0f0f0
 			position relative
 			display block

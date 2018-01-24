@@ -13,14 +13,21 @@
                 <li class="firstLi">
                 	<router-link :to="{name:'FindGoods'}" title="货源" :class="{'selected':selected == 3}">货源</router-link>
                 </li>
+                <li class="firstLi">
+                	<span @mouseover="showPop(true)" @mouseout="showPop(false)">APP下载</span>
+                	<div class="pop" v-show="isPopShow" @mouseover="showPop(true)" @mouseout="showPop(false)">
+                		<router-link :to="{name:'FindGoods'}" title="货主端下载" :class="{'selected':selected == 4}">货主端下载</router-link>
+                		<router-link :to="{name:'FindGoods'}" title="司机端下载" :class="{'selected':selected == 5}">司机端下载</router-link>
+                	</div>
+                </li>
                 <!-- <li class="firstLi">
                 	<router-link :to="{name:'SpecialLine'}" title="专线" :class="{'selected':selected == 4}">专线</router-link>
                 </li> -->
                 <li class="firstLi">
-                	<router-link :to="{name:'AboutUs',query:{cur:1}}" title="关于我们" :class="{'selected':selected == 5}">关于我们</router-link>
+                	<router-link :to="{name:'AboutUs',query:{cur:1}}" title="关于我们" :class="{'selected':selected == 6}">关于我们</router-link>
                 </li>
             </ul>
-            <div class="fr">
+            <!-- <div class="fr">
                 <div class="userInfo fl">
                     <span v-if="!memberInfo">
                     	<router-link :to="{name:'Login'}" title="登录/注册">登录/注册</router-link>
@@ -30,9 +37,12 @@
                     	<a href="javascript:void(0)" title="退出" @click.stop="signout()">退出</a>
                     </span>
                 </div>
-                <!-- <span>
+                <span>
                 	<router-link to="" title="企业端供应链" class="fr link">企业端供应链</router-link>
-                </span> -->
+                </span>
+            </div> -->
+            <div class="fr language">
+            	<span>EngLish</span> / <span class="cur">中文</span>
             </div>
         </div>
     </div>
@@ -41,7 +51,8 @@
 	export default {
 		data() {
 			return {
-				isSubMenuShow: false
+				isSubMenuShow: false,
+				isPopShow:false
 			}
 		},
 		computed: {
@@ -65,6 +76,13 @@
 					this.isSubMenuShow = true
 				}else {
 					this.isSubMenuShow = false
+				}
+			},
+			showPop(isShow) {
+				if (isShow) {
+					this.isPopShow = true
+				}else {
+					this.isPopShow = false
 				}
 			},
 			signout() {
@@ -92,6 +110,7 @@
 	.header
 		height 65px
 		background #fff
+		border-bottom 1px solid #ddd
 		.logo
 			display block
 			padding 15px 0
@@ -102,13 +121,16 @@
 				float left
 				height 65px
 				padding 0px 20px
+				position relative
 				a
+				span
 					display block
 					padding 0 10px
 					font-size 16px
 					line-height 65px
 					height 65px
 					color #878787
+					cursor pointer
 					&:hover
 						color #6cc
 					&.selected
@@ -119,6 +141,19 @@
 					height 32px
 					color #878787
 					border-bottom 2px solid #fff
+				
+				.pop
+					position absolute
+					top 64px
+					background #fff
+					border 1px solid #ddd
+					border-top none
+					border-radius 0 0 4px 4px
+					z-index 20
+					a
+						height 30px
+						line-height 30px
+						font-size 14px
 			.haveChild
 				position relative
 				.tip-menu
@@ -148,6 +183,14 @@
 						height 10px
 						background-color #4a4f5f
 						transform rotate(45deg)
+		.language
+			color #999
+			line-height 65px
+			span
+				cursor pointer
+				margin 0 5px
+				&.cur
+					color #666
 		.userInfo
 			margin-top 20px
 			padding-left 24px

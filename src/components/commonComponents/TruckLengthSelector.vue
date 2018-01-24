@@ -63,7 +63,7 @@
 			border 1px solid transparent
 			border-radius 4px
 			&.selected
-				color #20a0ff
-				background #fff
+				color #fff
+				background #20a0ff
 				border-color #20a0ff			
 </style>

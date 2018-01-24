@@ -7,13 +7,13 @@
 		<div class="list">
 			<div class="tit"><span>货源列表</span></div>
 			<div class="tab">
-				<div class="hd">
+				<!-- <div class="hd">
 					<ul>
 					<li class="hall" :class="{'on':tabs==1}" @click="room(1)">配货大厅</li>
 					<li class="mine" :class="{'on':tabs==2}" @click="mine(2)" v-if="isLogin">我的货源</li>
 					</ul>
 					<router-link :to="{name: 'PublishInfo',query:{active: 21}}" class="publishBtn fr" v-if="isLogin">发布货源</router-link>
-				</div>
+				</div> -->
 				<div class="tabCon" v-show="tabs==1">
 					<div v-if="GoodsList.length > 0">
 						<GoodsList v-for="Goods in GoodsList" :key="Goods.cargoSourceID" :data="Goods"></GoodsList>
@@ -25,7 +25,7 @@
 						<Empty type="noGoods"></Empty>
 					</div>
 				</div>
-				<div class="tabCon" v-show="tabs==2">
+				<!-- <div class="tabCon" v-show="tabs==2">
 					<div v-if="myGoodsList.length > 0">
 						<GoodsList v-for="Goods in myGoodsList" :key="Goods.cargoSourceID" :data="Goods"></GoodsList>
 						<div class="listFooter text-center">
@@ -35,7 +35,7 @@
 					<div v-if="myGoodsList.length == 0">
 						<Empty type="noPublishGoods"></Empty>
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
 		<!-- 列表 -->
@@ -297,7 +297,7 @@
 				.tabCon
 					background #fff
 					border 1px solid #f0f0f0
-					border-radius 0 4px 4px 4px
+					border-radius 0 0 4px 4px
 					padding 0 15px
 			.listFooter
 				background #fff;

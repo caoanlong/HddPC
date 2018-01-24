@@ -7,13 +7,13 @@
 		<div class="list">
 			<div class="tit"><span>车辆列表</span></div>
 			<div class="tab">
-				<div class="hd">
+				<!-- <div class="hd">
 					<ul>
 						<li class="hall" :class="{'on':tabs==1}" @click="inField(1)">车场</li>
 						<li class="mine" :class="{'on':tabs==2}" @click="inFleet(2)" v-if="isLogin">车队</li>
 					</ul>
-				</div>
-				<div class="tabCon" v-if="tabs==1">
+				</div> -->
+				<div class="tabCon">
 					<div v-if="TruckFieldSourceList.length > 0">
 						<TruckList v-for="TruckFieldSource in TruckFieldSourceList" :key="TruckFieldSource.truckSourceID" :dataDetail="TruckFieldSource"></TruckList>
 						<div class="listFooter text-center">
@@ -24,7 +24,7 @@
 						<Empty type="noTruck"></Empty>
 					</div>
 				</div>
-				<div class="tabCon" v-if="tabs==2">
+				<!-- <div class="tabCon" v-if="tabs==2">
 					<div v-if="TruckFleetSourceList.length > 0">
 						<TruckList v-for="TruckFleetSource in TruckFleetSourceList" :key="TruckFleetSource.truckSourceID" :dataDetail="TruckFleetSource"></TruckList>
 						<div class="listFooter text-center">
@@ -34,7 +34,7 @@
 					<div v-if="TruckFleetSourceList.length == 0">
 						<Empty type="noTruck"></Empty>
 					</div>
-				</div>
+				</div> -->
 			</div>
 		</div>
 		<!-- 列表 -->
