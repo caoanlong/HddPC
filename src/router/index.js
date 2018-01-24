@@ -110,6 +110,24 @@ const router = new Router({
 			]
 		},
 		{
+			path: '/AppDownload',
+			name: 'AppDownload',
+			component: resolve => require(['@/components/AppDownload'], resolve),
+			redirect: {name: 'AppDownload'},
+			children: [
+				{
+					path: '/AppDownload/DriverApp',
+					name: 'DriverApp',
+					component: resolve => require(['@/components/AppDownload/DriverApp'], resolve)
+				},
+				{
+					path: '/AppDownload/ConsignorDownload',
+					name: 'ConsignorDownload',
+					component: resolve => require(['@/components/AppDownload/ConsignorDownload'], resolve)
+				},
+			]
+		},
+		{
 			path: '/SpecialLine',
 			name: 'SpecialLine',
 			component: resolve => require(['@/components/SpecialLine'], resolve)
