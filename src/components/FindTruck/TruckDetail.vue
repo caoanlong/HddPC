@@ -17,7 +17,8 @@
 					<p><span class="c1"><label>平台承运：</label>{{truckSourceDetail.waybillNum ? truckSourceDetail.waybillNum : '0'}}笔</span><span class="c1"><label>累计里程：</label>{{truckSourceDetail.mileage ? truckSourceDetail.mileage : '0'}}km</span><span class="c1"><label>好评率：</label>{{truckSourceDetail.feedbackRate}}%</span></p>
 				</div>
 				<!-- <router-link :to="{name: 'SendGoods',query: {memID: truckSourceDetail.memIDStr}}" class="pushBtn" v-if="isLogin && truckSourceDetail.certifyStatus =='Y'">推送货源</router-link> -->
-				<router-link to="" class="contactBtn">联系司机</router-link>
+				<router-link :to="{name:'ConsignorApp'}" class="contactBtn">联系司机</router-link>
+
 			</div>
 		</div>
 		<!-- 车源详情 Start-->
@@ -214,10 +215,10 @@
 		width 950px
 		.preview-wrap
 			border 1px solid #f0f0f0
-			padding 10px 10px 20px 170px
+			padding 10px 10px 10px 170px
 			background #fff
 			border-radius 4px
-			min-height 162px
+			height 160px
 			position relative
 			color #585757
 			.driverPic
@@ -228,25 +229,24 @@
 				left 10px
 				top 10px
 			p
-				line-height 30px
-				height 30px
+				line-height 28px
+				height 28px
 				font-size 14px
 				overflow hidden
 				span
 					margin-right 40px
 				label
 					color #afafaf
-			.truckInfo
-				padding 10px 0
-			.otherInfo
-				padding-bottom 20px
 			.contactBtn
-				padding 0 20px 0 30px
-				height 28px
-				line-height 28px
+				padding 0 30px 0 40px
+				height 40px
+				line-height 40px
 				display inline-block
-				background url('../../assets/img/call.png') no-repeat 8px center #ffc426
+				background url('../../assets/img/call.png') no-repeat 18px center #ffc426
 				color #fff
+				position absolute
+				right 10px
+				bottom 10px
 				border-radius 4px
 				&:hover
 					background-color #fbbd17

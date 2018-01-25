@@ -18,7 +18,7 @@
 					<p><span class="c1"><label>发布货源：</label>{{goodsDetail.cargoSourceNum || 0}}次</span><span class="c1"><label>平台成交：</label>{{goodsDetail.dealNum || 0}}笔</span><span class="c1"><label>好评率：</label>{{goodsDetail.feedbackRate}}%</span></p>
 					<!-- <span class="attention attentioned">已关注</span> -->
 					<!-- <span class="attention">未关注</span> -->
-					<router-link to="" class="contactBtn">联系货主</router-link>
+					<router-link :to="{name:'DriverApp'}" class="contactBtn">联系货主</router-link>
 				</div>
 				<div class="goodsInfo clearfix">
 					<p class="title">货源信息</p>
@@ -257,16 +257,20 @@
 		label
 			color #afafaf
 		.ownerInfo
-			padding 0 100px 0 160px
+			padding-left 160px
 			position relative
 			overflow hidden
+			height 140px
 			.contactBtn
-				padding 0 20px 0 30px
-				height 28px
-				line-height 28px
+				padding 0 30px 0 40px
+				height 40px
+				line-height 40px
 				display inline-block
-				background url('../../assets/img/call.png') no-repeat 8px center #ffc426
+				background url('../../assets/img/call.png') no-repeat 18px center #ffc426
 				color #fff
+				position absolute
+				right 0
+				bottom 0
 				border-radius 4px
 				&:hover
 					background-color #fbbd17
@@ -280,7 +284,7 @@
 				left 0
 				top 0
 			p
-				line-height 30px
+				line-height 28px
 				span
 					margin-right 40px
 			.attention

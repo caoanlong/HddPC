@@ -42,7 +42,7 @@
                 </span>
             </div> -->
             <div class="fr language">
-            	<span>EngLish</span> / <span class="cur">中文</span>
+            	<span>English</span> / <span class="cur">中文</span>
             </div>
         </div>
     </div>
@@ -188,10 +188,12 @@
 			color #999
 			line-height 65px
 			span
-				cursor pointer
+				
+				cursor wait
 				margin 0 5px
 				&.cur
 					color #666
+					cursor pointer
 		.userInfo
 			margin-top 20px
 			padding-left 24px
