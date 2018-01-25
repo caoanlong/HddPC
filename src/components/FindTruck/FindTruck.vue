@@ -1,11 +1,9 @@
 <template>
-	<div>
-		<div class="content">
-			<div class="page-w">
-				<router-view></router-view>
-				<div class="rside fr">
-					<RecommendTruck></RecommendTruck>
-				</div>
+	<div class="content">
+		<div class="page-w">
+			<router-view></router-view>
+			<div class="rside fr">
+				<RecommendTruck></RecommendTruck>
 			</div>
 		</div>
 	</div>

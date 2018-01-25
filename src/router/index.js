@@ -121,9 +121,9 @@ const router = new Router({
 					component: resolve => require(['@/components/AppDownload/DriverApp'], resolve)
 				},
 				{
-					path: '/AppDownload/ConsignorDownload',
-					name: 'ConsignorDownload',
-					component: resolve => require(['@/components/AppDownload/ConsignorDownload'], resolve)
+					path: '/AppDownload/ConsignorApp',
+					name: 'ConsignorApp',
+					component: resolve => require(['@/components/AppDownload/ConsignorApp'], resolve)
 				},
 			]
 		},

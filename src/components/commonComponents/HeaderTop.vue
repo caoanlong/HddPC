@@ -14,9 +14,9 @@
                 	<router-link :to="{name:'FindGoods'}" title="货源" :class="{'selected':selected == 3}">货源</router-link>
                 </li>
                 <li class="firstLi">
-                	<span @mouseover="showPop(true)" @mouseout="showPop(false)" >APP下载</span>
+                	<span @mouseover="showPop(true)" @mouseout="showPop(false)" :class="{'selected':selected == 4 || selected == 5}" >APP下载</span>
                 	<div class="pop" v-show="isPopShow" @mouseover="showPop(true)" @mouseout="showPop(false)">
-                		<router-link :to="{name:'ConsignorDownload'}" title="货主端下载" :class="{'selected':selected == 4}">货主端下载</router-link>
+                		<router-link :to="{name:'ConsignorApp'}" title="货主端下载" :class="{'selected':selected == 4}">货主端下载</router-link>
                 		<router-link :to="{name:'DriverApp'}" title="司机端下载" :class="{'selected':selected == 5}">司机端下载</router-link>
                 	</div>
                 </li>
@@ -58,6 +58,7 @@
 		computed: {
 			selected() {
 				return this.$store.state.selected
+				alert(this.$store.state.selected)
 			},
 			authGoTo() {
 				if (this.memberInfo.certifyStatus == 'Y') {
