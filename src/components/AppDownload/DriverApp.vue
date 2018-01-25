@@ -3,7 +3,7 @@
 		<div class="page-w">
 			<div class="topic">
 				<img src="../../../static/img/appdownload/driverDownloadTopic.jpg" class="topic" />
-				<span class="downLoadBtn"><img src="../../../static/img/appdownload/driverDownload.png" title="下载司机端" alt="下载司机端"/></span>
+				<span class="downLoadBtn" @click="scrollTop"><img src="../../../static/img/appdownload/driverDownload.png" title="下载司机端" alt="下载司机端"/></span>
 			</div>
 			<div class="section1">
 				<div class="slideL">
@@ -132,7 +132,10 @@ export default {
 		},
 		ievent(i) {
 	        this.cur = i
-	    }
+	    },
+		scrollTop () {
+			document.documentElement.scrollTop = 2000
+		}
 	},
 	components: {
 		SwiperSlide

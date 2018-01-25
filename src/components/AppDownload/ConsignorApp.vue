@@ -3,7 +3,7 @@
 		<div class="page-w">
 			<div class="topic">
 				<img src="../../../static/img/appdownload/consignorDownloadTopic.jpg" class="topic" />
-				<span class="downLoadBtn"><img src="../../../static/img/appdownload/ConsignorDownload.png" title="下载货主端" alt="下载货主端"/></span>
+				<span class="downLoadBtn" @click="scrollTop"><img src="../../../static/img/appdownload/ConsignorDownload.png" title="下载货主端" alt="下载货主端"/></span>
 			</div>
 			<div class="section1">
 				<div class="slideL">
@@ -87,7 +87,7 @@ export default {
 	data() {
 		return {
 			cur:0,
-			marginL:0,			
+			marginL:0,	
 			pics:[
 				{
 					url: require('../../../static/img/appDownload/yzcy1.png')
@@ -132,7 +132,10 @@ export default {
 		},
 		ievent(i) {
 	        this.cur = i
-	    }
+	    },
+		scrollTop () {
+			document.documentElement.scrollTop = 2000
+		}
 	},
 	components: {
 		SwiperSlide
