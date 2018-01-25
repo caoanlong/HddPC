@@ -13,8 +13,8 @@
                 <li class="firstLi">
                 	<router-link :to="{name:'FindGoods'}" title="货源" :class="{'selected':selected == 3}">货源</router-link>
                 </li>
-                <li class="firstLi">
-                	<span @mouseover="showPop(true)" @mouseout="showPop(false)" :class="{'selected':selected == 4 || selected == 5}" >APP下载</span>
+                <li class="firstLi hasChild">
+                	<span @mouseover="showPop(true)" @mouseout="showPop(false)" :class="{'selected':selected == 4 || selected == 5}" >APP下载 <i></i></span>
                 	<div class="pop" v-show="isPopShow" @mouseover="showPop(true)" @mouseout="showPop(false)">
                 		<router-link :to="{name:'ConsignorApp'}" title="货主端下载" :class="{'selected':selected == 4}">货主端下载</router-link>
                 		<router-link :to="{name:'DriverApp'}" title="司机端下载" :class="{'selected':selected == 5}">司机端下载</router-link>
@@ -155,6 +155,21 @@
 						height 30px
 						line-height 30px
 						font-size 14px
+				&.hasChild
+					span
+						i
+							width 10px
+							height 10px
+							display inline-block
+							background url('../../assets/img/nav-arrow.png') no-repeat top center
+						&.selected
+							i
+								background-position bottom center
+				&.hasChild
+					&:hover
+						span
+							i
+								background-position bottom center
 			.haveChild
 				position relative
 				.tip-menu
