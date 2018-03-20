@@ -93,12 +93,12 @@ var webpackConfig = merge(baseWebpackConfig, {
       }
     ]),
     //set prerend plugin
-    // new PrerenderSpaPlugin(
-    //   // Absolute path to compiled SPA
-    //   path.join(__dirname, '../dist'),
-    //   // List of routes to prerender
-    //   [ '/', '/FindGoods', '/FindTruck', '/About' ]
-    // )
+    new PrerenderSpaPlugin(
+      // Absolute path to compiled SPA
+      path.join(__dirname, '../dist'),
+      // List of routes to prerender
+      [ '/', '/FindGoods', '/FindTruck', '/About' ]
+    )
   ]
 })
 
