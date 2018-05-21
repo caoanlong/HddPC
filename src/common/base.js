@@ -122,10 +122,6 @@ export default function install(Vue, options) {
 		var URL = 'http://api.map.baidu.com/geocoder/v2/?location='+lat+','+lng+'&output=json&ak=AjsVKu7N9iBX2klb9ktqGfAvA5dkfRBs'
 		return new Promise((resolve, reject) => {
 			this.$http.jsonp(URL).then((res) => {
-				// console.log(res.body.result.addressComponent)
-				// if (this.address) {
-				// 	this.address = res.body.result.addressComponent.province+res.body.result.addressComponent.city
-				// }
 				resolve(res.body.result.addressComponent)
 			}, res => {
 				reject(res.body)
